@@ -5,7 +5,7 @@ import {Container, Input, Button} from '../UI/UIPackage';
 function Login(props) {
     const navigate = useNavigate();
     const handleButtonClick = () => {
-        navigate('/home');
+        navigate('/');
     };
     return (
         <Container>
