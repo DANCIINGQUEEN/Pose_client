@@ -40,7 +40,7 @@ const ButtonGroup = ({ buttons }) => {
 function UserDetail3(props) {
     const navigate = useNavigate();
     const handleButtonClick = () => {
-        navigate('/home');
+        navigate('/');
     };
 
     const buttonNames=['평생 숙제 다이어트', '뱃살, 옆구리살 빼기', '마른 몸 벗어나기', '탄탄한 몸 만들기', '넓은 어깨 갖기', '슬림한 하체 만들기', '벌크업 하기', '굵코 큰 팔 만들기', '힙업','팔뚝 군살 제거', '전체적인 근육량 증가', '선명한 복근 만들기', '굵은 하체 만들기']
