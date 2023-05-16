@@ -1,19 +1,48 @@
 import React from 'react';
 import {Container, Input, Button} from '../UI/UIPackage';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 function UserDetail2(props) {
     const navigate = useNavigate();
-    const handleButtonClick = () => {
-        navigate('/userdetail3');
+
+    const location = useLocation()
+    console.log(location.state)
+    const name = location.state?.name || ''
+    const email = location.state?.email || ''
+    const password = location.state?.password || ''
+    const sex = location.state?.sex || ''
+    const area = location.state?.area || ''
+    const height = location.state?.height || ''
+    const weight = location.state?.weight || ''
+    const age = location.state?.age || ''
+    const handleHealthButtonClick = () => {
+        navigate('/userdetail3', {state:{
+            ...location.state,
+            exercise: '헬스'
+            }});
     };
+    const handleHomeButtonClick = () => {
+        navigate('/userdetail3', {state:{
+            ...location.state,
+            exercise: '홈 트레이닝'
+            }});
+    }
     return (
         <Container>
-            <h2 style={{marginBottom:'-10px'}}>주로 어떤 운동을 하시나요?</h2>
+            <h2 style={{marginBottom: '-10px'}}>주로 어떤 운동을 하시나요?</h2>
             <h5>하시는 운동에 맞게 추천해드릴게요</h5>
-            <Button onClick={handleButtonClick}>헬스</Button>
+            <p>{name}</p>
+            <p>{email}</p>
+            <p>{password}</p>
+            <p>{sex}</p>
+            <p>{area}</p>
+            <p>{height}</p>
+            <p>{weight}</p>
+            <p>{age}</p>
+
+            <Button onClick={handleHealthButtonClick}>헬스</Button>
             <br/>
-            <Button onClick={handleButtonClick}>홈 트레이닝</Button>
+            <Button onClick={handleHomeButtonClick}>홈 트레이닝</Button>
         </Container>
     );
 }

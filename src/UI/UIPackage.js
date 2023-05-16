@@ -93,7 +93,7 @@ const Option = styled.li`
   }
 `;
 
-export const CustomSelect = ({item, options}) => {
+export const CustomSelect = ({item, options, onChange}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     const containerRef = useRef(null);
@@ -104,6 +104,7 @@ export const CustomSelect = ({item, options}) => {
     const handleOptionClick = (option) => {
         setSelectedOption(option);
         setIsOpen(false);
+        onChange(option)
     };
 
     const handleClickOutside = (event) => {
