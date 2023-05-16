@@ -3,11 +3,24 @@ import {useLocation} from "react-router-dom";
 
 function InputToss2(props) {
     const location=useLocation()
+    //연습
     const content=location.state?.content||''
+
     const name=location.state?.name||''
     const email=location.state?.email||''
     const password=location.state?.password||''
-    console.log(location)
+    const age=location.state?.age||''
+    const area=location.state?.area||''
+    const height=location.state?.height||''
+    const weight=location.state?.weight||''
+    const sex=location.state?.sex||''
+    const exercise=location.state?.exercise||''
+    const wishList=location.state?.wishList||''
+
+
+    console.log(location.state)
+
+
     return (
         <>
         <div>전달받은 값</div>
@@ -15,6 +28,13 @@ function InputToss2(props) {
         <p>{name}</p>
         <p>{email}</p>
         <p>{password}</p>
+        <p>{age}</p>
+        <p>{area}</p>
+        <p>{height}</p>
+        <p>{weight}</p>
+            <p>{sex}</p>
+            <p>{exercise}</p>
+            <p>{wishList}</p>
         </>
     );
 }
