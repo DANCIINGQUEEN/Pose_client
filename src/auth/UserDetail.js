@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Container, CustomSelect} from '../UI/UIPackage';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 const UserDetail = (props) => {
@@ -10,6 +10,12 @@ const UserDetail = (props) => {
     const weight=['50 이하', 50, 60, 70, 80, 90, '90 이상']
     const age=[10, 20, 30, 40, 50, '60 이상']
 
+    const location=useLocation()
+    const name=location.state?.name||''
+    const email=location.state?.email||''
+    const password=location.state?.password||''
+
+
     const navigate = useNavigate();
     const handleButtonClick = () => {
         navigate('/userdetail2');
@@ -18,6 +24,9 @@ const UserDetail = (props) => {
     return (
         <Container>
             <h1>자세한 유저 정보</h1>
+            <span>{name}</span>
+            <span>{email}</span>
+            <span>{password}</span>
             {/*<div style={{marginBottom:'100px'}}>*/}
 
                 <CustomSelect options={sex} item='성별'/>

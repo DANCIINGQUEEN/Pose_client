@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Slider from "react-slick";
+import {ClipLoader} from "react-spinners";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 export const Container= styled.div`
@@ -175,6 +176,20 @@ export const UserProfile = ({text, size}) => {
         </div>
     )
 }
+
+export const Loading = () => {
+    return (
+        <div className="loading">
+            <ClipLoader
+                size={20}
+                color={'#123abc'}
+                loading={true}
+            />
+        </div>
+    );
+
+}
+
 export const UserBox=({name, email})=>{
     return (
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -334,6 +349,7 @@ export default {
     PillBox,
     SquareBox,
     Carousel,
-    NavigationBar
+    NavigationBar,
+    Loading
 
 }
