@@ -1,56 +1,68 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
+import {Link} from "react-router-dom";
 import styled from 'styled-components';
-import Slider from "react-slick";
+
+//로딩
 import {ClipLoader} from "react-spinners";
+//캐러셀
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-export const Container= styled.div`
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  height:100vh`
 
-export const Input= styled.input`
-    width:100%;
-    height:50px;
-    border:none;
-    border-radius:25px;
-    padding:0 20px;
-    background-color:rgba(217, 217, 217, 0.51);
-    box-sizing:border-box;
-    margin-bottom:10px;
-    font-size:16px;
-    &:focus{
-        outline:none;
-        border:1px solid #000;
-    }
-    
+//아이콘
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faComments, faDumbbell, faHouse, faTrophy, faUser, faUserGroup} from '@fortawesome/free-solid-svg-icons';
+
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh`
+
+export const Input = styled.input`
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 25px;
+  padding: 0 20px;
+  background-color: rgba(217, 217, 217, 0.51);
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 16px;
+
+  &:focus {
+    outline: none;
+    border: 1px solid #000;
+  }
+
 `
-export const Button=styled.button`
-    width:100%;
-    height:50px;
-    border:none;
-    border-radius:25px;
-    padding:0 20px;
-    font-family: 'Inter', sans-serif;
-    background-color:rgba(97, 137, 239, 1);
-    box-sizing:border-box;
-    margin-bottom:10px;
-    font-size:16px;
-    &:focus{
-        outline:none;
-        border:1px solid #000;
-    }
+export const Button = styled.button`
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 25px;
+  padding: 0 20px;
+  font-family: 'Inter', sans-serif;
+  background-color: rgba(97, 137, 239, 1);
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  font-size: 16px;
+
+  &:focus {
+    outline: none;
+    border: 1px solid #000;
+  }
 `
 
 
 const SelectContainer = styled.div`
   position: relative;
   margin-bottom: 10px;
-  width:100%;
+  width: 100%;
   height: 50px;
-  background-color:rgba(217, 217, 217, 0.51);
+  background-color: rgba(217, 217, 217, 0.51);
   border-radius: 25px;
   display: flex;
   align-items: center;
@@ -60,12 +72,12 @@ const SelectContainer = styled.div`
 `;
 
 const SelectedOption = styled.div`
-  margin-left:20px;
+  margin-left: 20px;
 `;
 
 const Arrow = styled.div`
-    margin-right:20px;
-  `;
+  margin-right: 20px;
+`;
 
 const OptionsList = styled.ul`
   position: absolute;
@@ -80,7 +92,7 @@ const OptionsList = styled.ul`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 1;
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
-  // visibility: ${(props) => (props.isOpen ? "visible" : "hidden")};
+    // visibility: ${(props) => (props.isOpen ? "visible" : "hidden")};
   // transition: opacity 0.5s ease-out, visibility 1s ease-out;
 `;
 
@@ -88,6 +100,7 @@ const Option = styled.li`
   padding: 8px 16px;
   cursor: pointer;
   z-index: 10;
+
   &:hover {
     background-color: rgba(97, 137, 239, 1);
   }
@@ -127,7 +140,7 @@ export const CustomSelect = ({item, options, onChange}) => {
             {isOpen && (
                 <OptionsList isOpen={isOpen}>
                     {options.map((option) => (
-                        <Option key={option} onClick={() => handleOptionClick(option)} >
+                        <Option key={option} onClick={() => handleOptionClick(option)}>
                             {option}
                         </Option>
                     ))}
@@ -137,8 +150,8 @@ export const CustomSelect = ({item, options, onChange}) => {
     );
 };
 
-export const Exit=({text})=>{
-    const q=text
+export const Exit = ({text}) => {
+    const q = text
     return (
         <div>{q}</div>
     )
@@ -191,18 +204,18 @@ export const Loading = () => {
 
 }
 
-export const UserBox=({name, email})=>{
+export const UserBox = ({name, email}) => {
     return (
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <UserProfile text={name} size={50}/>
-            <div style={{textAlign: 'left', marginLeft:'10px'}}>
+            <div style={{textAlign: 'left', marginLeft: '10px'}}>
                 <div>{name}</div>
                 <div>{email}</div>
             </div>
         </div>
     )
 }
-export const RecBox = ({ componentToRender }) => {
+export const RecBox = ({componentToRender}) => {
     return (
         <div
             style={{
@@ -210,19 +223,19 @@ export const RecBox = ({ componentToRender }) => {
                 height: "161px",
                 backgroundColor: "#ccc",
                 margin: "10px",
-                marginLeft:'20px',
+                marginLeft: '20px',
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "30px",
-                borderRadius:'16px'
+                borderRadius: '16px'
             }}
         >
-            { componentToRender }
+            {componentToRender}
         </div>
     );
 };
-export const PillBox = ({ componentToRender }) => {
+export const PillBox = ({componentToRender}) => {
     return (
         <div
             style={{
@@ -235,14 +248,14 @@ export const PillBox = ({ componentToRender }) => {
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "30px",
-                borderRadius:'16px'
+                borderRadius: '16px'
             }}
         >
-            { componentToRender }
+            {componentToRender}
         </div>
     );
 };
-export const SquareBox = ({ componentToRender }) => {
+export const SquareBox = ({componentToRender}) => {
     return (
         <div
             style={{
@@ -250,31 +263,31 @@ export const SquareBox = ({ componentToRender }) => {
                 height: "123px",
                 backgroundColor: "#ccc",
                 margin: "10px",
-                marginLeft:'20px',
+                marginLeft: '20px',
 
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "30px",
-                borderRadius:'16px'
+                borderRadius: '16px'
             }}
         >
-            { componentToRender }
+            {componentToRender}
         </div>
     );
 };
-export const Carousel=({ componentToRender })=>{
+export const Carousel = ({componentToRender}) => {
     const settings = {
-        draggable:true,
+        draggable: true,
         infinite: false,
         speed: 500,
         slidesToShow: 3,
-        onSwipe:null,
+        onSwipe: null,
     };
     const boxes = Array.from(Array(7).keys());
     return (
-        <div style={{ maxWidth: "380px", margin: "0 0 0 10px" }}>
-            <Slider {...settings} style={{margin:'0 0 0 auto'}}>
+        <div style={{maxWidth: "380px", margin: "0 0 0 10px"}}>
+            <Slider {...settings} style={{margin: '0 0 0 auto'}}>
                 {boxes.map((number) => (
                     // <Box number={number} key={number} />
                     <>{componentToRender}</>
@@ -294,7 +307,9 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  //overflow: hidden;
   // box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 16px 16px 0 0;
 `;
 
 const NavButton = styled.button`
@@ -309,30 +324,69 @@ const NavButton = styled.button`
   cursor: pointer;
 `;
 
-export const NavigationBar = ({ onExerciseClick, onRankingClick, onCommunityClick, onMateClick, onAccountClick }) => {
+export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick, onMateClick, onAccountClick}) => {
+    const [activateLink, setActivateLink] = useState(null)
+    const style = {
+        textDecoration: 'none',
+        color: activateLink==='exercise'||'ranking'||'home'||'community'||'account'?'black':'#9b9b9b',
+        // fontWeight: activateLink === 'exercise' ? 'bold' : 'normal',
+        display:'flex',
+        flexDirection:'column',
+    }
+    const iconStyle = {
+        fontSize:'20px',
+    }
+    const fontStyle = {
+        fontSize:'0.6rem',
+    }
+
+    const handleLinkClick = (link) => {
+        setActivateLink(link)
+    }
     return (
-            <Nav>
-                <NavButton onClick={onExerciseClick}>
-                    <i className="fas fa-dumbbell"></i>
-                    <span>운동</span>
-                </NavButton>
-                <NavButton onClick={onRankingClick}>
-                    <i className="fas fa-trophy"></i>
-                    <span>랭킹</span>
-                </NavButton>
-                <NavButton onClick={onCommunityClick}>
-                    <i className="fas fa-users"></i>
-                    <span>커뮤니티</span>
-                </NavButton>
-                <NavButton onClick={onMateClick}>
-                    <i className="fas fa-user-friends"></i>
-                    <span>메이트</span>
-                </NavButton>
-                <NavButton onClick={onAccountClick}>
-                    <i className="fas fa-user"></i>
-                    <span>계정</span>
-                </NavButton>
-            </Nav>
+        <Nav>
+            <NavButton onClick={()=>handleLinkClick('exercise')}>
+                <Link to={'/exercise'} style={style}>
+                    <FontAwesomeIcon icon={faDumbbell} style={iconStyle}/>
+                    <span  style={fontStyle}>
+                        운동
+                    </span>
+                </Link>
+            </NavButton>
+            <NavButton onClick={onRankingClick}>
+                <Link to={'/ranking'} style={style}>
+                    <FontAwesomeIcon icon={faTrophy} style={iconStyle}/>
+                    <span style={fontStyle}>
+                        랭킹
+                    </span>
+                </Link>
+            </NavButton>
+            <NavButton onClick={onMateClick}>
+                <Link to={'/'} style={style}>
+                    <FontAwesomeIcon icon={faHouse} style={iconStyle}/>
+                    <span style={fontStyle}>
+                        홈
+                    </span>
+                </Link>
+            </NavButton>
+            <NavButton onClick={onCommunityClick}>
+                <Link to={'/community'} style={style}>
+                    <FontAwesomeIcon icon={faComments} style={iconStyle}/>
+                    <span style={fontStyle}>
+                        커뮤니티
+                    </span>
+                </Link>
+            </NavButton>
+
+            <NavButton onClick={onAccountClick}>
+                <Link to={'/account'} style={style}>
+                    <FontAwesomeIcon icon={faUser} style={iconStyle}/>
+                    <span style={fontStyle}>
+                        계정
+                    </span>
+                </Link>
+            </NavButton>
+        </Nav>
 
     );
 };

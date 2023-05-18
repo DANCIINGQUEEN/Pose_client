@@ -3,7 +3,13 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
     email: null,
     name: null,
-    token: null
+    token: null,
+    age: null,
+    weight: null,
+    height: null,
+    exercise: null,
+    wishList: null
+
 }
 
 export const authSlice = createSlice({
@@ -27,9 +33,18 @@ export const authSlice = createSlice({
         },
         fetchName:(state, action)=>{
             state.name=action.payload.name
+        },
+        getUserFullInfo: (state, actions) => {
+            state.email=actions.payload.email
+            state.name=actions.payload.name
+            state.age=actions.payload.age
+            state.exercise=actions.payload.exercise
+            state.wishList=actions.payload.wishList
+            state.weight=actions.payload.weight
+            state.height=actions.payload.height
         }
     }
 })
 
-export const {login, logout, getUser} = authSlice.actions
+export const {login, logout, getUser, getUserFullInfo} = authSlice.actions
 export default authSlice.reducer

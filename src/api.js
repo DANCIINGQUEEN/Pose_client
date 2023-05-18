@@ -5,7 +5,9 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
 const API={
     //로그인
     LOGIN: `${API_BASE_URL}/user/login`,
-    GET_USER_INFO: `${API_BASE_URL}/user/getUser`,
+    GET_USER_BASIC_INFO: `${API_BASE_URL}/user/getUserBasicInfo`,
+    GET_USER_FULL_INFO: `${API_BASE_URL}/user/getUserFullInfo`,
+    //회원가입
     SEND_VERIFY_CODE: `${API_BASE_URL}/user/sendVerificationCode`,
     VERIFY_CODE: `${API_BASE_URL}/user/verifyCode`,
     REGISTER: `${API_BASE_URL}/user/register`,

@@ -77,21 +77,21 @@ function Register(props) {
         }
     }
 
-    const handleSubmit = async (e) => {
-        try {
-            let formData = {
-                name: name,
-                email: email,
-                password: password
-            }
-            console.log(formData)
-            await axios.post(REGISTER, formData)
-            alert("Signup successful");
-            console.log(formData)
-        } catch (error) {
-            alert("An error occurred while signing up");
-        }
-    }
+    // const handleSubmit = async (e) => {
+    //     try {
+    //         let formData = {
+    //             name: name,
+    //             email: email,
+    //             password: password
+    //         }
+    //         console.log(formData)
+    //         await axios.post(REGISTER, formData)
+    //         alert("Signup successful");
+    //         console.log(formData)
+    //     } catch (error) {
+    //         alert("An error occurred while signing up");
+    //     }
+    // }
     const handleSendSubmit= ()=>{
         navigate('/userdetail', {state: {name: name, email: email, password: password}})
     }
