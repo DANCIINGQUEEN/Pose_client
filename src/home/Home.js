@@ -9,7 +9,7 @@ import {Container, UserBox, NavigationBar} from '../UI/UIPackage';
 import StatusOfMAtes from "./widget/StatusOfMAtes";
 import CurrentExercise from "./widget/CurrentExercise";
 import HomeRanking from "./widget/HomeRanking";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 function Home(props) {
@@ -60,10 +60,23 @@ function Home(props) {
         getUserInfo()
     }, [name])
 
+    async function setLogout() {
+        // Remove the JWT token from the session storage
+        sessionStorage.removeItem('jwt');
+        dispatch(
+            logout()
+        )
+    }
+
 
     return (
         <Container>
             {/*<button onClick={handleMenuClick}>유저 정보</button>*/}
+            <button onClick={setLogout}>
+                <Link to={'/'}>
+                    로그아웃
+                </Link>
+            </button>
             <div>3월 24일 까지</div>
             <div>8일 12시간 : 33분 : 42초 남음</div>
             <br/>
