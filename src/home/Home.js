@@ -87,10 +87,10 @@ function Home(props) {
             }
             <br/>
             <br/>
-            <StatusOfMAtes/>
+            {/*<StatusOfMAtes/>*/}
             <br/>
             <br/>
-            <CurrentExercise/>
+            {/*<CurrentExercise/>*/}
             <br/>
             <br/>
             <HomeRanking/>

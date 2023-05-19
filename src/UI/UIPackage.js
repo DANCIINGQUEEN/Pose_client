@@ -19,7 +19,8 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  //height: 100vh
+  height: 100vh;
+  flex-grow: 1;
 `
 
 export const Input = styled.input`
@@ -284,6 +285,7 @@ export const Carousel = ({componentToRender}) => {
         speed: 500,
         slidesToShow: 3,
         onSwipe: null,
+        arrow:false,
     };
     const boxes = Array.from(Array(7).keys());
     return (
