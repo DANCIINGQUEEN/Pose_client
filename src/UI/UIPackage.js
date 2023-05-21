@@ -19,8 +19,8 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
-  flex-grow: 1;
+  //height: 100vh;
+  //flex-grow: 1;
 `
 
 export const Input = styled.input`
@@ -158,6 +158,21 @@ export const Exit = ({text}) => {
         <div>{q}</div>
     )
 }
+export const HorizonLine = () => {
+    return (
+        <div
+            style={{
+                width: "100%",
+                textAlign: "center",
+                borderBottom: "1px solid #aaa",
+                lineHeight: "0.1em",
+                margin: "10px 0 20px",
+            }}
+        >
+            {/*<span style={{background: "#fff", padding: "0 10px"}}>{text}</span>*/}
+        </div>
+    );
+};
 export const UserProfile = ({text, size}) => {
     const fontSize = (3 * size) / 5
     const randomColor = () => {
@@ -408,6 +423,7 @@ export default {
     SquareBox,
     Carousel,
     NavigationBar,
-    Loading
+    Loading,
+    HorizonLine
 
 }

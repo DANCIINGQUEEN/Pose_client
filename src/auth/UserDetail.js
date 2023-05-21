@@ -8,7 +8,7 @@ const UserDetail = (props) => {
     const areaList = ['서울', '경기', '인천', '강원', '충북', '충남', '대전', '경북', '경남', '대구', '울산', '부산', '전북', '전남', '광주', '제주']
     const heightList = ['150 이하', 150, 160, 170, 180, 190, '190 이상']
     const weightList = ['50 이하', 50, 60, 70, 80, 90, '90 이상']
-    const ageList = [10, 20, 30, 40, 50, '60 이상']
+    const ageList = ['10대', '20대', '30대', '40대', '50대', '60대 이상']
 
     const [sex, setSex] = useState(null);
     const [area, setArea] = useState(null);
