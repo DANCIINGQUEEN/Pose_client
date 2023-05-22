@@ -236,7 +236,7 @@ export const RecBox = ({componentToRender}) => {
     return (
         <div
             style={{
-                width: "125px",
+                width: "123px",
                 height: "161px",
                 backgroundColor: "#ccc",
                 margin: "10px",
@@ -256,7 +256,7 @@ export const PillBox = ({componentToRender}) => {
     return (
         <div
             style={{
-                width: "139px",
+                width: "120px",
                 height: "32px",
                 backgroundColor: "#ccc",
                 margin: "10px",
@@ -279,36 +279,46 @@ export const SquareBox = ({componentToRender}) => {
                 width: "123px",
                 height: "123px",
                 backgroundColor: "#ccc",
-                margin: "10px",
+                margin: "15px",
                 marginLeft: '20px',
 
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "30px",
-                borderRadius: '16px'
+                borderRadius: '16px',
             }}
         >
             {componentToRender}
         </div>
     );
 };
+const StyledSlider=styled(Slider)`
+  height: 100%;
+    width: 100%;
+  position: relative;
+  .slick-prev::before, .slick-next::before {
+    opacity: 0;
+    display: none;
+  }
+`
 export const Carousel = ({componentToRender}) => {
     const settings = {
+        arrows:false,
+        // dots: true,
         draggable: true,
         infinite: false,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 2.8,
         onSwipe: null,
-        arrow:false,
     };
     const boxes = Array.from(Array(7).keys());
     return (
-        <div style={{maxWidth: "380px", margin: "0 0 0 10px"}}>
-            <Slider {...settings} style={{margin: '0 0 0 auto'}}>
+        <div style={{maxWidth: "380px", margin: '0 0 0 10px'}}>
+            <Slider {...settings} >
                 {boxes.map((number) => (
                     // <Box number={number} key={number} />
-                    <>{componentToRender}</>
+                    <div>{componentToRender}</div>
                 ))}
             </Slider>
         </div>
