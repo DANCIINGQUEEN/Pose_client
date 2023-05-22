@@ -264,7 +264,7 @@ export const PillBox = ({text}) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "20px",
+                fontSize: "18px",
                 borderRadius: '16px'
             }}
         >
@@ -293,15 +293,7 @@ export const SquareBox = ({componentToRender}) => {
         </div>
     );
 };
-const StyledSlider=styled(Slider)`
-  height: 100%;
-    width: 100%;
-  position: relative;
-  .slick-prev::before, .slick-next::before {
-    opacity: 0;
-    display: none;
-  }
-`
+
 export const Carousel = ({componentToRender}) => {
     const settings = {
         arrows:false,
