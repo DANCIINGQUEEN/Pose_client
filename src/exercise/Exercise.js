@@ -1,11 +1,13 @@
 import React from 'react';
 import {Carousel, Container, NavigationBar, RecBox} from "../UI/UIPackage";
 import styled from "styled-components";
+
+
 const Box = styled.div`
-    background-color: #d9d9d9;
+  background-color: rgba(217, 217, 217, 0.5);
   border-radius: 16px 0 0 16px;
-  margin-left: 30px;
-  margin-bottom: 30px;
+  margin: 0 0 30px 30px;
+  //margin-bottom: 30px;
   width:360px;
 `
 

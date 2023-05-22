@@ -252,7 +252,7 @@ export const RecBox = ({componentToRender}) => {
         </div>
     );
 };
-export const PillBox = ({componentToRender}) => {
+export const PillBox = ({text}) => {
     return (
         <div
             style={{
@@ -264,11 +264,11 @@ export const PillBox = ({componentToRender}) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "30px",
+                fontSize: "20px",
                 borderRadius: '16px'
             }}
         >
-            {componentToRender}
+            {text}
         </div>
     );
 };
@@ -319,6 +319,25 @@ export const Carousel = ({componentToRender}) => {
                 {boxes.map((number) => (
                     // <Box number={number} key={number} />
                     <div>{componentToRender}</div>
+                ))}
+            </Slider>
+        </div>
+    );
+}
+export const CarouselList = ({componentToRender, list}) => {
+    const settings = {
+        arrows:false,
+        draggable: true,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 2.8,
+        onSwipe: null,
+    };
+    return (
+        <div style={{maxWidth: "380px", margin: '0 0 0 10px'}}>
+            <Slider {...settings} >
+                {list.map((text, index) => (
+                    <div key={index}>{React.cloneElement(componentToRender, {text})}</div>
                 ))}
             </Slider>
         </div>
@@ -432,6 +451,7 @@ export default {
     PillBox,
     SquareBox,
     Carousel,
+    CarouselList,
     NavigationBar,
     Loading,
     HorizonLine

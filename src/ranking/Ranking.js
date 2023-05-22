@@ -1,10 +1,21 @@
 import React, {useState} from 'react';
-import {Carousel, Container, CustomSelect, HorizonLine, NavigationBar, PillBox, RecBox, UserBox} from "../UI/UIPackage";
+import {
+    Carousel,
+    CarouselList,
+    Container,
+    CustomSelect,
+    HorizonLine,
+    NavigationBar,
+    PillBox,
+    RecBox,
+    UserBox
+} from "../UI/UIPackage";
 import RankInfoList from "./RankInfo";
 
 
 function Ranking(props) {
     const ageList = ['전체', '10대', '20대', '30대', '40대', '50대', '60대 이상']
+    const exerciseList=['턱걸이', '팔굽혀펴기', '스쿼드', '딥스']
     const [age, setAge] = useState(null);
 
     const handleAgeChange = (selectedAge) => {
@@ -26,7 +37,7 @@ function Ranking(props) {
 
                 </div>
             </div>
-            <Carousel componentToRender={<PillBox/>}/>
+            <CarouselList componentToRender={<PillBox/>} list={exerciseList}/>
 
             <RankInfoList name='park' email={'holyShit@google.com'} rank={'1st'}/>
 
