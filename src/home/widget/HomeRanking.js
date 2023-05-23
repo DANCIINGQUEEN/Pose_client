@@ -1,12 +1,12 @@
 import React from 'react';
-import {UserBox} from "../../UI/UIPackage";
+import {UserBox, ThemeColor} from "../../UI/UIPackage";
 
 function HomeRanking(props) {
     const style={
         display: 'flex',
         justifyContent: 'space-between',
-        backgroundColor:'#d9d9d9',
-        width:"250px",
+        backgroundColor:`${ThemeColor.importantColor}`,
+        width:"280px",
         padding:'5px 20px 5px 20px',
         borderRadius:'20px',
         margin:'15px 0 15px 0'

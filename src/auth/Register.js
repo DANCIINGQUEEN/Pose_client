@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {SEND_VERIFY_CODE, VERIFY_CODE, REGISTER} from '../api'
 
 
-import {Container, Input, Button, Loading} from '../UI/UIPackage';
+import {ThemeColor,Container, Input, Button, Loading} from '../UI/UIPackage';
 
 
 function Register(props) {
@@ -129,7 +129,7 @@ function Register(props) {
                      }}>
                     <Input style={{width: '50%', marginRight: '10px'}} type="text" placeholder='인증번호'
                            value={verificationCode} onChange={handleVerificationCodeChange}/>
-                    <Button style={{width: '25%', backgroundColor: 'rgb(163,183,233)'}}
+                    <Button style={{width: '25%', backgroundColor: `${ThemeColor.disabledButtonColor}`}}
                             onClick={handleVerifyCode}>확인</Button>
                 </div>
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Container, Input, Button} from '../UI/UIPackage';
+import {ThemeColor, Container, Input, Button} from '../UI/UIPackage';
 import {useLocation, useNavigate} from "react-router-dom";
 
 import {REGISTER} from '../api'
@@ -8,24 +8,11 @@ import axios from "axios";
 const ButtonGroup = ({buttons, onChange}) => {
     const [selectedButtons, setSelectedButtons] = useState([]);
 
-
-
-
-    // const handleButtonClick = (button) => {
-    //     if (selectedButtons.includes(button)) {
-    //         setSelectedButtons(selectedButtons.filter((b) => b !== button));
-    //     } else {
-    //         setSelectedButtons([...selectedButtons, button]);
-    //     }
-    //     console.log(selectedButtons)
-    //     onChange(selectedButtons)
-    // };
-
     const handleButtonClick = (button) => {
         let updatedButtons
-        if(selectedButtons.includes(button)){
+        if (selectedButtons.includes(button)) {
             updatedButtons = selectedButtons.filter((b) => b !== button)
-        }else{
+        } else {
             updatedButtons = [...selectedButtons, button]
         }
         setSelectedButtons(updatedButtons)
@@ -39,10 +26,11 @@ const ButtonGroup = ({buttons, onChange}) => {
                     key={button}
                     onClick={() => handleButtonClick(button)}
                     style={{
-                        backgroundColor: selectedButtons.includes(button) ? "rgba(97, 137, 239, 1)" : "gray",
-                        color: "white",
+                        backgroundColor: selectedButtons.includes(button) ? `${ThemeColor.buttonColor}` : `${ThemeColor.primaryColor}`,
+                        color: selectedButtons.includes(button) ? 'black' : 'white',
                         height: '40px',
-                        padding: "0 10px",
+                        padding: "0 17px 0 17px",
+                        textAlign:'center',
                         borderRadius: "20px",
                         margin: "5px",
                         border: "none",
@@ -74,7 +62,6 @@ function UserDetail3(props) {
     //     });
     //     console.log(location.state, selectedOptions)
     // };
-
 
 
     const handleSubmit = async (e) => {

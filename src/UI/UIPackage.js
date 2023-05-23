@@ -14,6 +14,16 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faComments, faDumbbell, faHouse, faTrophy, faUser, faUserGroup} from '@fortawesome/free-solid-svg-icons';
 
 
+export const ThemeColor={
+    rootColor:'rgba(217, 217, 217, 0.11)',
+    containerColor:'rgba(217, 217, 217, 0.2)',
+    divColor:'rgba(217, 217, 217, 0.4)',
+    importantColor:'rgba(217, 217, 217, 0.6)',
+    primaryColor:'rgba(160, 160, 160)',
+    navColor:'rgba(217, 217, 217, 0.3)',
+    disabledButtonColor:'rgb(163,183,233)',
+    buttonColor:'rgba(97, 137, 239, 1)'
+}
 export const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -29,7 +39,7 @@ export const Input = styled.input`
   border: none;
   border-radius: 25px;
   padding: 0 20px;
-  background-color: rgba(217, 217, 217, 0.51);
+  background-color: ${ThemeColor.divColor};
   box-sizing: border-box;
   margin-bottom: 10px;
   font-size: 16px;
@@ -47,7 +57,7 @@ export const Button = styled.button`
   border-radius: 25px;
   padding: 0 20px;
   font-family: 'Inter', sans-serif;
-  background-color: rgba(97, 137, 239, 1);
+  background-color: ${ThemeColor.buttonColor};
   box-sizing: border-box;
   margin-bottom: 10px;
   font-size: 16px;
@@ -64,7 +74,7 @@ const SelectContainer = styled.div`
   margin-bottom: 10px;
   width: 100%;
   height: 50px;
-  background-color: rgba(217, 217, 217, 0.51);
+  background-color: ${ThemeColor.divColor};
   border-radius: 25px;
   display: flex;
   align-items: center;
@@ -91,7 +101,7 @@ const OptionsList = styled.ul`
   list-style: none;
   background-color: #fff;
   border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   z-index: 1;
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
     // visibility: ${(props) => (props.isOpen ? "visible" : "hidden")};
@@ -102,9 +112,10 @@ const Option = styled.li`
   padding: 8px 16px;
   cursor: pointer;
   z-index: 10;
+  border-radius: 20px;
 
   &:hover {
-    background-color: rgba(97, 137, 239, 1);
+    background-color: ${ThemeColor.buttonColor};
   }
 `;
 
@@ -238,7 +249,7 @@ export const RecBox = ({componentToRender}) => {
             style={{
                 width: "123px",
                 height: "161px",
-                backgroundColor: "#ccc",
+                backgroundColor: `${ThemeColor.importantColor}`,
                 margin: "10px",
                 marginLeft: '20px',
                 display: "flex",
@@ -258,7 +269,7 @@ export const PillBox = ({text}) => {
             style={{
                 width: "120px",
                 height: "32px",
-                backgroundColor: "#ccc",
+                backgroundColor: `${ThemeColor.importantColor}`,
                 margin: "10px",
 
                 display: "flex",
@@ -278,7 +289,7 @@ export const SquareBox = ({componentToRender}) => {
             style={{
                 width: "123px",
                 height: "123px",
-                backgroundColor: "#ccc",
+                backgroundColor: `${ThemeColor.importantColor}`,
                 margin: "15px",
                 marginLeft: '20px',
 
@@ -297,7 +308,7 @@ export const SquareBox = ({componentToRender}) => {
 export const Carousel = ({componentToRender}) => {
     const settings = {
         arrows:false,
-        // dots: true,
+        dots: true,
         draggable: true,
         infinite: false,
         speed: 500,
@@ -310,7 +321,7 @@ export const Carousel = ({componentToRender}) => {
             <Slider {...settings} >
                 {boxes.map((number) => (
                     // <Box number={number} key={number} />
-                    <div>{componentToRender}</div>
+                    <div key={number}>{componentToRender}</div>
                 ))}
             </Slider>
         </div>
@@ -342,7 +353,7 @@ const Nav = styled.nav`
   width: 100%;
   max-width: 390px;
   height: 60px;
-  background-color: #fff;
+  background-color: ${ThemeColor.navColor};
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -432,6 +443,7 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
 
 
 export default {
+    ThemeColor,
     Container,
     Input,
     Button,

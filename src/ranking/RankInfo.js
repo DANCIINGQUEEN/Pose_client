@@ -1,12 +1,12 @@
 import React from 'react';
-import {UserBox} from "../UI/UIPackage";
+import {UserBox, ThemeColor} from "../UI/UIPackage";
 
 
 const RankInfo = ({name, email, rank}) => {
     const style = {
         display: 'flex',
         justifyContent: 'space-between',
-        backgroundColor: '#d9d9d9',
+        backgroundColor: `${ThemeColor.importantColor}`,
         width: "320px",
         padding: '5px 20px 5px 20px',
         borderRadius: '20px',

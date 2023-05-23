@@ -1,14 +1,13 @@
 import React from 'react';
-import {Carousel, Container, NavigationBar, RecBox} from "../UI/UIPackage";
+import {ThemeColor,Carousel, Container, NavigationBar, RecBox} from "../UI/UIPackage";
 import styled from "styled-components";
 
 
 const Box = styled.div`
-  background-color: rgba(217, 217, 217, 0.5);
+  background-color: ${ThemeColor.containerColor};
   border-radius: 16px 0 0 16px;
-  margin: 0 0 30px 30px;
-  //margin-bottom: 30px;
-  width:360px;
+  margin: 0 0 30px 10px;
+  width:380px;
 `
 
 function Exercise(props) {
