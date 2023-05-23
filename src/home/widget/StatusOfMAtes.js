@@ -19,7 +19,19 @@ const Carousel = ({componentToRender, data}) => {
         <div style={{maxWidth: "380px", margin: '0 0 0 10px'}}>
             <Slider {...settings} >
                 {Object.values(data).map((data, index) => (
-                    <div key={index}>{React.cloneElement(componentToRender, {data: data})}</div>
+                    <div key={index}>
+                        <span
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginLeft: '26px',
+                                marginBottom: '-17px',
+                            }}
+                        >{data.name}
+                        </span>
+                        {React.cloneElement(componentToRender, {data: data})}
+                    </div>
                 ))}
             </Slider>
         </div>
@@ -66,19 +78,19 @@ const SquareBox = ({componentToRender, data}) => {
         },
     };
     const backgroundData = {
-        labels:[1,2,3],
+        labels: [1, 2, 3],
         datasets: [
             {
-                data:[100,0],
-                backgroundColor:['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 0, 0)']
+                data: [100, 0],
+                backgroundColor: ['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 0, 0)']
             },
             {
-                data:[100,0],
-                backgroundColor:['rgba(0, 0, 153, 0.2)', 'rgba(0, 0, 0, 0)']
+                data: [100, 0],
+                backgroundColor: ['rgba(0, 0, 153, 0.2)', 'rgba(0, 0, 0, 0)']
             },
             {
-                data:[100,0],
-                backgroundColor:['rgba(0, 64, 0, 0.2)', 'rgba(0, 0, 0, 0)']
+                data: [100, 0],
+                backgroundColor: ['rgba(0, 64, 0, 0.2)', 'rgba(0, 0, 0, 0)']
             },
 
         ]
@@ -116,16 +128,17 @@ const SquareBox = ({componentToRender, data}) => {
                 borderRadius: '16px',
             }}
         >
-            <span style={{
-                position: 'absolute',
-                zIndex: '2',
-                fontSize: '18px',
-            }}>{data.name}
-            </span>
-            <span style={{position:'absolute', }}>
+            {/*<span style={{*/}
+            {/*    position: 'absolute',*/}
+            {/*    zIndex: '2',*/}
+            {/*    fontSize: '18px',*/}
+            {/*    top:'20px'*/}
+            {/*}}>{data.name}*/}
+            {/*</span>*/}
+            <span style={{position: 'absolute',}}>
                 {<Doughnut data={backgroundData} options={backgroundOptions}/>}
             </span>
-            <span style={{position:'absolute',  }}>
+            <span style={{position: 'absolute',}}>
                 {<Doughnut data={chartData} options={options}/>}
             </span>
         </div>
