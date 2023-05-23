@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 const Carousel = ({componentToRender, data}) => {
     const settings = {
-        arrows:false,
+        arrows: false,
         dots: true,
         draggable: true,
         infinite: false,
@@ -15,39 +15,34 @@ const Carousel = ({componentToRender, data}) => {
         slidesToShow: 2.8,
         onSwipe: null,
     };
-    const realData=data
-    const userData=Object.keys(data)
-
     return (
         <div style={{maxWidth: "380px", margin: '0 0 0 10px'}}>
             <Slider {...settings} >
-                {userData.map((data, index) => (
-                    // <Box number={number} key={number} />
-                    <div key={index}>{React.cloneElement(componentToRender, {data:realData[data]})}</div>
-                    // <div key={index}>{<Doughnut data={data}/>}</div>
+                {Object.values(data).map((data, index) => (
+                    <div key={index}>{React.cloneElement(componentToRender, {data: data})}</div>
                 ))}
             </Slider>
         </div>
     );
 }
 const SquareBox = ({componentToRender, data}) => {
-    const squatPercent=data.squat/100
-    const pullUpPercent=data.pullUp/100
-    const pushUpPercent=data.pushUp/100
+    const squatPercent = data.squat / 100
+    const pullUpPercent = data.pullUp / 100
+    const pushUpPercent = data.pushUp / 100
     // console.log(squatPercent, pullUpPercent, pushUpPercent)
     const chartData = {
         labels: ['턱걸이', '스쿼트', '푸쉬업'],
         datasets: [
             {
-                data: [pullUpPercent, 1-pullUpPercent],
+                data: [pullUpPercent, 1 - pullUpPercent],
                 backgroundColor: ['hotpink', 'rgba(0, 0, 0, 0)'],
             },
             {
-                data: [squatPercent, 1-squatPercent],
+                data: [squatPercent, 1 - squatPercent],
                 backgroundColor: ['blue', 'rgba(0, 0, 0, 0)'],
             },
             {
-                data: [pushUpPercent, 1-pushUpPercent],
+                data: [pushUpPercent, 1 - pushUpPercent],
                 backgroundColor: ['green', 'rgba(0, 0, 0, 0)'],
             }
         ],
@@ -64,9 +59,45 @@ const SquareBox = ({componentToRender, data}) => {
         },
         elements: {
             arc: {
-                borderWidth: 10,
+                borderWidth: 190,
                 borderColor: 'transparent',
                 borderRadius: 50,
+            },
+        },
+    };
+    const backgroundData = {
+        labels:[1,2,3],
+        datasets: [
+            {
+                data:[100,0],
+                backgroundColor:['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 0, 0)']
+            },
+            {
+                data:[100,0],
+                backgroundColor:['rgba(0, 0, 153, 0.2)', 'rgba(0, 0, 0, 0)']
+            },
+            {
+                data:[100,0],
+                backgroundColor:['rgba(0, 64, 0, 0.2)', 'rgba(0, 0, 0, 0)']
+            },
+
+        ]
+    }
+    const backgroundOptions = {
+        cutoutPercentage: 30,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                enabled: false,
+            },
+        },
+        elements: {
+            arc: {
+                borderWidth: 190,
+                borderColor: 'transparent',
+                // borderRadius: 50,
             },
         },
     };
@@ -85,66 +116,77 @@ const SquareBox = ({componentToRender, data}) => {
                 borderRadius: '16px',
             }}
         >
-            {<Doughnut data={chartData} options={options}/>}
+            <span style={{
+                position: 'absolute',
+                zIndex: '2',
+                fontSize: '18px',
+            }}>{data.name}
+            </span>
+            <span style={{position:'absolute', }}>
+                {<Doughnut data={backgroundData} options={backgroundOptions}/>}
+            </span>
+            <span style={{position:'absolute',  }}>
+                {<Doughnut data={chartData} options={options}/>}
+            </span>
         </div>
     );
 };
 
 function StatusOfMAtes(props) {
-    const usersData={
-        john:{
-            name:'john',
-            squat:30,
-            pushUp:50,
-            pullUp:70,
+    const usersData = {
+        john: {
+            name: 'john',
+            squat: 30,
+            pushUp: 50,
+            pullUp: 70,
         },
-        park:{
-            name:'park',
-            squat:70,
-            pushUp:50,
-            pullUp:50,
+        park: {
+            name: 'park',
+            squat: 70,
+            pushUp: 50,
+            pullUp: 50,
         },
-        kim:{
-            name:'kim',
-            squat:50,
-            pushUp:80,
-            pullUp:20,
+        kim: {
+            name: 'kim',
+            squat: 50,
+            pushUp: 80,
+            pullUp: 20,
         },
-        hong:{
-            name:'hong',
-            squat:100,
-            pushUp:120,
-            pullUp:10,
+        hong: {
+            name: 'hong',
+            squat: 100,
+            pushUp: 120,
+            pullUp: 10,
         },
-        lee:{
-            name:'lee',
-            squat:50,
-            pushUp:40,
-            pullUp:15,
+        lee: {
+            name: 'lee',
+            squat: 50,
+            pushUp: 40,
+            pullUp: 15,
         },
-        choi:{
-            name:'choi',
-            squat:30,
-            pushUp:50,
-            pullUp:70,
+        choi: {
+            name: 'choi',
+            squat: 30,
+            pushUp: 50,
+            pullUp: 70,
         },
-        jang:{
-            name:'jang',
-            squat:70,
-            pushUp:90,
-            pullUp:40,
+        jang: {
+            name: 'jang',
+            squat: 70,
+            pushUp: 90,
+            pullUp: 40,
         },
-        yoon:{
-            name:'yoon',
-            squat:50,
-            pushUp:80,
-            pullUp:20,
+        yoon: {
+            name: 'yoon',
+            squat: 50,
+            pushUp: 80,
+            pullUp: 20,
         }
     }
 
     return (
         <div>
-            <div style={{marginLeft:'30px'}}>메이트들의 운동 현황</div>
+            <div style={{marginLeft: '30px'}}>메이트들의 운동 현황</div>
             <Carousel data={usersData} componentToRender={<SquareBox/>}/>
         </div>
     );
