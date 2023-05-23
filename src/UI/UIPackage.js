@@ -14,15 +14,15 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faComments, faDumbbell, faHouse, faTrophy, faUser, faUserGroup} from '@fortawesome/free-solid-svg-icons';
 
 
-export const ThemeColor={
-    rootColor:'rgba(217, 217, 217, 0.11)',
-    containerColor:'rgba(217, 217, 217, 0.2)',
-    divColor:'rgba(217, 217, 217, 0.4)',
-    importantColor:'rgba(217, 217, 217, 0.6)',
-    primaryColor:'rgba(160, 160, 160)',
-    navColor:'rgba(217, 217, 217, 0.3)',
-    disabledButtonColor:'rgb(163,183,233)',
-    buttonColor:'rgba(97, 137, 239, 1)'
+export const ThemeColor = {
+    rootColor: 'rgba(217, 217, 217, 0.11)',
+    containerColor: 'rgba(217, 217, 217, 0.2)',
+    divColor: 'rgba(217, 217, 217, 0.4)',
+    importantColor: 'rgba(217, 217, 217, 0.6)',
+    primaryColor: 'rgba(160, 160, 160)',
+    navColor: 'rgba(217, 217, 217, 0.3)',
+    disabledButtonColor: 'rgb(163,183,233)',
+    buttonColor: 'rgba(97, 137, 239, 1)'
 }
 export const Container = styled.div`
   display: flex;
@@ -305,9 +305,9 @@ export const SquareBox = ({componentToRender}) => {
     );
 };
 
-export const Carousel = ({componentToRender}) => {
+export const Carousel = ({componentToRender, data}) => {
     const settings = {
-        arrows:false,
+        arrows: false,
         dots: true,
         draggable: true,
         infinite: false,
@@ -329,7 +329,7 @@ export const Carousel = ({componentToRender}) => {
 }
 export const CarouselList = ({componentToRender, list}) => {
     const settings = {
-        arrows:false,
+        arrows: false,
         draggable: true,
         infinite: false,
         speed: 500,
@@ -353,6 +353,7 @@ const Nav = styled.nav`
   width: 100%;
   max-width: 390px;
   height: 60px;
+  //overflow: auto; /* 추가된 부분 */
   background-color: ${ThemeColor.navColor};
   display: flex;
   justify-content: space-around;
@@ -361,13 +362,18 @@ const Nav = styled.nav`
   // box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.2);
   border-radius: 16px 16px 0 0;
 `;
-
+const BodyPadding = styled.div`
+  padding-bottom: 60px;
+  display: flex;
+  justify-content: center;
+`;
 const NavButton = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #9b9b9b;
+  //color: #9b9b9b;
+  color: ${ThemeColor.navColor};
   font-size: 0.8rem;
   background-color: transparent;
   border: none;
@@ -378,66 +384,67 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
     const [activateLink, setActivateLink] = useState(null)
     const style = {
         textDecoration: 'none',
-        color: activateLink==='exercise'||'ranking'||'home'||'community'||'account'?'black':'#9b9b9b',
+        color: activateLink === 'exercise' || 'ranking' || 'home' || 'community' || 'account' ? 'black' : '#9b9b9b',
         // fontWeight: activateLink === 'exercise' ? 'bold' : 'normal',
-        display:'flex',
-        flexDirection:'column',
+        display: 'flex',
+        flexDirection: 'column',
     }
     const iconStyle = {
-        fontSize:'20px',
+        fontSize: '20px',
     }
     const fontStyle = {
-        fontSize:'0.6rem',
+        fontSize: '0.6rem',
     }
 
     const handleLinkClick = (link) => {
         setActivateLink(link)
     }
     return (
-        <Nav>
-            <NavButton onClick={()=>handleLinkClick('exercise')}>
-                <Link to={'/exercise'} style={style}>
-                    <FontAwesomeIcon icon={faDumbbell} style={iconStyle}/>
-                    <span  style={fontStyle}>
+        <BodyPadding>
+            <Nav>
+                <NavButton onClick={() => handleLinkClick('exercise')}>
+                    <Link to={'/exercise'} style={style}>
+                        <FontAwesomeIcon icon={faDumbbell} style={iconStyle}/>
+                        <span style={fontStyle}>
                         운동
                     </span>
-                </Link>
-            </NavButton>
-            <NavButton onClick={onRankingClick}>
-                <Link to={'/ranking'} style={style}>
-                    <FontAwesomeIcon icon={faTrophy} style={iconStyle}/>
-                    <span style={fontStyle}>
+                    </Link>
+                </NavButton>
+                <NavButton onClick={onRankingClick}>
+                    <Link to={'/ranking'} style={style}>
+                        <FontAwesomeIcon icon={faTrophy} style={iconStyle}/>
+                        <span style={fontStyle}>
                         랭킹
                     </span>
-                </Link>
-            </NavButton>
-            <NavButton onClick={onMateClick}>
-                <Link to={'/'} style={style}>
-                    <FontAwesomeIcon icon={faHouse} style={iconStyle}/>
-                    <span style={fontStyle}>
+                    </Link>
+                </NavButton>
+                <NavButton onClick={onMateClick}>
+                    <Link to={'/'} style={style}>
+                        <FontAwesomeIcon icon={faHouse} style={iconStyle}/>
+                        <span style={fontStyle}>
                         홈
                     </span>
-                </Link>
-            </NavButton>
-            <NavButton onClick={onCommunityClick}>
-                <Link to={'/community'} style={style}>
-                    <FontAwesomeIcon icon={faComments} style={iconStyle}/>
-                    <span style={fontStyle}>
+                    </Link>
+                </NavButton>
+                <NavButton onClick={onCommunityClick}>
+                    <Link to={'/community'} style={style}>
+                        <FontAwesomeIcon icon={faComments} style={iconStyle}/>
+                        <span style={fontStyle}>
                         커뮤니티
                     </span>
-                </Link>
-            </NavButton>
+                    </Link>
+                </NavButton>
 
-            <NavButton onClick={onAccountClick}>
-                <Link to={'/account'} style={style}>
-                    <FontAwesomeIcon icon={faUser} style={iconStyle}/>
-                    <span style={fontStyle}>
+                <NavButton onClick={onAccountClick}>
+                    <Link to={'/account'} style={style}>
+                        <FontAwesomeIcon icon={faUser} style={iconStyle}/>
+                        <span style={fontStyle}>
                         계정
                     </span>
-                </Link>
-            </NavButton>
-        </Nav>
-
+                    </Link>
+                </NavButton>
+            </Nav>
+        </BodyPadding>
     );
 };
 

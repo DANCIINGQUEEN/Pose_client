@@ -15,7 +15,7 @@ import RankInfoList from "./RankInfo";
 
 function Ranking(props) {
     const ageList = ['전체', '10대', '20대', '30대', '40대', '50대', '60대 이상']
-    const exerciseList=['턱걸이', '팔굽혀펴기', '스쿼드', '딥스']
+    const exerciseList=['턱걸이', '팔굽혀펴기', '스쿼트', '딥스']
     const [age, setAge] = useState(null);
 
     const handleAgeChange = (selectedAge) => {

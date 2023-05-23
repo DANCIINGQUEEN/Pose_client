@@ -71,12 +71,7 @@ function Home(props) {
 
     return (
         <Container>
-            {/*<button onClick={handleMenuClick}>유저 정보</button>*/}
-            {/*<button onClick={setLogout}>*/}
-            {/*    <Link to={'/'}>*/}
-            {/*        로그아웃*/}
-            {/*    </Link>*/}
-            {/*</button>*/}
+
             <div>3월 24일 까지</div>
             <div>8일 12시간 : 33분 : 42초 남음</div>
             <br/>
