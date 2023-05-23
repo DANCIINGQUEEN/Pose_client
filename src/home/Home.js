@@ -72,7 +72,8 @@ function Home(props) {
     return (
         <Container>
 
-            <div>3월 24일 까지</div>
+            <h1>운동 메이트</h1>
+            <h3>3월 24일 까지</h3>
             <div>8일 12시간 : 33분 : 42초 남음</div>
             <br/>
             <br/>

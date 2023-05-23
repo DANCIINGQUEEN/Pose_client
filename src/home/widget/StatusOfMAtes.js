@@ -2,8 +2,6 @@ import React from 'react';
 import {ThemeColor} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
 import Slider from "react-slick";
-import styled from "styled-components";
-
 
 const Carousel = ({componentToRender, data}) => {
     const settings = {

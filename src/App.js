@@ -17,6 +17,7 @@ import InputToss2 from "./prtc/InputToss2";
 import Exercise from "./exercise/Exercise";
 import Ranking from "./ranking/Ranking";
 import Community from "./community/Community";
+import Training from "./exercise/Training";
 const App = () => {
 
     return (
@@ -27,6 +28,7 @@ const App = () => {
                     {/*네비게이션바*/}
                     <Route path="/account" element={<Account/>}/>
                     <Route path="/exercise" element={<Exercise/>}/>
+                    <Route path="/training" element={<Training/>}/>
                     <Route path="/ranking" element={<Ranking/>}/>
                     <Route path="/community" element={<Community/>}/>
                     <Route path="/register" element={<Register/>}/>
