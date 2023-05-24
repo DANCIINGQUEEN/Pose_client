@@ -410,14 +410,14 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
                     </span>
                     </Link>
                 </NavButton>
-                <NavButton onClick={onRankingClick}>
-                    <Link to={'/ranking'} style={style}>
-                        <FontAwesomeIcon icon={faTrophy} style={iconStyle}/>
-                        <span style={fontStyle}>
-                        랭킹
-                    </span>
-                    </Link>
-                </NavButton>
+                {/*<NavButton onClick={onRankingClick}>*/}
+                {/*    <Link to={'/ranking'} style={style}>*/}
+                {/*        <FontAwesomeIcon icon={faTrophy} style={iconStyle}/>*/}
+                {/*        <span style={fontStyle}>*/}
+                {/*        랭킹*/}
+                {/*    </span>*/}
+                {/*    </Link>*/}
+                {/*</NavButton>*/}
                 <NavButton onClick={onMateClick}>
                     <Link to={'/'} style={style}>
                         <FontAwesomeIcon icon={faHouse} style={iconStyle}/>

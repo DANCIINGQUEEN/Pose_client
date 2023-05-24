@@ -28,7 +28,7 @@ const Carousel = ({componentToRender, data}) => {
             <Slider {...settings} >
                 {data && data.map((item, index) => (
                     <div key={index}>
-                        {React.cloneElement(componentToRender, {text:item})}
+                        {React.cloneElement(componentToRender, {text: item})}
                     </div>
                 ))}
             </Slider>
@@ -37,14 +37,14 @@ const Carousel = ({componentToRender, data}) => {
 }
 const RecBox = ({componentToRender, text}) => {
     const navigate = useNavigate();
-    const handleButtonClick=()=>{
+    const handleButtonClick = () => {
         navigate('/training', {
             state: {exercise: text}
         })
     }
     return (
 
-            <button onClick={handleButtonClick}
+        <button onClick={handleButtonClick}
                 style={{
                     width: "123px",
                     height: "161px",
@@ -58,49 +58,32 @@ const RecBox = ({componentToRender, text}) => {
                     borderRadius: '16px',
                     // userSelect:'none'
                 }}
-            >
-                {text}
-            </button>
+        >
+            {text}
+        </button>
 
     );
 };
 
 function Exercise(props) {
-    const exercises={
+    //홈 트레이닝
+    const exercises = {
         "lowerBodyExercises": [
             "스쿼트",
             "런지",
             "데드리프트",
-            "레그 프레스",
-            "불가리안 스플릿 스쿼트",
-            "스텝 업",
-            "힙 스러스트",
-            "글루트 브릿지",
-            "해머스트링 컬"
         ],
         "abdominalExercises": [
             "플랭크",
             "크런치",
-            "러시안 트위스트",
-            "마운틴 클라이머",
-            "바이시클 크런치",
             "레그 레이즈",
-            "플러터 킥",
-            "우드초퍼",
-            "리버스 크런치",
-            "행잉 니 레이즈"
         ],
         "armExercises": [
-            "바이셉 컬",
-            "트라이셉 딥스",
             "푸시업",
             "숄더 프레스",
             "덤벨 로우",
-            "트라이셉 익스텐션",
             "해머 컬",
-            "사이드 레이즈",
-            "스컬 크러셔",
-            "천장 니 풀업"
+
         ]
     }
     return (
