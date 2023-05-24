@@ -16,7 +16,7 @@ function Login(props) {
     const [isLoginErrorMessage, setIsLoginErrorMessage] = useState(false);
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -28,7 +28,7 @@ function Login(props) {
 
     const setLogin = (e) => {
         e.preventDefault();
-        console.log(email, password)
+        // console.log(email, password)
         axios.post(LOGIN, {
             email: email,
             password: password
@@ -57,7 +57,7 @@ function Login(props) {
             .catch(function (error) {
                 setError('Invalid email or password');
                 console.log(error);
-                setLoginErrorMessage('Invalid email or password')
+                setLoginErrorMessage('Invalid email or password!!')
                 setIsLoginErrorMessage(true)
             });
     }
@@ -65,7 +65,9 @@ function Login(props) {
         <Container>
 
             {/*<h1>운동 메이트</h1>*/}
+
             <h1>로그인</h1>
+            <div style={{display:'flex', flexDirection:'column',justifyContent:'center', width:'90%'}}>
             <form onSubmit={setLogin}>
 
                 <Input type="email" placeholder='Email' value={email} onChange={handleEmailChange}/>
@@ -74,6 +76,8 @@ function Login(props) {
                     로그인
                 </Button>
             </form>
+                {isLoginErrorMessage && <p style={{color: 'red',display:'flex',justifyContent:'center', margin:'-5px 0 -19px 0' }}>{loginErrorMessage}</p>}
+            </div>
             <br/>
             <h5>계정이 없으신가요?&nbsp;&nbsp;<a href='/register' style={{textDecoration: 'none'}}>회원가입</a></h5>
         </Container>

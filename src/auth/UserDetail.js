@@ -60,11 +60,13 @@ const UserDetail = (props) => {
     return (
         <Container>
             <h1>자세한 유저 정보</h1>
-            <span>{name}</span>
-            <span>{email}</span>
-            <span>{password}</span>
+            <h3 style={{margin:'-5px 0 -10px 0'}}>안녕하세요 {name}님!</h3>
+            <h5>다양한 정보를 입력해주세요</h5>
+            {/*<span>{email}</span>*/}
+            {/*<span>{password}</span>*/}
             {/*<div style={{marginBottom:'100px'}}>*/}
 
+            <div style={{display:'flex', flexDirection:'column',justifyContent:'center', width:'90%'}}>
             <CustomSelect options={sexList} item='성별' onChange={handleSexChange}/>
             {/*<p>{selectedSex?selectedSex:null}</p>*/}
             <CustomSelect options={areaList} item='지역' onChange={handleAreaChange}/>
@@ -72,7 +74,7 @@ const UserDetail = (props) => {
             <CustomSelect options={weightList} item='몸무게' onChange={handleWeightChange}/>
             <CustomSelect options={ageList} item='나이' onChange={handleAgeChange}/>
             <Button onClick={handleButtonClick}>등록</Button>
-            {/*</div>*/}
+            </div>
 
         </Container>
     );

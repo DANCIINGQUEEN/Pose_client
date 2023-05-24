@@ -113,8 +113,7 @@ const SquareBox = ({componentToRender, data}) => {
         },
     };
     return (
-        <div
-            style={{
+        <div style={{
                 width: "123px",
                 height: "123px",
                 backgroundColor: `${ThemeColor.importantColor}`,
@@ -125,15 +124,7 @@ const SquareBox = ({componentToRender, data}) => {
                 justifyContent: "center",
                 fontSize: "30px",
                 borderRadius: '16px',
-            }}
-        >
-            {/*<span style={{*/}
-            {/*    position: 'absolute',*/}
-            {/*    zIndex: '2',*/}
-            {/*    fontSize: '18px',*/}
-            {/*    top:'20px'*/}
-            {/*}}>{data.name}*/}
-            {/*</span>*/}
+            }}>
             <span style={{position: 'absolute',}}>
                 {<Doughnut data={backgroundData} options={backgroundOptions}/>}
             </span>

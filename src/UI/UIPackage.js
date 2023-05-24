@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {Link} from "react-router-dom";
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 //로딩
 import {ClipLoader} from "react-spinners";
@@ -24,6 +24,33 @@ export const ThemeColor = {
     disabledButtonColor: 'rgb(163,183,233)',
     buttonColor: 'rgba(97, 137, 239, 1)'
 }
+
+const rainbowAnimation = keyframes`
+  0% {
+    border-color: red;
+  }
+  14% {
+    border-color: orange;
+  }
+  28% {
+    border-color: yellow;
+  }
+  42% {
+    border-color: green;
+  }
+  57% {
+    border-color: blue;
+  }
+  71% {
+    border-color: indigo;
+  }
+  85% {
+    border-color: violet;
+  }
+  100% {
+    border-color: red;
+  }
+`;
 export const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -37,7 +64,7 @@ export const Input = styled.input`
   width: 100%;
   height: 50px;
   border: none;
-  border-radius: 25px;
+  border-radius: 16px;
   padding: 0 20px;
   background-color: ${ThemeColor.divColor};
   box-sizing: border-box;
@@ -46,7 +73,9 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
-    border: 1px solid #000;
+    border: 2px solid;
+    animation: ${rainbowAnimation} 5s linear infinite;
+    
   }
 
 `
@@ -54,7 +83,7 @@ export const Button = styled.button`
   width: 100%;
   height: 50px;
   border: none;
-  border-radius: 25px;
+  border-radius: 16px;
   padding: 0 20px;
   font-family: 'Inter', sans-serif;
   background-color: ${ThemeColor.buttonColor};
@@ -75,7 +104,7 @@ const SelectContainer = styled.div`
   width: 100%;
   height: 50px;
   background-color: ${ThemeColor.divColor};
-  border-radius: 25px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -100,7 +129,7 @@ const OptionsList = styled.ul`
   padding: 0;
   list-style: none;
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   z-index: 1;
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
@@ -112,7 +141,7 @@ const Option = styled.li`
   padding: 8px 16px;
   cursor: pointer;
   z-index: 10;
-  border-radius: 20px;
+  border-radius: 16px;
 
   &:hover {
     background-color: ${ThemeColor.buttonColor};

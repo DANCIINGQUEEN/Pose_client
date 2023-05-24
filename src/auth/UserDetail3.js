@@ -31,7 +31,7 @@ const ButtonGroup = ({buttons, onChange}) => {
                         height: '40px',
                         padding: "0 17px 0 17px",
                         textAlign:'center',
-                        borderRadius: "20px",
+                        borderRadius: "16px",
                         margin: "5px",
                         border: "none",
                         cursor: "pointer"
@@ -50,6 +50,7 @@ function UserDetail3(props) {
 
     const location = useLocation()
     const navigate = useNavigate();
+    console.log(location)
 
     const handleOptionsChange = (selectedOptions) => {
         setSelectedOptions(selectedOptions);
@@ -85,11 +86,14 @@ function UserDetail3(props) {
 
     return (
         <Container>
-            <h2 style={{marginBottom: '-10px'}}>해결하고 싶은 고민이 무엇인가요?</h2>
+            <h2>해결하고 싶은 고민이 무엇인가요?</h2>
+            <h3 style={{margin:'0 0 -10px 0'}}>{location.state.name}님!</h3>
             <h5>선택해주신 고민들을 기반으로 운동을 추천합니다</h5>
+            <div style={{display:'flex', flexDirection:'column',justifyContent:'center', width:'90%'}}>
             <ButtonGroup buttons={wishList} onChange={handleOptionsChange}/>
             <br/>
             <Button onClick={handleSubmit}>완료</Button>
+            </div>
         </Container>
     );
 }

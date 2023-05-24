@@ -77,21 +77,6 @@ function Register(props) {
         }
     }
 
-    // const handleSubmit = async (e) => {
-    //     try {
-    //         let formData = {
-    //             name: name,
-    //             email: email,
-    //             password: password
-    //         }
-    //         console.log(formData)
-    //         await axios.post(REGISTER, formData)
-    //         alert("Signup successful");
-    //         console.log(formData)
-    //     } catch (error) {
-    //         alert("An error occurred while signing up");
-    //     }
-    // }
     const handleSendSubmit= ()=>{
         navigate('/userdetail', {state: {name: name, email: email, password: password}})
     }
@@ -99,6 +84,9 @@ function Register(props) {
     return (
         <Container>
             <h1>계정을 등록하세요</h1>
+            <div style={{display:'flex', flexDirection:'column',justifyContent:'center', width:'90%'}}>
+
+
             <form onSubmit={handleSendSubmit}>
 
                 <Input type="name" placeholder='이름' value={name} onChange={handleNameChange}/>
@@ -145,6 +133,7 @@ function Register(props) {
                     회원가입
                 </Button>
             </form>
+            </div>
             <h5>계정이 있으신가요?&nbsp;&nbsp;<a href='/' style={{textDecoration: 'none'}}>로그인</a></h5>
 
 
