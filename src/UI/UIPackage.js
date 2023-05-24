@@ -11,7 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 //아이콘
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faComments, faDumbbell, faHouse, faTrophy, faUser, faUserGroup} from '@fortawesome/free-solid-svg-icons';
+import {faComments, faDumbbell, faHouse, faPeopleGroup, faUser, faUserGroup} from '@fortawesome/free-solid-svg-icons';
 
 
 export const ThemeColor = {
@@ -428,9 +428,9 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
                 </NavButton>
                 <NavButton onClick={onCommunityClick}>
                     <Link to={'/community'} style={style}>
-                        <FontAwesomeIcon icon={faComments} style={iconStyle}/>
+                        <FontAwesomeIcon icon={faPeopleGroup} style={iconStyle}/>
                         <span style={fontStyle}>
-                        커뮤니티
+                        메이트
                     </span>
                     </Link>
                 </NavButton>

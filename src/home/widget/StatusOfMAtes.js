@@ -54,7 +54,8 @@ const SquareBox = ({componentToRender, data}) => {
             {
                 data: [pushUpPercent, 1 - pushUpPercent],
                 backgroundColor: ['green', 'rgba(0, 0, 0, 0)'],
-            }
+            },
+
         ],
     };
     const options = {
