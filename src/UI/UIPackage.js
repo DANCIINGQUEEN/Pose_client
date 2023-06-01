@@ -96,7 +96,31 @@ export const Button = styled.button`
     border: 1px solid #000;
   }
 `
+export const Scroll = styled.div`
+  overflow: scroll;
+  display: flex;
+  flex-direction: row;
 
+  /* PC 버전 */
+  @media (min-width: 768px) {
+    overflow-y: hidden; /* 세로 스크롤 숨김 */
+  }
+
+  /* 모바일 버전 */
+  @media (max-width: 767px) {
+    overflow: hidden; /* 가로 및 세로 스크롤 숨김 */
+  }
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+  }
+`
 
 const SelectContainer = styled.div`
   position: relative;
@@ -478,6 +502,27 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
 };
 
 
+export const Carousel2= ({componentToRender, data}) => {
+    return (
+        <Scroll>
+            {Object.values(data).map((data, index) => (
+                <div key={index}>
+                        <span
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginLeft: '26px',
+                                marginBottom: '-17px',
+                            }}
+                        >{data.name}
+                        </span>
+                    {React.cloneElement(componentToRender, {data: data})}
+                </div>
+                ))}
+        </Scroll>
+    )
+}
 export default {
     ThemeColor,
     Container,
@@ -494,6 +539,7 @@ export default {
     CarouselList,
     NavigationBar,
     Loading,
-    HorizonLine
+    HorizonLine,
+    Carousel2
 
 }
