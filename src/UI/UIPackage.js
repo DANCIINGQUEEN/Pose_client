@@ -108,7 +108,7 @@ export const Scroll = styled.div`
 
   /* 모바일 버전 */
   @media (max-width: 767px) {
-    overflow: hidden; /* 가로 및 세로 스크롤 숨김 */
+    overflow-y: hidden; /* 가로 및 세로 스크롤 숨김 */
   }
   &::-webkit-scrollbar {
     width: 10px;
