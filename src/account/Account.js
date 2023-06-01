@@ -4,7 +4,7 @@ import styled, {keyframes} from "styled-components";
 import {Link} from "react-router-dom";
 
 
-import {Button, Container, NavigationBar, UserBox, ThemeColor} from "../UI/UIPackage";
+import {Button, Container, NavigationBar, UserBox, ThemeColor, UserBoxSize} from "../UI/UIPackage";
 import {logout} from "../state/userState";
 
 //아이콘
@@ -94,6 +94,9 @@ function Account(props) {
     const height = useSelector((state) => state.height)
     const exercise = useSelector((state) => state.exercise)
     const wishList = useSelector((state) => state.wishList)
+    const followers = useSelector((state) => state.followers)
+    const following = useSelector((state) => state.following)
+    console.log(followers, following)
 
     async function setLogout() {
         // Remove the JWT token from the session storage
@@ -122,7 +125,7 @@ function Account(props) {
                 <div style={{width: '70%', display: 'flex', justifyContent: 'space-between'}}>
 
                     {name &&
-                        <UserBox name={name} email={email}/>
+                        <UserBox name={name} email={email} size={UserBoxSize.large}/>
                     }
                     <Link to={'/usersetting'} style={{textDecoration:'none', color:'black'}}>
 
@@ -159,6 +162,15 @@ function Account(props) {
                     }
 
                 </RainbowDiv>
+                <InfoBox>
+                    <p>팔로워</p>
+                    <p>{followers?followers&&followers.length:'0'}명</p>
+                </InfoBox>
+
+                <InfoBox>
+                    <p>팔로잉</p>
+                    <p>{following?following&&following.length:'0'}명</p>
+                </InfoBox>
 
             </div>
             <Link to={'/'}>

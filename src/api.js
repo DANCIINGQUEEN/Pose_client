@@ -11,6 +11,9 @@ const API={
     SEND_VERIFY_CODE: `${API_BASE_URL}/user/sendVerificationCode`,
     VERIFY_CODE: `${API_BASE_URL}/user/verifyCode`,
     REGISTER: `${API_BASE_URL}/user/register`,
+    //추천 유저
+    GET_RECOMMEND_USER: `${API_BASE_URL}/user/getRecommendUsers`,
+
 }
 
 module.exports = API

@@ -6,7 +6,7 @@ import {Doughnut} from "react-chartjs-2";
 
 import {useHorizontalScroll} from "../hook/useSideScroll";
 import Gallery from "./Gallery";
-import SoM from "../home/widget/SoM";
+import StateOfMate from "../home/widget/StateOfMate";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -135,7 +135,7 @@ function InputToss(props) {
                 <Gallery componentToRender={<SquareBox/>}/>
             </div>
             <div >
-                <SoM/>
+                <StateOfMate/>
             </div>
         </Container>
     );

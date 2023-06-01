@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+
+
 import {GET_USER_FULL_INFO} from '../api'
 
 
 import {getUserFullInfo, logout} from "../state/userState";
-import {Container, UserBox, NavigationBar} from '../UI/UIPackage';
-import StatusOfMAtes from "./widget/StatusOfMAtes";
+
+import {Container, UserBox, NavigationBar, UserBoxSize} from '../UI/UIPackage';
+
 import CurrentExercise from "./widget/CurrentExercise";
 import HomeRanking from "./widget/HomeRanking";
-import {Link, useNavigate} from "react-router-dom";
-import SoM from "./widget/SoM";
+import StateOfMate from "./widget/StateOfMate";
 
 
 function Home(props) {
@@ -44,6 +47,8 @@ function Home(props) {
                     height: response.data.height,
                     exercise: response.data.exercise,
                     wishList: response.data.wishList,
+                    follower: response.data.follower,
+                    following: response.data.following
                 })
             )
             // console.log(response.data)
@@ -81,7 +86,7 @@ function Home(props) {
             {name &&
                 <Link to={'/account'} style={{textDecoration: 'none', color:'black'}}>
                     <div>
-                        <UserBox name={name} email={email}/>
+                        <UserBox name={name} email={email} size={UserBoxSize.large}/>
                     </div>
                 </Link>
             }
@@ -89,7 +94,7 @@ function Home(props) {
             <br/>
             {/*<StatusOfMAtes/>*/}
             <div>
-                <SoM/>
+                <StateOfMate/>
             </div>
             <br/>
             <br/>

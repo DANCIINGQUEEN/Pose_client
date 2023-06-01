@@ -24,6 +24,11 @@ export const ThemeColor = {
     disabledButtonColor: 'rgb(163,183,233)',
     buttonColor: 'rgba(97, 137, 239, 1)'
 }
+export const UserBoxSize={
+    large:35,
+    medium:30,
+    small:25
+}
 
 const rainbowAnimation = keyframes`
   0% {
@@ -90,8 +95,11 @@ export const Button = styled.button`
   font-size: 16px;
 
   &:focus {
+    //outline: none;
+    //border: 1px solid #000;
     outline: none;
-    border: 1px solid #000;
+    border: 2px solid;
+    animation: ${rainbowAnimation} 5s linear infinite;
   }
 `
 export const Scroll = styled.div`
@@ -99,14 +107,6 @@ export const Scroll = styled.div`
   display: flex;
   flex-direction: row;
   overflow-y: hidden;
-  ///* PC 버전 */
-  //@media (min-width: 768px) {
-  //  overflow-y: hidden; /* 세로 스크롤 숨김 */
-  //}
-  ///* 모바일 버전 */
-  //@media (max-width: 767px) {
-  //  overflow-y: hidden; /* 가로 및 세로 스크롤 숨김 */
-  //}
   &::-webkit-scrollbar {
     height: 10px;
     border-radius: 5px;
@@ -283,13 +283,14 @@ export const Loading = () => {
 
 }
 
-export const UserBox = ({name, email}) => {
+export const UserBox = ({name, email, size}) => {
+    const fontSize = (3 * size) / 5
     return (
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <UserProfile text={name} size={50}/>
+            <UserProfile text={name} size={size}/>
             <div style={{textAlign: 'left', marginLeft: '10px'}}>
-                <div>{name}</div>
-                <div>{email}</div>
+                <div style={{fontSize:fontSize}}>{name}</div>
+                <div style={{fontSize:fontSize}}>{email}</div>
             </div>
         </div>
     )

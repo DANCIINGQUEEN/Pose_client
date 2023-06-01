@@ -1,5 +1,5 @@
 import React from 'react';
-import {UserBox, ThemeColor} from "../../UI/UIPackage";
+import {UserBox, ThemeColor, UserBoxSize} from "../../UI/UIPackage";
 import {Link} from "react-router-dom";
 
 
@@ -17,6 +17,7 @@ function HomeRanking(props) {
         borderRadius: '20px',
         margin: '15px 0 15px 0'
     }
+    const size= UserBoxSize.medium;
     return (
         <div>
             <div style={{display:'flex', justifyContent:'space-between'}}>
@@ -28,15 +29,15 @@ function HomeRanking(props) {
             <div>
 
                 <div style={style}>
-                    <UserBox name='qwer' email='asdf'/>
+                    <UserBox name='qwer' email='asdf' size={size}/>
                     <h3>1st</h3>
                 </div>
                 <div style={style}>
-                    <UserBox name='qwer' email='asdf'/>
+                    <UserBox name='qwer' email='asdf' size={size}/>
                     <h3>2nd</h3>
                 </div>
                 <div style={style}>
-                    <UserBox name='qwer' email='asdf'/>
+                    <UserBox name='qwer' email='asdf' size={size}/>
                     <h3>3rd</h3>
                 </div>
             </div>

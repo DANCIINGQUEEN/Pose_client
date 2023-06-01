@@ -9,8 +9,9 @@ const initialState = {
     weight: null,
     height: null,
     exercise: null,
-    wishList: null
-
+    wishList: null,
+    followers:[],
+    following:[]
 }
 
 export const authSlice = createSlice({
@@ -50,6 +51,8 @@ export const authSlice = createSlice({
             state.wishList = actions.payload.wishList
             state.weight = actions.payload.weight
             state.height = actions.payload.height
+            state.followers = actions.payload.followers
+            state.following = actions.payload.following
         }
     }
 })

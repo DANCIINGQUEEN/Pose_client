@@ -1,45 +1,12 @@
 import React from 'react';
-import {ThemeColor} from "../../UI/UIPackage";
+import {ThemeColor, Carousel2, Scroll} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
-import Slider from "react-slick";
-
-//아이콘
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {useSelector} from "react-redux";
 
-const Carousel = ({componentToRender, data}) => {
-    const settings = {
-        arrows: false,
-        dots: true,
-        draggable: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 2.8,
-        onSwipe: null,
-    };
-    return (
-        <div style={{maxWidth: "380px", margin: '0 0 0 10px'}}>
-            <Slider {...settings} >
-                {Object.values(data).map((data, index) => (
-                    <div key={index}>
-                        <span
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginLeft: '26px',
-                                marginBottom: '-17px',
-                            }}
-                        >{data.name}
-                        </span>
-                        {React.cloneElement(componentToRender, {data: data})}
-                    </div>
-                ))}
-            </Slider>
-        </div>
-    );
-}
+
 const SquareBox = ({componentToRender, data}) => {
     const squatPercent = data.squat / 100
     const pullUpPercent = data.pullUp / 100
@@ -118,46 +85,82 @@ const SquareBox = ({componentToRender, data}) => {
         },
     };
     return (
-        <div
-            style={{
-                width: "123px",
-                height: "123px",
-                backgroundColor: `${ThemeColor.importantColor}`,
-                margin: "15px",
-                marginLeft: '20px',
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "30px",
-                borderRadius: '16px',
-            }}>
-            <span style={{position: 'absolute',}}>
+        <div style={{
+            width: "123px",
+            height: "123px",
+            backgroundColor: `${ThemeColor.importantColor}`,
+            margin: "15px",
+            marginLeft: '10px',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "30px",
+            borderRadius: '16px',
+        }}>
+            <span style={{position: 'relative', zIndex: '1', left: '150px'}}>
                 {<Doughnut data={backgroundData} options={backgroundOptions}/>}
             </span>
-            <span style={{position: 'absolute',}}>
+            <span style={{position: 'relative', zIndex: '2', left: '-150px'}}>
                 {<Doughnut data={chartData} options={options}/>}
             </span>
-            {/*<MateMeter data={data}/>*/}
         </div>
     );
 };
 
-const MateMeter = ({data}) => {
-    const squatPercent = data.squat / 100
-    const pullUpPercent = data.pullUp / 100
-    const pushUpPercent = data.pushUp / 100
+const Carousel = ({componentToRender, data}) => {
     return (
-        <div>
-            <meter style={{width: '110px'}} max='1' value={squatPercent}>{squatPercent}%</meter>
-            <meter style={{width: '110px'}} max='1' value={pullUpPercent}>{pullUpPercent}%</meter>
-            <meter style={{width: '110px'}} max='1' value={pushUpPercent}>{pushUpPercent}%</meter>
+        <Scroll>
+            {Object.values(data).map((data, index) => (
+                <div key={index}>
+                        <span style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: '-17px',
+                            fontWeight: 'bold'
+                        }}
+                        >{data.name}
+                        </span>
+                    {React.cloneElement(componentToRender, {data: data})}
+                </div>
+            ))}
+        </Scroll>
+    )
+}
+const NoMate = () => {
+    return (
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '16px',
+                padding: '20px',
+                backgroundColor: ThemeColor.divColor
+            }}>
+            <h3 style={{marginTop: '0px'}}>메이트가 없습니다!</h3>
+            <Link to={'/mate'} style={{
+                textDecoration: 'none',
+                color: 'black',
+                // border: '1px solid black',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                width: '160px'
+            }}>
+                <div>메이트 찾으러 가기</div>
+                <FontAwesomeIcon icon={faArrowRight}/>
+            </Link>
 
         </div>
-
     )
 }
 
-function StatusOfMAtes(props) {
+function StateOfMate(props) {
+    const following = useSelector((state) => state.following)
+    // console.log(following)
+
     const usersData = {
         john: {
             name: 'john',
@@ -208,22 +211,27 @@ function StatusOfMAtes(props) {
             pullUp: 20,
         }
     }
-
     return (
-        <div>
-            <div style={{marginLeft: '30px', display:'flex', justifyContent:'space-between'}}>
-                <div>
-                    메이트들의 운동 현황
-                </div>
-                <Link to={'/mate'} style={{textDecoration:'none'}}>
+        <div style={{maxWidth: '390px'}}>
+            {following ?
+                (
+                    <NoMate/>
+                )
+                :
+                (
+                    <div style={{marginLeft: '30px', display: 'flex', justifyContent: 'space-between'}}>
+                        <div>
+                            메이트들의 운동 현황
+                        </div>
+                        <Link to={'/mate'} style={{textDecoration: 'none', color: 'black'}}>
+                            <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px'}}/>
+                        </Link>
+                        <Carousel data={usersData} componentToRender={<SquareBox/>}/>
+                    </div>
+                )}
 
-                <FontAwesomeIcon icon={faArrowRight} style={{marginRight:'20px'}}/>
-                </Link>
-
-            </div>
-            <Carousel data={usersData} componentToRender={<SquareBox/>}/>
         </div>
     );
 }
 
-export default StatusOfMAtes;
+export default StateOfMate;
