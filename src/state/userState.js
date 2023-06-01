@@ -5,6 +5,7 @@ const initialState = {
     name: null,
     token: null,
     age: null,
+    sex: null,
     weight: null,
     height: null,
     exercise: null,
@@ -22,29 +23,42 @@ export const authSlice = createSlice({
         },
         logout: (state, actions) => {
             state.token = null
-            state.name=null
-            state.email=null
+            state.name = null
+            state.email = null
+            state.age = null
+            state.sex = null
+            state.exercise = null
+            state.wishList = null
+            state.weight = null
+            state.height = null
             console.log('logout success!')
 
         },
         getUser: (state, actions) => {
-            state.email=actions.payload.email
-            state.name=actions.payload.name
+            state.email = actions.payload.email
+            state.name = actions.payload.name
         },
-        fetchName:(state, action)=>{
-            state.name=action.payload.name
+        fetchName: (state, action) => {
+            state.name = action.payload.name
         },
         getUserFullInfo: (state, actions) => {
-            state.email=actions.payload.email
-            state.name=actions.payload.name
-            state.age=actions.payload.age
-            state.exercise=actions.payload.exercise
-            state.wishList=actions.payload.wishList
-            state.weight=actions.payload.weight
-            state.height=actions.payload.height
+            state.email = actions.payload.email
+            state.name = actions.payload.name
+            state.age = actions.payload.age
+            state.sex = actions.payload.sex
+            state.exercise = actions.payload.exercise
+            state.wishList = actions.payload.wishList
+            state.weight = actions.payload.weight
+            state.height = actions.payload.height
         }
     }
 })
 
-export const {login, logout, getUser, getUserFullInfo} = authSlice.actions
+export const {
+    login,
+    logout,
+    getUser,
+    fetchName,
+    getUserFullInfo
+} = authSlice.actions
 export default authSlice.reducer

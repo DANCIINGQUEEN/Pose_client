@@ -3,6 +3,10 @@ import {SquareBox} from "../UI/UIPackage";
 import {useNavigate} from "react-router-dom";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import {Doughnut} from "react-chartjs-2";
+
+import { useHorizontalScroll } from "../hook/useSideScroll";
+import Gallery from "./Gallery";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
@@ -104,6 +108,7 @@ function InputToss(props) {
         },
     };
 
+    const scrollRef = useHorizontalScroll();
 
 
     return (
@@ -116,6 +121,9 @@ function InputToss(props) {
                 <input type="text" value={password} onChange={handlePasswordChange}/>
                 <button type='submit'>send</button>
             </form>
+            <p>진행률 : <progress max='100' value="25">25%</progress></p>
+            <p>진행률 : <meter max='100' value="25">25%</meter></p>
+
             <div>
                 <SquareBox componentToRender={<Doughnut data={data2} options={options2}/>}/>
             </div>
@@ -123,6 +131,9 @@ function InputToss(props) {
                 {/*<Doughnut data={data} options={options}/>*/}
                 <Doughnut data={data2} options={options2}/>
             </div>
+<div>
+    <Gallery componentToRender={<SquareBox/>}/>
+</div>
         </div>
     );
 }

@@ -7,6 +7,10 @@ import {Link} from "react-router-dom";
 import {Button, Container, NavigationBar, UserBox, ThemeColor} from "../UI/UIPackage";
 import {logout} from "../state/userState";
 
+//아이콘
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faGear} from '@fortawesome/free-solid-svg-icons';
+
 const InfoBox = styled.div`
   //border: 1px solid black;
   width: 95%;
@@ -115,10 +119,16 @@ function Account(props) {
                 padding: '20px'
 
             }}>
+                <div style={{width: '70%', display: 'flex', justifyContent: 'space-between'}}>
 
-                {name &&
-                    <UserBox name={name} email={email}/>
-                }
+                    {name &&
+                        <UserBox name={name} email={email}/>
+                    }
+                    <Link to={'/usersetting'} style={{textDecoration:'none', color:'black'}}>
+
+                        <FontAwesomeIcon icon={faGear} spin style={{fontSize: '25px', marginTop: '10px'}}/>
+                    </Link>
+                </div>
 
                 <InfoBox>
                     <p>나이</p>

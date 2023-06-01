@@ -2,6 +2,11 @@ import React from 'react';
 import {UserBox, ThemeColor} from "../../UI/UIPackage";
 import {Link} from "react-router-dom";
 
+
+//아이콘
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
+
 function HomeRanking(props) {
     const style = {
         display: 'flex',
@@ -14,9 +19,12 @@ function HomeRanking(props) {
     }
     return (
         <div>
-            <Link to={'/ranking'} style={{textDecoration: 'none', color: 'black'}}>
+            <div style={{display:'flex', justifyContent:'space-between'}}>
                 <div>랭킹</div>
-            </Link>
+                <Link to={'/ranking'} style={{textDecoration: 'none', color: 'black', marginRight:'20px'}}>
+                    <FontAwesomeIcon icon={faArrowRight}/>
+                </Link>
+            </div>
             <div>
 
                 <div style={style}>

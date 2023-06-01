@@ -16,8 +16,9 @@ import InputToss2 from "./prtc/InputToss2";
 //네비게이션
 import Exercise from "./exercise/Exercise";
 import Ranking from "./ranking/Ranking";
-import Community from "./community/Community";
 import Training from "./exercise/Training";
+import UserSetting from "./account/UserSetting";
+import Mate from "./mate/Mate";
 const App = () => {
 
     return (
@@ -28,9 +29,15 @@ const App = () => {
                     {/*네비게이션바*/}
                     <Route path="/account" element={<Account/>}/>
                     <Route path="/exercise" element={<Exercise/>}/>
-                    <Route path="/training" element={<Training/>}/>
                     <Route path="/ranking" element={<Ranking/>}/>
-                    <Route path="/community" element={<Community/>}/>
+                    <Route path="/mate" element={<Mate/>}/>
+
+                    //유저 세팅
+                    <Route path="/usersetting" element={<UserSetting/>}/>
+
+                    <Route path="/training" element={<Training/>}/>
+
+                    //회원가입
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/userdetail" element={<UserDetail/>}/>
                     <Route path="/userdetail2" element={<UserDetail2/>}/>

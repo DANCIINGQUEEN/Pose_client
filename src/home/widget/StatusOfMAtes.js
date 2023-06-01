@@ -3,6 +3,11 @@ import {ThemeColor} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
 import Slider from "react-slick";
 
+//아이콘
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import {Link} from "react-router-dom";
+
 const Carousel = ({componentToRender, data}) => {
     const settings = {
         arrows: false,
@@ -113,7 +118,8 @@ const SquareBox = ({componentToRender, data}) => {
         },
     };
     return (
-        <div style={{
+        <div
+            style={{
                 width: "123px",
                 height: "123px",
                 backgroundColor: `${ThemeColor.importantColor}`,
@@ -131,9 +137,25 @@ const SquareBox = ({componentToRender, data}) => {
             <span style={{position: 'absolute',}}>
                 {<Doughnut data={chartData} options={options}/>}
             </span>
+            {/*<MateMeter data={data}/>*/}
         </div>
     );
 };
+
+const MateMeter = ({data}) => {
+    const squatPercent = data.squat / 100
+    const pullUpPercent = data.pullUp / 100
+    const pushUpPercent = data.pushUp / 100
+    return (
+        <div>
+            <meter style={{width: '110px'}} max='1' value={squatPercent}>{squatPercent}%</meter>
+            <meter style={{width: '110px'}} max='1' value={pullUpPercent}>{pullUpPercent}%</meter>
+            <meter style={{width: '110px'}} max='1' value={pushUpPercent}>{pushUpPercent}%</meter>
+
+        </div>
+
+    )
+}
 
 function StatusOfMAtes(props) {
     const usersData = {
@@ -189,7 +211,16 @@ function StatusOfMAtes(props) {
 
     return (
         <div>
-            <div style={{marginLeft: '30px'}}>메이트들의 운동 현황</div>
+            <div style={{marginLeft: '30px', display:'flex', justifyContent:'space-between'}}>
+                <div>
+                    메이트들의 운동 현황
+                </div>
+                <Link to={'/mate'} style={{textDecoration:'none'}}>
+
+                <FontAwesomeIcon icon={faArrowRight} style={{marginRight:'20px'}}/>
+                </Link>
+
+            </div>
             <Carousel data={usersData} componentToRender={<SquareBox/>}/>
         </div>
     );

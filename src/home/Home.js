@@ -23,7 +23,6 @@ function Home(props) {
     const email = useSelector((state) => state.email)
 
 
-
     const getUserInfo = () => {
         const jwt = sessionStorage.getItem('jwt')
         const headers = {
@@ -31,7 +30,7 @@ function Home(props) {
             'Content-Type': 'application/json'
         }
         setIsLoading(true)
-        console.log(isLoading)
+        // console.log(isLoading)
         axios.get(GET_USER_FULL_INFO, {
             headers: headers
         }).then(response => {
@@ -46,9 +45,9 @@ function Home(props) {
                     wishList: response.data.wishList,
                 })
             )
-            console.log(response.data)
+            // console.log(response.data)
             setIsLoading(false)
-            console.log(isLoading)
+            // console.log(isLoading)
         }).catch(error => console.error(error))
     }
 
@@ -79,7 +78,11 @@ function Home(props) {
             <br/>
 
             {name &&
-                <UserBox name={name} email={email}/>
+                <Link to={'/account'} style={{textDecoration: 'none'}}>
+                    <div>
+                        <UserBox name={name} email={email}/>
+                    </div>
+                </Link>
             }
             <br/>
             <br/>

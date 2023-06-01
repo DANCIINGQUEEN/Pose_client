@@ -56,7 +56,7 @@ function Login(props) {
             })
             .catch(function (error) {
                 setError('Invalid email or password');
-                console.log(error);
+                // console.log(error);
                 setLoginErrorMessage('Invalid email or password!!')
                 setIsLoginErrorMessage(true)
             });

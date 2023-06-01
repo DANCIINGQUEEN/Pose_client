@@ -8,13 +8,13 @@ function UserDetail2(props) {
     const location = useLocation()
     console.log(location.state)
     const name = location.state?.name || ''
-    const email = location.state?.email || ''
-    const password = location.state?.password || ''
-    const sex = location.state?.sex || ''
-    const area = location.state?.area || ''
-    const height = location.state?.height || ''
-    const weight = location.state?.weight || ''
-    const age = location.state?.age || ''
+    // const email = location.state?.email || ''
+    // const password = location.state?.password || ''
+    // const sex = location.state?.sex || ''
+    // const area = location.state?.area || ''
+    // const height = location.state?.height || ''
+    // const weight = location.state?.weight || ''
+    // const age = location.state?.age || ''
     const handleHealthButtonClick = () => {
         navigate('/userdetail3', {state:{
             ...location.state,
