@@ -98,13 +98,13 @@ const SquareBox = ({componentToRender, data}) => {
                 borderRadius: '16px',
                 // overflow:'hidden'
             }}>
-            {/*<span */}
-            {/*    style={{position: 'absolute',}}*/}
-            {/*>*/}
-            {/*    {<Doughnut data={backgroundData} options={backgroundOptions} style={{overflow:'hidden'}}/>}*/}
-            {/*</span>*/}
             <span
-                // style={{position: 'absolute',}}
+                style={{position: 'relative',zIndex:'1', left:'150px'}}
+            >
+                {<Doughnut data={backgroundData} options={backgroundOptions}/>}
+            </span>
+            <span
+                style={{position: 'relative',zIndex:'2', left:'-150px'}}
             >
                 {<Doughnut data={chartData} options={options}/>}
             </span>
