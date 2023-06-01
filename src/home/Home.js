@@ -10,6 +10,7 @@ import StatusOfMAtes from "./widget/StatusOfMAtes";
 import CurrentExercise from "./widget/CurrentExercise";
 import HomeRanking from "./widget/HomeRanking";
 import {Link, useNavigate} from "react-router-dom";
+import SoM from "./widget/SoM";
 
 
 function Home(props) {
@@ -78,7 +79,7 @@ function Home(props) {
             <br/>
 
             {name &&
-                <Link to={'/account'} style={{textDecoration: 'none'}}>
+                <Link to={'/account'} style={{textDecoration: 'none', color:'black'}}>
                     <div>
                         <UserBox name={name} email={email}/>
                     </div>
@@ -86,7 +87,10 @@ function Home(props) {
             }
             <br/>
             <br/>
-            <StatusOfMAtes/>
+            {/*<StatusOfMAtes/>*/}
+            <div>
+                <SoM/>
+            </div>
             <br/>
             <br/>
             <CurrentExercise/>

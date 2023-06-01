@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
 
-import {Container, NavigationBar, ThemeColor} from "../UI/UIPackage";
+import {Container, NavigationBar, Scroll, ThemeColor} from "../UI/UIPackage";
 import styled from "styled-components";
 import Slider from "react-slick";
 
@@ -12,28 +12,27 @@ const Box = styled.div`
   margin: 0 0 30px 10px;
   width: 380px;
 `
-const Carousel = ({componentToRender, data}) => {
-    const settings = {
-        arrows: false,
-        dots: true,
-        draggable: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 2.8,
-        onSwipe: null,
-    };
 
+const Carousel = ({componentToRender, data}) => {
     return (
-        <div style={{maxWidth: "380px", margin: '0 0 0 10px'}}>
-            <Slider {...settings} >
-                {data && data.map((item, index) => (
-                    <div key={index}>
-                        {React.cloneElement(componentToRender, {text: item})}
-                    </div>
-                ))}
-            </Slider>
-        </div>
-    );
+        <Scroll>
+            {Object.values(data).map((data, index) => (
+                <div key={index}>
+                        <span style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: '-10px',
+                            fontWeight: 'bold'
+                        }}>
+                            {data}
+                        </span>
+                    {/*{React.cloneElement(componentToRender, {data: data})}*/}
+                    <RecBox text={data}/>
+                </div>
+            ))}
+        </Scroll>
+    )
 }
 const RecBox = ({componentToRender, text}) => {
     const navigate = useNavigate();
@@ -56,10 +55,10 @@ const RecBox = ({componentToRender, text}) => {
                     justifyContent: "center",
                     fontSize: "20px",
                     borderRadius: '16px',
-                    // userSelect:'none'
+                    border: 'none',
                 }}
         >
-            {text}
+            {/*{text}*/}
         </button>
 
     );

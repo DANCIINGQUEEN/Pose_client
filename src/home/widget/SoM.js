@@ -1,5 +1,5 @@
 import React from 'react';
-import {ThemeColor, Carousel2} from "../../UI/UIPackage";
+import {ThemeColor, Carousel2, Scroll} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -84,33 +84,48 @@ const SquareBox = ({componentToRender, data}) => {
         },
     };
     return (
-        <div
-            style={{
+        <div style={{
                 width: "123px",
                 height: "123px",
                 backgroundColor: `${ThemeColor.importantColor}`,
                 margin: "15px",
-                marginLeft: '20px',
+                marginLeft: '10px',
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "30px",
                 borderRadius: '16px',
-                // overflow:'hidden'
             }}>
-            <span
-                style={{position: 'relative',zIndex:'1', left:'150px'}}
-            >
+            <span style={{position: 'relative',zIndex:'1', left:'150px'}}>
                 {<Doughnut data={backgroundData} options={backgroundOptions}/>}
             </span>
-            <span
-                style={{position: 'relative',zIndex:'2', left:'-150px'}}
-            >
+            <span style={{position: 'relative',zIndex:'2', left:'-150px'}}>
                 {<Doughnut data={chartData} options={options}/>}
             </span>
         </div>
     );
 };
+
+const Carousel= ({componentToRender, data}) => {
+    return (
+        <Scroll>
+            {Object.values(data).map((data, index) => (
+                <div key={index}>
+                        <span style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginBottom: '-17px',
+                                fontWeight:'bold'
+                            }}
+                        >{data.name}
+                        </span>
+                    {React.cloneElement(componentToRender, {data: data})}
+                </div>
+            ))}
+        </Scroll>
+    )
+}
 function SoM(props) {
     const usersData = {
         john: {
@@ -163,18 +178,17 @@ function SoM(props) {
         }
     }
     return (
-        <div>
+        <div style={{maxWidth:'390px'}}>
             <div style={{marginLeft: '30px', display:'flex', justifyContent:'space-between'}}>
                 <div>
                     메이트들의 운동 현황
                 </div>
-                <Link to={'/mate'} style={{textDecoration:'none'}}>
-
+                <Link to={'/mate'} style={{textDecoration:'none', color:'black'}}>
                     <FontAwesomeIcon icon={faArrowRight} style={{marginRight:'20px'}}/>
                 </Link>
 
             </div>
-            <Carousel2 data={usersData} componentToRender={<SquareBox/>}/>
+            <Carousel data={usersData} componentToRender={<SquareBox/>}/>
         </div>
     );
 }

@@ -56,8 +56,6 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  //height: 100vh;
-  //flex-grow: 1;
 `
 
 export const Input = styled.input`
@@ -100,26 +98,26 @@ export const Scroll = styled.div`
   overflow: scroll;
   display: flex;
   flex-direction: row;
-
-  /* PC 버전 */
-  @media (min-width: 768px) {
-    overflow-y: hidden; /* 세로 스크롤 숨김 */
-  }
-
-  /* 모바일 버전 */
-  @media (max-width: 767px) {
-    overflow-y: hidden; /* 가로 및 세로 스크롤 숨김 */
-  }
+  overflow-y: hidden;
+  ///* PC 버전 */
+  //@media (min-width: 768px) {
+  //  overflow-y: hidden; /* 세로 스크롤 숨김 */
+  //}
+  ///* 모바일 버전 */
+  //@media (max-width: 767px) {
+  //  overflow-y: hidden; /* 가로 및 세로 스크롤 숨김 */
+  //}
   &::-webkit-scrollbar {
-    width: 10px;
     height: 10px;
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: ${ThemeColor.containerColor};
   }
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.3);
+    width:10px;
+    background-color: ${ThemeColor.importantColor};
     border-radius: 5px;
   }
+  
 `
 
 const SelectContainer = styled.div`
@@ -463,14 +461,6 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
                     </span>
                     </Link>
                 </NavButton>
-                {/*<NavButton onClick={onRankingClick}>*/}
-                {/*    <Link to={'/ranking'} style={style}>*/}
-                {/*        <FontAwesomeIcon icon={faTrophy} style={iconStyle}/>*/}
-                {/*        <span style={fontStyle}>*/}
-                {/*        랭킹*/}
-                {/*    </span>*/}
-                {/*    </Link>*/}
-                {/*</NavButton>*/}
                 <NavButton onClick={onMateClick}>
                     <Link to={'/'} style={style}>
                         <FontAwesomeIcon icon={faHouse} style={iconStyle}/>
@@ -502,27 +492,6 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
 };
 
 
-export const Carousel2= ({componentToRender, data}) => {
-    return (
-        <Scroll>
-            {Object.values(data).map((data, index) => (
-                <div key={index}>
-                        <span
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                marginLeft: '26px',
-                                marginBottom: '-17px',
-                            }}
-                        >{data.name}
-                        </span>
-                    {React.cloneElement(componentToRender, {data: data})}
-                </div>
-                ))}
-        </Scroll>
-    )
-}
 export default {
     ThemeColor,
     Container,
@@ -535,11 +504,9 @@ export default {
     RecBox,
     PillBox,
     SquareBox,
-    Carousel,
     CarouselList,
     NavigationBar,
     Loading,
     HorizonLine,
-    Carousel2
 
 }

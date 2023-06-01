@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
-import {SquareBox} from "../UI/UIPackage";
+import {Container, SquareBox} from "../UI/UIPackage";
 import {useNavigate} from "react-router-dom";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {Doughnut} from "react-chartjs-2";
 
-import { useHorizontalScroll } from "../hook/useSideScroll";
+import {useHorizontalScroll} from "../hook/useSideScroll";
 import Gallery from "./Gallery";
 import SoM from "../home/widget/SoM";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
 
 
 function InputToss(props) {
@@ -35,16 +34,16 @@ function InputToss(props) {
     }
     const handleSubmit = (event) => {
         // event.preventDefault();
-        navigate('/input2', {state: {'content':content, 'name':name, 'email':email, 'password':password}})
+        navigate('/input2', {state: {'content': content, 'name': name, 'email': email, 'password': password}})
     }
 
-    const data={
-        labels:['Red', 'Blue', 'Yellow'],
-        datasets:[
+    const data = {
+        labels: ['Red', 'Blue', 'Yellow'],
+        datasets: [
             {
-                data:[300, 50, 100],
-                backgroundColor:['#FF6384', '#36A2EB', '#FFCE56'],
-                hoverBackgroundColor:['#FF6384', '#36A2EB', '#FFCE56']
+                data: [300, 50, 100],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
             },
             {
                 data: [100, 200, 50],
@@ -113,8 +112,8 @@ function InputToss(props) {
 
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} style={{display:'flex', flexDirection:'column'}}>
+        <Container>
+            <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column'}}>
 
                 <input type="text" value={content} onChange={handleContentChange}/>
                 <input type="text" value={name} onChange={handleNameChange}/>
@@ -132,13 +131,13 @@ function InputToss(props) {
                 {/*<Doughnut data={data} options={options}/>*/}
                 <Doughnut data={data2} options={options2}/>
             </div>
-<div>
-    <Gallery componentToRender={<SquareBox/>}/>
-</div>
             <div>
+                <Gallery componentToRender={<SquareBox/>}/>
+            </div>
+            <div >
                 <SoM/>
             </div>
-        </div>
+        </Container>
     );
 }
 
