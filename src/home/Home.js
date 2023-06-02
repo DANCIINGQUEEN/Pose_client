@@ -47,7 +47,7 @@ function Home(props) {
                     height: response.data.height,
                     exercise: response.data.exercise,
                     wishList: response.data.wishList,
-                    follower: response.data.follower,
+                    followers: response.data.followers,
                     following: response.data.following
                 })
             )

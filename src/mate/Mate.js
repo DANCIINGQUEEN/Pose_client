@@ -16,7 +16,7 @@ function Community(props) {
                 )
                     :
                     (
-                        <p>sex</p>
+                        <p>hello</p>
                     )
             }
             <NavigationBar/>

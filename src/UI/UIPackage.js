@@ -27,7 +27,9 @@ export const ThemeColor = {
 export const UserBoxSize={
     large:35,
     medium:30,
-    small:25
+    small:25,
+    xSmall:15,
+    xxSmall:10
 }
 
 const rainbowAnimation = keyframes`

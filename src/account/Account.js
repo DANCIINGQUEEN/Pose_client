@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import styled, {keyframes} from "styled-components";
 import {Link} from "react-router-dom";
 
 
-import {Button, Container, NavigationBar, UserBox, ThemeColor, UserBoxSize} from "../UI/UIPackage";
-import {logout} from "../state/userState";
+import {Button, Container, NavigationBar, UserBox, ThemeColor, UserBoxSize, Loading} from "../UI/UIPackage";
+import {getUserFullInfo, logout} from "../state/userState";
 
 //아이콘
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGear} from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
+import {GET_USER_FULL_INFO} from "../api";
 
 const InfoBox = styled.div`
   //border: 1px solid black;
@@ -86,6 +88,9 @@ const RainbowDiv = styled.div`
 `;
 
 function Account(props) {
+
+    const [isLoading, setIsLoading] = useState(false)
+
     const dispatch = useDispatch();
     const name = useSelector((state) => state.name)
     const email = useSelector((state) => state.email)
@@ -96,7 +101,7 @@ function Account(props) {
     const wishList = useSelector((state) => state.wishList)
     const followers = useSelector((state) => state.followers)
     const following = useSelector((state) => state.following)
-    console.log(followers, following)
+    // console.log(followers, following)
 
     async function setLogout() {
         // Remove the JWT token from the session storage
@@ -105,10 +110,45 @@ function Account(props) {
             logout()
         )
     }
+    const getUserInfo = () => {
+        const jwt = sessionStorage.getItem('jwt')
+        const headers = {
+            'Authorization': `Bearer ${jwt}`,
+            'Content-Type': 'application/json'
+        }
+        setIsLoading(true)
+        // console.log(isLoading)
+        axios.get(GET_USER_FULL_INFO, {
+            headers: headers
+        }).then(response => {
+            dispatch(
+                getUserFullInfo({
+                    name: response.data.name,
+                    email: response.data.email,
+                    age: response.data.age,
+                    weight: response.data.weight,
+                    height: response.data.height,
+                    exercise: response.data.exercise,
+                    wishList: response.data.wishList,
+                    followers: response.data.followers,
+                    following: response.data.following
+                })
+            )
+            // console.log(response.data)
+            setIsLoading(false)
+            // console.log(isLoading)
+        }).catch(error => console.error(error))
+    }
+
+
+    useEffect(() => {
+        getUserInfo()
+    }, [name])
 
     return (
         <Container>
             <h1>유저 정보</h1>
+            {isLoading && <Loading/>}
             <div style={{
                 // border: '1px solid black',
                 borderRadius: '20px',

@@ -10,8 +10,8 @@ const initialState = {
     height: null,
     exercise: null,
     wishList: null,
-    followers:[],
-    following:[]
+    followers:null,
+    following:null
 }
 
 export const authSlice = createSlice({

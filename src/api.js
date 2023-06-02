@@ -13,6 +13,8 @@ const API={
     REGISTER: `${API_BASE_URL}/user/register`,
     //추천 유저
     GET_RECOMMEND_USER: `${API_BASE_URL}/user/getRecommendUsers`,
+    //유저 팔로우
+    FOLLOW_USER: `${API_BASE_URL}/user/followUser`,
 
 }
 
