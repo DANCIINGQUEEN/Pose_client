@@ -4,7 +4,6 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 import {REGISTER} from '../api'
 import axios from "axios";
-import Like from "../prtc/Like";
 
 const ButtonGroup = ({buttons, onChange}) => {
     const [selectedButtons, setSelectedButtons] = useState([]);
@@ -17,7 +16,7 @@ const ButtonGroup = ({buttons, onChange}) => {
             updatedButtons = [...selectedButtons, button]
         }
         setSelectedButtons(updatedButtons)
-        // console.log(updatedButtons)
+        console.log(updatedButtons)
         onChange(updatedButtons)
     }
     return (
@@ -51,11 +50,11 @@ function UserDetail3(props) {
 
     const location = useLocation()
     const navigate = useNavigate();
-    // console.log(location)
+    console.log(location)
 
     const handleOptionsChange = (selectedOptions) => {
         setSelectedOptions(selectedOptions);
-        // console.log(selectedOptions)
+        console.log(selectedOptions)
     }
     // const handleButtonClick = () => {
     //     navigate('/input2', {state:{
@@ -73,12 +72,12 @@ function UserDetail3(props) {
                 ...location.state,
                 wishList: selectedOptions
             }
-            // console.log(formData)
+            console.log(formData)
             await axios.post(REGISTER, formData
             )
             // e.preventDefault()
             alert("Signup successful");
-            // console.log(formData)
+            console.log(formData)
             navigate('/')
         } catch (error) {
             alert("An error occurred while signing up");
@@ -93,7 +92,7 @@ function UserDetail3(props) {
             <div style={{display:'flex', flexDirection:'column',justifyContent:'center', width:'90%'}}>
             <ButtonGroup buttons={wishList} onChange={handleOptionsChange}/>
             <br/>
-            <Like onClick={handleSubmit} text={'완료'}></Like>
+            <Button onClick={handleSubmit}>완료</Button>
             </div>
         </Container>
     );
