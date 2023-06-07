@@ -1,21 +1,22 @@
 import React from 'react';
 import {useLocation} from "react-router-dom";
+import Like from "./Like";
 
 function InputToss2(props) {
-    const location=useLocation()
+    const location = useLocation()
     //연습
-    const content=location.state?.content||''
+    const content = location.state?.content || ''
 
-    const name=location.state?.name||''
-    const email=location.state?.email||''
-    const password=location.state?.password||''
-    const age=location.state?.age||''
-    const area=location.state?.area||''
-    const height=location.state?.height||''
-    const weight=location.state?.weight||''
-    const sex=location.state?.sex||''
-    const exercise=location.state?.exercise||''
-    const wishList=location.state?.wishList||''
+    const name = location.state?.name || ''
+    const email = location.state?.email || ''
+    const password = location.state?.password || ''
+    const age = location.state?.age || ''
+    const area = location.state?.area || ''
+    const height = location.state?.height || ''
+    const weight = location.state?.weight || ''
+    const sex = location.state?.sex || ''
+    const exercise = location.state?.exercise || ''
+    const wishList = location.state?.wishList || ''
 
 
     console.log(location.state)
@@ -23,18 +24,19 @@ function InputToss2(props) {
 
     return (
         <>
-        <div>전달받은 값</div>
-        <p>{content}</p>
-        <p>{name}</p>
-        <p>{email}</p>
-        <p>{password}</p>
-        <p>{age}</p>
-        <p>{area}</p>
-        <p>{height}</p>
-        <p>{weight}</p>
+            <div>전달받은 값</div>
+            <p>{content}</p>
+            <p>{name}</p>
+            <p>{email}</p>
+            <p>{password}</p>
+            <p>{age}</p>
+            <p>{area}</p>
+            <p>{height}</p>
+            <p>{weight}</p>
             <p>{sex}</p>
             <p>{exercise}</p>
             <p>{wishList}</p>
+            <Like text={'like'}/>
         </>
     );
 }
