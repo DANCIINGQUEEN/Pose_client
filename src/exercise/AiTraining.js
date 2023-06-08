@@ -1,11 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Container} from "../UI/UIPackage";
 import ProgressBar from "./ProgressBar";
+import * as ml5 from "ml5";
 
 
 function AiTraining({text}) {
     const videoRef = useRef(null);
-
     useEffect(() => {
         // 미디어 스트림 요청
         navigator.mediaDevices.getUserMedia({video: true})
@@ -49,7 +49,8 @@ function AiTraining({text}) {
             </div>
             {/*<div style={{display:'flex', justifyContent:'center'}}>*/}
             <br/>
-                <ProgressBar progress={progress} duration={duration} />
+                {/*<ProgressBar progress={progress} duration={duration} />*/}
+            <progress style={{width:'90%'}}/>
             {/*</div>*/}
         </Container>
     );

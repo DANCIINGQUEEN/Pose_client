@@ -1,6 +1,7 @@
 import React from 'react';
 import {useLocation} from "react-router-dom";
 import Like from "./Like";
+import PoseNetprtc from "./PoseNetprtc";
 
 function InputToss2(props) {
     const location = useLocation()
@@ -19,8 +20,7 @@ function InputToss2(props) {
     const wishList = location.state?.wishList || ''
 
 
-    console.log(location.state)
-
+    // console.log(location.state)
 
     return (
         <>
@@ -37,6 +37,7 @@ function InputToss2(props) {
             <p>{exercise}</p>
             <p>{wishList}</p>
             <Like text={'like'}/>
+            <PoseNetprtc/>
         </>
     );
 }

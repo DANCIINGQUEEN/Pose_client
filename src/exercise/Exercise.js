@@ -3,7 +3,6 @@ import {Link, useNavigate} from "react-router-dom";
 
 import {Container, NavigationBar, Scroll, ThemeColor} from "../UI/UIPackage";
 import styled from "styled-components";
-import Slider from "react-slick";
 
 
 const Box = styled.div`

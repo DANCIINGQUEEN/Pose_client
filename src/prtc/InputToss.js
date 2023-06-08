@@ -4,9 +4,9 @@ import {useNavigate} from "react-router-dom";
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {Doughnut} from "react-chartjs-2";
 
-import {useHorizontalScroll} from "../hook/useSideScroll";
 import Gallery from "./Gallery";
 import StateOfMate from "../home/widget/StateOfMate";
+// import PoseNetprtc from "./PoseNetprtc";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -108,7 +108,6 @@ function InputToss(props) {
         },
     };
 
-    const scrollRef = useHorizontalScroll();
 
 
     return (
@@ -137,6 +136,7 @@ function InputToss(props) {
             <div >
                 <StateOfMate/>
             </div>
+            {/*<PoseNetprtc/>*/}
         </Container>
     );
 }
