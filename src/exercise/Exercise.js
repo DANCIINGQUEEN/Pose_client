@@ -4,6 +4,8 @@ import {Link, useNavigate} from "react-router-dom";
 import {Container, NavigationBar, Scroll, ThemeColor} from "../UI/UIPackage";
 import styled from "styled-components";
 
+// import squat from '../public/exercise/lowerBody/squat.jpg'
+
 
 const Box = styled.div`
   background-color: ${ThemeColor.containerColor};
@@ -12,7 +14,8 @@ const Box = styled.div`
   width: 380px;
 `
 
-const Carousel = ({componentToRender, data}) => {
+
+const Carousel = ({data}) => {
     return (
         <Scroll>
             {Object.values(data).map((data, index) => (
@@ -24,66 +27,84 @@ const Carousel = ({componentToRender, data}) => {
                             marginBottom: '-10px',
                             fontWeight: 'bold'
                         }}>
-                            {data}
+                            {data.name}
                         </span>
-                    {/*{React.cloneElement(componentToRender, {data: data})}*/}
-                    <RecBox text={data}/>
+                    <RecBox image={data.image} text={data.name}/>
                 </div>
             ))}
         </Scroll>
     )
 }
-const RecBox = ({componentToRender, text}) => {
+const RecBox = ({image, text}) => {
     const navigate = useNavigate();
     const handleButtonClick = () => {
         navigate('/training', {
             state: {exercise: text}
         })
     }
+    const image_url = process.env.PUBLIC_URL + '/' + image
+    // console.log(image_url)
     return (
-
-        <button onClick={handleButtonClick}
-                style={{
-                    width: "123px",
-                    height: "161px",
-                    backgroundColor: `${ThemeColor.importantColor}`,
-                    margin: "10px",
-                    marginLeft: '20px',
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "20px",
-                    borderRadius: '16px',
-                    border: 'none',
-                }}
-        >
-            {/*{text}*/}
-        </button>
+        <>
+            <button onClick={handleButtonClick}
+                    style={{
+                        width: "123px",
+                        height: "161px",
+                        backgroundColor: `${ThemeColor.importantColor}`,
+                        margin: "10px",
+                        marginLeft: '20px',
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "20px",
+                        borderRadius: '16px',
+                        border: 'none',
+                    }}
+            >
+                <img src={image_url} alt="" style={{borderRadius: '16px'}}/>
+            </button>
+        </>
 
     );
 };
 
 function Exercise(props) {
+    //lower
+    const squat = 'exercise2/lower/squat.jpg'
+    const lunge = 'exercise2/lower/lunge.jpg'
+    const deadLift = 'exercise2/lower/deadLift.jpg'
+
+    //abdominal
+    const plank = 'exercise2/abdominal/plank.jpg'
+    const crunch = 'exercise2/abdominal/crunch.jpg'
+    const legRaise = 'exercise2/abdominal/legRaise.jpg'
+
+    //arm
+    const pushUp = 'exercise2/arm/pushUp.jpg'
+    const shoulderPress = 'exercise2/arm/shoulderPress.jpg'
+    const dumbbellRow = 'exercise2/arm/dumbbellRow.jpg'
+    const hammerCurl = 'exercise2/arm/hammerCurl.jpg'
     //홈 트레이닝
     const exercises = {
         "lowerBodyExercises": [
-            "스쿼트",
-            "런지",
-            "데드리프트",
+            {name: "스쿼트", image: squat},
+            {name: "런지", image: lunge},
+            {name: "데드리프트", image: deadLift},
         ],
         "abdominalExercises": [
-            "플랭크",
-            "크런치",
-            "레그 레이즈",
+            {name: "플랭크", image: plank},
+            {name: "크런치", image: crunch},
+            {name: "레그 레이즈", image: legRaise},
         ],
         "armExercises": [
-            "푸시업",
-            "숄더 프레스",
-            "덤벨 로우",
-            "해머 컬",
+            {name: "푸시업", image: pushUp},
+            {name: "숄더 프레스", image: shoulderPress},
+            {name: "덤벨 로우", image: dumbbellRow},
+            {name: "해머 컬", image: hammerCurl},
 
         ]
     }
+
     return (
         <Container>
             <h1>운동</h1>

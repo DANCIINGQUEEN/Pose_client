@@ -1,5 +1,5 @@
 import React from 'react';
-import {Scroll, ThemeColor} from "../../UI/UIPackage";
+import {Scroll, ThemeColor} from "../../../UI/UIPackage";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
@@ -43,10 +43,9 @@ function CurrentExercise(props) {
                 <div>
                     유저의 현재 운동
                 </div>
-                <Link to={'/account'} style={{textDecoration:'none', color:'black'}}>
+                <Link to={'/exercise/wishexercise'} style={{textDecoration:'none', color:'black'}}>
                     <FontAwesomeIcon icon={faArrowRight} style={{marginRight:'20px'}}/>
                 </Link>
-
             </div>
             <Carousel data={data} componentToRender={<RecBox/>}/>
         </div>

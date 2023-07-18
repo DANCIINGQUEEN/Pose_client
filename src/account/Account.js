@@ -172,7 +172,18 @@ function Account(props) {
                         <FontAwesomeIcon icon={faGear} spin style={{fontSize: '25px', marginTop: '10px'}}/>
                     </Link>
                 </div>
+                <InfoBox>
+                    유저의 현재 운동 상태
+                </InfoBox>
+                <InfoBox>
+                    <p>팔로워</p>
+                    <p>{followers?followers&&followers.length:'0'}명</p>
+                </InfoBox>
 
+                <InfoBox>
+                    <p>팔로잉</p>
+                    <p>{following?following&&following.length:'0'}명</p>
+                </InfoBox>
                 <InfoBox>
                     <p>나이</p>
                     <p>{age}살</p>
@@ -202,15 +213,7 @@ function Account(props) {
                     }
 
                 </RainbowDiv>
-                <InfoBox>
-                    <p>팔로워</p>
-                    <p>{followers?followers&&followers.length:'0'}명</p>
-                </InfoBox>
 
-                <InfoBox>
-                    <p>팔로잉</p>
-                    <p>{following?following&&following.length:'0'}명</p>
-                </InfoBox>
 
             </div>
             <Link to={'/'}>

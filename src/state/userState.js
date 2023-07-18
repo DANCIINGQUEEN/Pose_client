@@ -10,8 +10,8 @@ const initialState = {
     height: null,
     exercise: null,
     wishList: null,
-    followers:null,
-    following:null
+    followers: null,
+    following: null
 }
 
 export const authSlice = createSlice({
@@ -32,6 +32,8 @@ export const authSlice = createSlice({
             state.wishList = null
             state.weight = null
             state.height = null
+            state.followers = null
+            state.following = null
             console.log('logout success!')
 
         },
@@ -53,6 +55,9 @@ export const authSlice = createSlice({
             state.height = actions.payload.height
             state.followers = actions.payload.followers
             state.following = actions.payload.following
+        },
+        putFollow: (state, actions) => {
+            state.following = actions.payload.following
         }
     }
 })
@@ -62,6 +67,7 @@ export const {
     logout,
     getUser,
     fetchName,
-    getUserFullInfo
+    getUserFullInfo,
+    putFollow
 } = authSlice.actions
 export default authSlice.reducer

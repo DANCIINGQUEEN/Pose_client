@@ -11,7 +11,7 @@ import {getUserFullInfo, logout} from "../state/userState";
 
 import {Container, UserBox, NavigationBar, UserBoxSize} from '../UI/UIPackage';
 
-import CurrentExercise from "./widget/CurrentExercise";
+import CurrentExercise from "./widget/currentExercise/CurrentExercise";
 import HomeRanking from "./widget/HomeRanking";
 import StateOfMate from "./widget/StateOfMate";
 

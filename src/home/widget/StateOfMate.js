@@ -1,5 +1,5 @@
 import React from 'react';
-import {ThemeColor, Carousel2, Scroll} from "../../UI/UIPackage";
+import {ThemeColor, Scroll} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

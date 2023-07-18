@@ -32,7 +32,7 @@ export const UserBoxSize={
     xxSmall:10
 }
 
-const rainbowAnimation = keyframes`
+export const rainbowAnimation = keyframes`
   0% {
     border-color: red;
   }
@@ -64,7 +64,16 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
 `
-
+export const Box = styled.div`
+  background-color: ${ThemeColor.containerColor};
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  margin-bottom:37px;
+  width:370px;
+`
 export const Input = styled.input`
   width: 100%;
   height: 50px;
@@ -511,5 +520,6 @@ export default {
     NavigationBar,
     Loading,
     HorizonLine,
+    rainbowAnimation
 
 }

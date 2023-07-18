@@ -8,6 +8,7 @@ import Gallery from "./Gallery";
 import StateOfMate from "../home/widget/StateOfMate";
 // import PoseNetprtc from "./PoseNetprtc";
 
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
@@ -108,6 +109,7 @@ function InputToss(props) {
         },
     };
 
+    const squat=process.env.PUBLIC_URL + '/exercise2/lower/squat.jpg'
 
 
     return (
@@ -137,6 +139,7 @@ function InputToss(props) {
                 <StateOfMate/>
             </div>
             {/*<PoseNetprtc/>*/}
+            <img src={squat} alt=""/>
         </Container>
     );
 }

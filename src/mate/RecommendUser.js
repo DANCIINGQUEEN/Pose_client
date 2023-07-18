@@ -23,6 +23,14 @@ const Detail = styled.p`
   margin-right: 5px;
   padding: 5px;
 `
+
+const FollowButton=()=>{
+    return (
+        <Button>
+            팔로우
+        </Button>
+    )
+}
 const RecommendUser = () => {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);

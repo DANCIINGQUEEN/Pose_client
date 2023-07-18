@@ -19,6 +19,11 @@ import Ranking from "./ranking/Ranking";
 import Training from "./exercise/Training";
 import UserSetting from "./account/UserSetting";
 import Mate from "./mate/Mate";
+
+//현재 운동
+import WishExercise from "./home/widget/currentExercise/WishExercise";
+import GoalSetting from "./home/widget/currentExercise/GoalSetting";
+import Current from "./home/widget/currentExercise/Current";
 const App = () => {
 
     return (
@@ -35,7 +40,14 @@ const App = () => {
                     //유저 세팅
                     <Route path="/usersetting" element={<UserSetting/>}/>
 
+                    //운동
                     <Route path="/training" element={<Training/>}/>
+
+
+                    //현재 유저 운동 상태
+                    <Route path="/exercise/wishexercise" element={<WishExercise/>}/>
+                    <Route path='/exercise/goal' element={<GoalSetting/>}/>
+                    <Route path='/exercise/current' element={<Current/>}/>
 
                     //회원가입
                     <Route path="/register" element={<Register/>}/>
