@@ -1,8 +1,11 @@
 import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
 
-import {Container, NavigationBar, Scroll, ThemeColor} from "../UI/UIPackage";
+import {Container, NavigationBar, Scroll, ThemeColor, exerciseImage} from "../UI/UIPackage";
 import styled from "styled-components";
+import {useSelector} from "react-redux";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
 // import squat from '../public/exercise/lowerBody/squat.jpg'
 
@@ -38,7 +41,7 @@ const Carousel = ({data}) => {
 const RecBox = ({image, text}) => {
     const navigate = useNavigate();
     const handleButtonClick = () => {
-        navigate('/training', {
+        navigate('/exercise/training', {
             state: {exercise: text}
         })
     }
@@ -69,38 +72,25 @@ const RecBox = ({image, text}) => {
 };
 
 function Exercise(props) {
-    //lower
-    const squat = 'exercise2/lower/squat.jpg'
-    const lunge = 'exercise2/lower/lunge.jpg'
-    const deadLift = 'exercise2/lower/deadLift.jpg'
+    const goals = useSelector((state) => state.goals)
 
-    //abdominal
-    const plank = 'exercise2/abdominal/plank.jpg'
-    const crunch = 'exercise2/abdominal/crunch.jpg'
-    const legRaise = 'exercise2/abdominal/legRaise.jpg'
-
-    //arm
-    const pushUp = 'exercise2/arm/pushUp.jpg'
-    const shoulderPress = 'exercise2/arm/shoulderPress.jpg'
-    const dumbbellRow = 'exercise2/arm/dumbbellRow.jpg'
-    const hammerCurl = 'exercise2/arm/hammerCurl.jpg'
     //홈 트레이닝
     const exercises = {
         "lowerBodyExercises": [
-            {name: "스쿼트", image: squat},
-            {name: "런지", image: lunge},
-            {name: "데드리프트", image: deadLift},
+            {name: "스쿼트", image: exerciseImage.squat},
+            {name: "런지", image: exerciseImage.lunge},
+            {name: "데드리프트", image: exerciseImage.deadLift},
         ],
         "abdominalExercises": [
-            {name: "플랭크", image: plank},
-            {name: "크런치", image: crunch},
-            {name: "레그 레이즈", image: legRaise},
+            {name: "플랭크", image: exerciseImage.plank},
+            {name: "크런치", image: exerciseImage.crunch},
+            {name: "레그 레이즈", image: exerciseImage.legRaise},
         ],
         "armExercises": [
-            {name: "푸시업", image: pushUp},
-            {name: "숄더 프레스", image: shoulderPress},
-            {name: "덤벨 로우", image: dumbbellRow},
-            {name: "해머 컬", image: hammerCurl},
+            {name: "푸시업", image: exerciseImage.pushUp},
+            {name: "숄더 프레스", image: exerciseImage.shoulderPress},
+            {name: "덤벨 로우", image: exerciseImage.dumbbellRow},
+            {name: "해머 컬", image: exerciseImage.hammerCurl},
 
         ]
     }
@@ -120,6 +110,27 @@ function Exercise(props) {
                 <h3 style={{marginLeft: '20px'}}>팔 운동</h3>
                 <Carousel componentToRender={<RecBox/>} data={exercises.armExercises}/>
             </Box>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '20px',
+                }}>
+                <Link to={'/exercise/selected'} style={{
+                    textDecoration: 'none',
+                    color: 'black',
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    alignItems: 'center',
+                    width: '190px'
+                }}>
+                    <div>내가 선택한 운동 보기</div>
+                    <FontAwesomeIcon icon={faArrowRight}/>
+                </Link>
+
+            </div>
 
             <NavigationBar/>
 

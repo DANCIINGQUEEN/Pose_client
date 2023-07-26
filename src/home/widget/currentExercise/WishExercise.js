@@ -94,7 +94,7 @@ function WishExercise(props) {
         hammerCurl: false
     });
     const trueExercises = Object.keys(selectedExercises).filter(exercise => selectedExercises[exercise]);
-    console.log('Selected Exercises:', trueExercises);
+    // console.log('Selected Exercises:', trueExercises);
     const handleButtonClick = () => {
         navigate('/exercise/goal', {
             state:{

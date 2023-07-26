@@ -20,7 +20,7 @@ export const ThemeColor = {
     divColor: 'rgba(217, 217, 217, 0.4)',
     importantColor: 'rgba(217, 217, 217, 0.6)',
     primaryColor: 'rgba(160, 160, 160)',
-    navColor: 'rgba(217, 217, 217, 0.3)',
+    navColor: 'rgba(217, 217, 217, 1)',
     disabledButtonColor: 'rgb(163,183,233)',
     buttonColor: 'rgba(97, 137, 239, 1)'
 }
@@ -118,6 +118,7 @@ export const Scroll = styled.div`
   display: flex;
   flex-direction: row;
   overflow-y: hidden;
+  //overflow-x: hidden;
   &::-webkit-scrollbar {
     height: 10px;
     border-radius: 5px;
@@ -466,7 +467,7 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
         <BodyPadding>
             <Nav>
                 <NavButton onClick={() => handleLinkClick('exercise')}>
-                    <Link to={'/exercise'} style={style}>
+                    <Link to={'/exercise/selected'} style={style}>
                         <FontAwesomeIcon icon={faDumbbell} style={iconStyle}/>
                         <span style={fontStyle}>
                         운동
@@ -502,6 +503,34 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
         </BodyPadding>
     );
 };
+export const exerciseName = {
+    squat: '스쿼트',
+    lunge: '런지',
+    pushUp: '푸쉬업',
+    crunch: '크런치',
+    plank: '플랭크',
+    deadLift: '데드리프트',
+    shoulderPress: '숄더 프레스',
+    dumbbellRow: '덤벨 로우',
+    hammerCurl: '해머 컬',
+    legRaise: '레그 레이즈'
+}
+export const exerciseImage = {
+     squat: 'exercise2/lower/squat.jpg',
+     lunge: 'exercise2/lower/lunge.jpg',
+    deadLift: 'exercise2/lower/deadLift.jpg',
+
+    //abdominal
+     plank: 'exercise2/abdominal/plank.jpg',
+     crunch: 'exercise2/abdominal/crunch.jpg',
+    legRaise: 'exercise2/abdominal/legRaise.jpg',
+
+    //arm
+     pushUp: 'exercise2/arm/pushUp.jpg',
+     shoulderPress: 'exercise2/arm/shoulderPress.jpg',
+     dumbbellRow: 'exercise2/arm/dumbbellRow.jpg',
+     hammerCurl: 'exercise2/arm/hammerCurl.jpg'
+}
 
 
 export default {
@@ -520,6 +549,8 @@ export default {
     NavigationBar,
     Loading,
     HorizonLine,
-    rainbowAnimation
+    rainbowAnimation,
+    exerciseName,
+    exerciseImage
 
 }

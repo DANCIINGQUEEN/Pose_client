@@ -1,30 +1,50 @@
 import React from 'react';
-import {Box, Container, ThemeColor} from "../../../UI/UIPackage";
+import {Box, Container, ThemeColor, exerciseName, NavigationBar} from "../../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
+import {useLocation} from "react-router-dom";
+
+const DoughnutBox = styled.div`
+  width: 205px;
+  height: 205px;
+  background-color: ${ThemeColor.importantColor};
+  margin: 15px 15px 15px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  border-radius: 20px;
+`
 
 
 const InfoBox = styled.div`
-  //display:flex;
-  //flex-direction: column;
-  //justify-content: center;
-  //align-items: center;  
+  display: flex;
+  flex-direction: row;
   background-color: ${ThemeColor.divColor};
-  border-radius: 16px;
   width: 130px;
-  margin-bottom: -9px;
+  height: 60px;
+  border-radius: 16px;
+  margin: 15px 0 0 0;
 `
-const SeveralPTitle = styled.p`
+const Label=styled.h4`
+  margin-left: 20px;
+  margin-bottom: 5px;
+`
+
+const DivStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+const PTitle = styled.p`
   font-weight: bold;
   margin-left: 12px;
-  margin-bottom: -5px;
-  //margin:0 0 -5px 10px;
-  padding-top: 5px;
 `
-const SeveralPContent = styled.p`
-  margin-left: 13px;
-  padding-bottom: 5px;
+const PContent = styled.p`
+  margin-left: 10px;
+  margin-top: -10px;
 `
 
 const ExerciseData = ({data, exercise}) => {
@@ -83,60 +103,58 @@ const ExerciseData = ({data, exercise}) => {
         },
     };
     return (
-        <div style={{
-            width: "205px",
-            height: "205px",
-            backgroundColor: `${ThemeColor.importantColor}`,
-            margin: "15px",
-            marginLeft: '10px',
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "30px",
-            borderRadius: '16px',
-        }}>
+        <DoughnutBox>
             <span style={{position: 'relative', zIndex: '1', left: '150px'}}>
                 {<Doughnut data={backgroundData} options={backgroundOptions}/>}
             </span>
             <span style={{position: 'relative', zIndex: '2', left: '-150px'}}>
                 {<Doughnut data={chartData} options={options}/>}
             </span>
-        </div>
+        </DoughnutBox>
     )
 }
-const EachExercise = () => {
-    return(
+const EachExercise = ({dDay, goal, attain}) => {
+    // console.log(dDay, goal, attain)
+    const year = dDay.substring(2, 4)
+    const month = dDay.substring(5, 7)
+    const day = dDay.substring(8, 10)
+    const label = goal.label
+    const cycle = goal.cycle
+    const goalNum = goal.number
+    const percent = attain / goalNum * 100
+
+    const contentStyle = {marginLeft: '10px', marginTop: '-10px'}
+    return (
         <Box>
-            <h4 style={{marginLeft: "20px", marginBottom: '5px'}}>운동 1</h4>
+            <Label>{exerciseName[label]}</Label>
             <div style={{display: 'flex', flexDirection: 'row'}}>
-                <ExerciseData data={70} exercise='운동 1'/>
+                <ExerciseData data={percent} exercise='운동 1'/>
                 <div>
                     <InfoBox>
-                        <SeveralPTitle>목표 날짜</SeveralPTitle>
-                        <SeveralPContent>2023-7-23</SeveralPContent>
+                        <DivStyle>
+                            <PTitle>목표 날짜</PTitle>
+                            <PContent>{year}년 {month}월 {day}일</PContent>
+                        </DivStyle>
                     </InfoBox>
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        backgroundColor: ThemeColor.divColor,
-                        width: '130px',
-                        height: '60px',
-                        borderRadius: '16px',
-                        margin:'-5px 0 -9px 0',
-                    }}>
-                        <div style={{display: 'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                            <p style={{fontWeight:'bold', marginLeft:'10px'}}>목표치</p>
-                            <p style={{marginLeft:'10px', marginTop:'-10px'}}>70회</p>
-                        </div>
-                        <div style={{display: 'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                            <p style={{fontWeight:'bold', marginLeft:'10px'}}>달성량</p>
-                            <p style={{marginLeft:'10px', marginTop:'-10px'}}>50회</p>
-                        </div>
-
-                    </div>
                     <InfoBox>
-                        <SeveralPTitle>달성률</SeveralPTitle>
-                        <SeveralPContent>70%</SeveralPContent>
+                        <DivStyle>
+                            <PTitle>달성률</PTitle>
+                            <PContent>{Math.round(percent)}%</PContent>
+                        </DivStyle>
+                        <DivStyle>
+                            <PTitle>주기</PTitle>
+                            <PContent>{cycle}</PContent>
+                        </DivStyle>
+                    </InfoBox>
+                    <InfoBox>
+                        <DivStyle>
+                            <PTitle>목표치</PTitle>
+                            <PContent>{goalNum}회</PContent>
+                        </DivStyle>
+                        <DivStyle>
+                            <PTitle>달성량</PTitle>
+                            <PContent>{attain}회</PContent>
+                        </DivStyle>
                     </InfoBox>
                 </div>
             </div>
@@ -146,14 +164,19 @@ const EachExercise = () => {
 
 function Current(props) {
     const name = useSelector((state) => state.name)
-
+    const dDay = useSelector((state) => state.dDay)
+    const goals = useSelector((state) => state.goals)
+    // console.log(dDay, goals)
+    const attain = 2
     return (
         <Container>
             <h1>{name}님의 현재 운동</h1>
-            <EachExercise/>
-            <EachExercise/>
-            <EachExercise/>
-
+            {
+                goals.map((goal, index) => (
+                    <EachExercise key={index} dDay={dDay} goal={goal} attain={attain}/>
+                ))
+            }
+            <NavigationBar/>
         </Container>
     );
 }

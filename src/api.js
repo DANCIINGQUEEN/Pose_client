@@ -15,6 +15,8 @@ const API={
     GET_RECOMMEND_USER: `${API_BASE_URL}/user/getRecommendUsers`,
     //유저 팔로우
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,
+    //유저의 운동 목표 설정
+    GOAL_SETTING: `${API_BASE_URL}/user/goalSetting`,
 
 }
 

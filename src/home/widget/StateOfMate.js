@@ -117,7 +117,7 @@ const Carousel = ({componentToRender, data}) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             marginBottom: '-17px',
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
                         }}
                         >{data.name}
                         </span>
@@ -143,7 +143,6 @@ const NoMate = () => {
             <Link to={'/mate'} style={{
                 textDecoration: 'none',
                 color: 'black',
-                // border: '1px solid black',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',

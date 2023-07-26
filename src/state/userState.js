@@ -11,53 +11,70 @@ const initialState = {
     exercise: null,
     wishList: null,
     followers: null,
-    following: null
+    following: null,
+    dDay: null,
+    goals: null,
 }
 
 export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        login: (state, actions) => {
-            state.token = actions.payload.token
+        login: (state, action) => {
+            state.token = action.payload.token
             console.log('login success!')
         },
-        logout: (state, actions) => {
-            state.token = null
-            state.name = null
-            state.email = null
-            state.age = null
-            state.sex = null
-            state.exercise = null
-            state.wishList = null
-            state.weight = null
-            state.height = null
-            state.followers = null
-            state.following = null
+        logout: (state) => {
+            Object.assign(state, initialState);
             console.log('logout success!')
 
         },
-        getUser: (state, actions) => {
-            state.email = actions.payload.email
-            state.name = actions.payload.name
+        getUser: (state, action) => {
+            const {email, name} = action.payload;
+            state.email = email;
+            state.name = name;
         },
         fetchName: (state, action) => {
             state.name = action.payload.name
         },
-        getUserFullInfo: (state, actions) => {
-            state.email = actions.payload.email
-            state.name = actions.payload.name
-            state.age = actions.payload.age
-            state.sex = actions.payload.sex
-            state.exercise = actions.payload.exercise
-            state.wishList = actions.payload.wishList
-            state.weight = actions.payload.weight
-            state.height = actions.payload.height
-            state.followers = actions.payload.followers
-            state.following = actions.payload.following
+        getUserFullInfo: (state, action) => {
+            const {
+                email,
+                name,
+                age,
+                sex,
+                exercise,
+                wishList,
+                weight,
+                height,
+                followers,
+                following,
+                dDay,
+                goals
+            } = action.payload;
+            Object.assign(state, {
+                email,
+                name,
+                age,
+                sex,
+                exercise,
+                wishList,
+                weight,
+                height,
+                followers,
+                following,
+                dDay,
+                goals
+            });
         },
-        putFollow: (state, actions) => {
-            state.following = actions.payload.following
+        putFollow: (state, action) => {
+            state.following = action.payload.following
+        },
+        putGoals: (state, action) => {
+            const {dDay, goals} = action.payload;
+            state.dDay = dDay;
+            state.goals = goals;
+            console.log('putGoals success!')
         }
     }
 })
@@ -68,6 +85,7 @@ export const {
     getUser,
     fetchName,
     getUserFullInfo,
-    putFollow
+    putFollow,
+    putGoals
 } = authSlice.actions
 export default authSlice.reducer

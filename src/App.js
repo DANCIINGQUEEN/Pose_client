@@ -24,6 +24,7 @@ import Mate from "./mate/Mate";
 import WishExercise from "./home/widget/currentExercise/WishExercise";
 import GoalSetting from "./home/widget/currentExercise/GoalSetting";
 import Current from "./home/widget/currentExercise/Current";
+import SelectedExercise from "./exercise/SelectedExercise";
 const App = () => {
 
     return (
@@ -33,7 +34,7 @@ const App = () => {
                     <Route path="/" element={<AuthHome/>}/>
                     {/*네비게이션바*/}
                     <Route path="/account" element={<Account/>}/>
-                    <Route path="/exercise" element={<Exercise/>}/>
+                    <Route path="/exercise/selected" element={<SelectedExercise/>}/>
                     <Route path="/ranking" element={<Ranking/>}/>
                     <Route path="/mate" element={<Mate/>}/>
 
@@ -41,7 +42,8 @@ const App = () => {
                     <Route path="/usersetting" element={<UserSetting/>}/>
 
                     //운동
-                    <Route path="/training" element={<Training/>}/>
+                    <Route path="/exercise" element={<Exercise/>}/>
+                    <Route path="/exercise/training" element={<Training/>}/>
 
 
                     //현재 유저 운동 상태

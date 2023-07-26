@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {Container, NavigationBar} from "../UI/UIPackage";
+import {Container, NavigationBar, exerciseName} from "../UI/UIPackage";
 import Examples from "./Examples";
 import AiTraining from "./AiTraining";
 import {useLocation} from "react-router-dom";

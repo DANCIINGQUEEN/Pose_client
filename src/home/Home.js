@@ -38,40 +38,45 @@ function Home(props) {
         axios.get(GET_USER_FULL_INFO, {
             headers: headers
         }).then(response => {
+            const { name, email, age, weight, height, exercise, wishList, followers, following, goal } = response.data;
+
+            const dDay = goal ? goal.dDay : null;
+            const goals = goal ? goal.goals : null;
             dispatch(
                 getUserFullInfo({
-                    name: response.data.name,
-                    email: response.data.email,
-                    age: response.data.age,
-                    weight: response.data.weight,
-                    height: response.data.height,
-                    exercise: response.data.exercise,
-                    wishList: response.data.wishList,
-                    followers: response.data.followers,
-                    following: response.data.following
+                    name: name,
+                    email: email,
+                    age: age,
+                    weight: weight,
+                    height: height,
+                    exercise: exercise,
+                    wishList: wishList,
+                    followers: followers,
+                    following: following,
+                    dDay: dDay,
+                    goals: goals,
                 })
             )
             // console.log(response.data)
             setIsLoading(false)
-            // console.log(isLoading)
         }).catch(error => console.error(error))
     }
 
-    const handleMenuClick = () => {
-        navigate('/menu')
-    }
+    // const handleMenuClick = () => {
+    //     navigate('/menu')
+    // }
 
     useEffect(() => {
         getUserInfo()
     }, [name])
 
-    async function setLogout() {
-        // Remove the JWT token from the session storage
-        sessionStorage.removeItem('jwt');
-        dispatch(
-            logout()
-        )
-    }
+    // async function setLogout() {
+    //     // Remove the JWT token from the session storage
+    //     sessionStorage.removeItem('jwt');
+    //     dispatch(
+    //         logout()
+    //     )
+    // }
 
 
     return (
@@ -84,7 +89,7 @@ function Home(props) {
             <br/>
 
             {name &&
-                <Link to={'/account'} style={{textDecoration: 'none', color:'black'}}>
+                <Link to={'/account'} style={{textDecoration: 'none', color: 'black'}}>
                     <div>
                         <UserBox name={name} email={email} size={UserBoxSize.large}/>
                     </div>
@@ -92,13 +97,10 @@ function Home(props) {
             }
             <br/>
             <br/>
-            {/*<StatusOfMAtes/>*/}
-            <div>
-                <StateOfMate/>
-            </div>
+            <StateOfMate/>
             <br/>
             <br/>
-            <CurrentExercise/>
+            <CurrentExercise name={name}/>
             <br/>
             <br/>
             <HomeRanking/>
