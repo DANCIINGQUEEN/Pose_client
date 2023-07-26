@@ -16,6 +16,63 @@ import HomeRanking from "./widget/HomeRanking";
 import StateOfMate from "./widget/StateOfMate";
 
 
+const DecimalDay = () => {
+    const [remainingTime, setRemainingTime] = useState(null);
+
+    const dDay = useSelector((state) => state.dDay)
+    const goalMonth = dDay?.substring(5, 7).replace(/^0+/, '');
+    const goalDay = dDay?.substring(8, 10).replace(/^0+/, '');
+    // console.log(dDay)
+
+    const calculateRemainingTime = () => {
+        const targetDate = new Date(dDay)
+        const now = new Date();
+
+        // console.log(now)
+        const timeDifference = targetDate - now;
+        if (timeDifference <= 0) {
+            setRemainingTime('이벤트가 종료되었습니다.');
+            return;
+        }
+
+        const oneDay = 1000 * 60 * 60 * 24;
+        const oneHour = 1000 * 60 * 60;
+        const oneMinute = 1000 * 60;
+        const oneSecond = 1000;
+
+        const days = Math.floor(timeDifference / oneDay);
+        const hours = Math.floor((timeDifference % oneDay) / oneHour);
+        const minutes = Math.floor((timeDifference % oneHour) / oneMinute);
+        const seconds = Math.floor((timeDifference % oneMinute) / oneSecond);
+
+        setRemainingTime(`${days}일 ${hours}시간 : ${minutes}분 : ${seconds}초 남음`);
+    };
+
+    useEffect(() => {
+        calculateRemainingTime();
+
+        // 1초마다 calculateRemainingTime 함수 호출 (1000ms = 1초)
+        const intervalId = setInterval(calculateRemainingTime, 1000);
+
+        // 컴포넌트가 언마운트될 때 인터벌 제거 (메모리 누수 방지)
+        return () => clearInterval(intervalId);
+    }, [dDay]);
+    return(
+        <>
+            {dDay?(
+                <>
+                    {goalMonth && goalDay && <h3>{`${goalMonth}월 ${goalDay}일 까지`}</h3>}
+                    {dDay && <div>{remainingTime}</div>}
+                </>
+            ):(
+                <>
+
+                </>
+            )}
+
+        </>
+    )
+}
 function Home(props) {
     const [isLoading, setIsLoading] = useState(false)
     const isAuth = Boolean(useSelector((state) => state.token))
@@ -25,6 +82,7 @@ function Home(props) {
 
     const name = useSelector((state) => state.name)
     const email = useSelector((state) => state.email)
+
 
 
     const getUserInfo = () => {
@@ -62,29 +120,19 @@ function Home(props) {
         }).catch(error => console.error(error))
     }
 
-    // const handleMenuClick = () => {
-    //     navigate('/menu')
-    // }
+
 
     useEffect(() => {
         getUserInfo()
     }, [name])
 
-    // async function setLogout() {
-    //     // Remove the JWT token from the session storage
-    //     sessionStorage.removeItem('jwt');
-    //     dispatch(
-    //         logout()
-    //     )
-    // }
 
 
     return (
         <Container>
 
             <h1>운동 메이트</h1>
-            <h3>3월 24일 까지</h3>
-            <div>8일 12시간 : 33분 : 42초 남음</div>
+            <DecimalDay/>
             <br/>
             <br/>
 
