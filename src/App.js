@@ -1,5 +1,6 @@
 import React, {useRef, useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {useSelector} from "react-redux";
 //회원가입
 import Register from "./auth/Register";
 import UserDetail from "./auth/UserDetail";
@@ -25,37 +26,42 @@ import WishExercise from "./home/widget/currentExercise/WishExercise";
 import GoalSetting from "./home/widget/currentExercise/GoalSetting";
 import Current from "./home/widget/currentExercise/Current";
 import SelectedExercise from "./exercise/SelectedExercise";
+
+import {ACCOUNT, SELECTED_EXERCISE, RANKING, MATE, USER_SETTING, EXERCISE, TRAINING, WISH_EXERCISE
+,GOAL, CURRENT, NEW_USER, USER_DETAIL, USER_DETAIL_2, USER_DETAIL_3} from './api'
 const App = () => {
+    // const goals = useSelector((state) => state.goals)
+    // console.log(goals)
 
     return (
         <div className="App">
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<AuthHome/>}/>
-                    {/*네비게이션바*/}
-                    <Route path="/account" element={<Account/>}/>
-                    <Route path="/exercise/selected" element={<SelectedExercise/>}/>
-                    <Route path="/ranking" element={<Ranking/>}/>
-                    <Route path="/mate" element={<Mate/>}/>
+                    //네비게이션바
+                    <Route path={ACCOUNT} element={<Account/>}/>
+                    <Route path={SELECTED_EXERCISE} element={<SelectedExercise/>}/>
+                    <Route path={RANKING} element={<Ranking/>}/>
+                    <Route path={MATE} element={<Mate/>}/>
 
                     //유저 세팅
-                    <Route path="/usersetting" element={<UserSetting/>}/>
+                    <Route path={USER_SETTING} element={<UserSetting/>}/>
 
                     //운동
-                    <Route path="/exercise" element={<Exercise/>}/>
-                    <Route path="/exercise/training" element={<Training/>}/>
+                    <Route path={EXERCISE} element={<Exercise/>}/>
+                    <Route path={TRAINING} element={<Training/>}/>
 
 
                     //현재 유저 운동 상태
-                    <Route path="/exercise/wishexercise" element={<WishExercise/>}/>
-                    <Route path='/exercise/goal' element={<GoalSetting/>}/>
-                    <Route path='/exercise/current' element={<Current/>}/>
+                    <Route path={WISH_EXERCISE} element={<WishExercise/>}/>
+                    <Route path={GOAL} element={<GoalSetting/>}/>
+                    <Route path={CURRENT} element={<Current/>}/>
 
                     //회원가입
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/userdetail" element={<UserDetail/>}/>
-                    <Route path="/userdetail2" element={<UserDetail2/>}/>
-                    <Route path="/userdetail3" element={<UserDetail3/>}/>
+                    <Route path={NEW_USER} element={<Register/>}/>
+                    <Route path={USER_DETAIL} element={<UserDetail/>}/>
+                    <Route path={USER_DETAIL_2} element={<UserDetail2/>}/>
+                    <Route path={USER_DETAIL_3} element={<UserDetail3/>}/>
                     <Route path="/input" element={<InputToss/>}/>
                     <Route path="/input2" element={<InputToss2/>}/>
                 </Routes>

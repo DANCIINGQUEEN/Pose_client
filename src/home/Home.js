@@ -22,7 +22,6 @@ const DecimalDay = () => {
     const dDay = useSelector((state) => state.dDay)
     const goalMonth = dDay?.substring(5, 7).replace(/^0+/, '');
     const goalDay = dDay?.substring(8, 10).replace(/^0+/, '');
-    // console.log(dDay)
 
     const calculateRemainingTime = () => {
         const targetDate = new Date(dDay)
@@ -75,9 +74,7 @@ const DecimalDay = () => {
 }
 function Home(props) {
     const [isLoading, setIsLoading] = useState(false)
-    const isAuth = Boolean(useSelector((state) => state.token))
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
 
     const name = useSelector((state) => state.name)
@@ -92,12 +89,13 @@ function Home(props) {
             'Content-Type': 'application/json'
         }
         setIsLoading(true)
-        // console.log(isLoading)
         axios.get(GET_USER_FULL_INFO, {
             headers: headers
         }).then(response => {
             const { name, email, age, weight, height, exercise, wishList, followers, following, goal } = response.data;
 
+            const followersList=followers.length>0?followers:null
+            const followingList=following.length>0?following:null
             const dDay = goal ? goal.dDay : null;
             const goals = goal ? goal.goals : null;
             dispatch(
@@ -109,13 +107,12 @@ function Home(props) {
                     height: height,
                     exercise: exercise,
                     wishList: wishList,
-                    followers: followers,
-                    following: following,
+                    followers: followersList,
+                    following: followingList,
                     dDay: dDay,
                     goals: goals,
                 })
             )
-            // console.log(response.data)
             setIsLoading(false)
         }).catch(error => console.error(error))
     }

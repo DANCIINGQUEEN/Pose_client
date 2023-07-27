@@ -132,4 +132,5 @@ function Register(props) {
         </Container>
     );
 }
+
 export default Register;

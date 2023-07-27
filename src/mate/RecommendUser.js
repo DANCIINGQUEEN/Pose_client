@@ -102,7 +102,6 @@ const RecommendUser = () => {
                         {isFollowing ? `팔로잉` : '팔로우'}
                     </Button>
 
-                    {/* Render other user fields as needed */}
                 </UserInfoBox>
             ))}
         </div>

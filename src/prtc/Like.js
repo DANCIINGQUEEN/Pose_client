@@ -6,8 +6,8 @@ import {Button} from "../UI/UIPackage";
 function Like({text}) {
     function onClick() {
         confetti({
-            particleCount: 150,
-            spread: 60
+            particleCount: 50,
+            spread: 50
         });
     }
 

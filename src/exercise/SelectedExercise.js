@@ -5,11 +5,12 @@ import {Link, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 
-const RecBox = ({image, text}) => {
+const RecBox = ({image, text, label}) => {
     const navigate = useNavigate();
     const handleButtonClick = () => {
         navigate('/exercise/training', {
-            state: {exercise: text}
+            state: {exercise: text,
+                    label: label}
         })
     }
     const image_url = process.env.PUBLIC_URL + '/' + image
@@ -50,7 +51,7 @@ const ExerciseBox = ({goal}) => {
             }}>
                 {exerciseName[label]}
             </span>
-            <RecBox image={image} text={exerciseName[label]}/>
+            <RecBox image={image} text={exerciseName[label]} label={label}/>
         </div>
     )
 }

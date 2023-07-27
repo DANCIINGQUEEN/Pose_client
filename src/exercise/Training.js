@@ -10,7 +10,6 @@ import {useLocation} from "react-router-dom";
 function Training(props) {
     const location = useLocation()
     const exercise = location.state?.exercise || ''
-    // console.log(exercise)
     const settings = {
         arrows: false,
         dots: true,
@@ -22,14 +21,14 @@ function Training(props) {
     }
     return (
         <>
-        <Slider {...settings}>
-            <Container>
-                <AiTraining text={exercise}/>
-            </Container>
-            <Container>
-                <Examples/>
-            </Container>
-        </Slider>
+            <Slider {...settings}>
+                <Container>
+                    <AiTraining text={exercise}/>
+                </Container>
+                <Container>
+                    <Examples/>
+                </Container>
+            </Slider>
             <NavigationBar/>
         </>
     );

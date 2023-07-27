@@ -114,7 +114,6 @@ const ExerciseData = ({data, exercise}) => {
     )
 }
 const EachExercise = ({dDay, goal, attain}) => {
-    // console.log(dDay, goal, attain)
     const year = dDay.substring(2, 4)
     const month = dDay.substring(5, 7)
     const day = dDay.substring(8, 10)
@@ -123,7 +122,6 @@ const EachExercise = ({dDay, goal, attain}) => {
     const goalNum = goal.number
     const percent = attain / goalNum * 100
 
-    const contentStyle = {marginLeft: '10px', marginTop: '-10px'}
     return (
         <Box>
             <Label>{exerciseName[label]}</Label>

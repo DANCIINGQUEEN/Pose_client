@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 import styled, {keyframes} from 'styled-components';
 
 //로딩
@@ -12,7 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 //아이콘
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faDumbbell, faHouse, faPeopleGroup, faUser} from '@fortawesome/free-solid-svg-icons';
-
+import {SELECTED_EXERCISE, WISH_EXERCISE, ACCOUNT, MATE} from '../api'
 
 export const ThemeColor = {
     rootColor: 'rgba(217, 217, 217, 0.11)',
@@ -106,8 +107,6 @@ export const Button = styled.button`
   font-size: 16px;
 
   &:focus {
-    //outline: none;
-    //border: 1px solid #000;
     outline: none;
     border: 2px solid;
     animation: ${rainbowAnimation} 5s linear infinite;
@@ -167,8 +166,6 @@ const OptionsList = styled.ul`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   z-index: 1;
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
-    // visibility: ${(props) => (props.isOpen ? "visible" : "hidden")};
-  // transition: opacity 0.5s ease-out, visibility 1s ease-out;
 `;
 
 const Option = styled.li`
@@ -446,6 +443,8 @@ const NavButton = styled.button`
 
 export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick, onMateClick, onAccountClick}) => {
     const [activateLink, setActivateLink] = useState(null)
+    const goals = useSelector((state) => state.goals)
+
     const style = {
         textDecoration: 'none',
         color: activateLink === 'exercise' || 'ranking' || 'home' || 'community' || 'account' ? 'black' : '#9b9b9b',
@@ -467,7 +466,7 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
         <BodyPadding>
             <Nav>
                 <NavButton onClick={() => handleLinkClick('exercise')}>
-                    <Link to={'/exercise/selected'} style={style}>
+                    <Link to={goals?SELECTED_EXERCISE:WISH_EXERCISE} style={style}>
                         <FontAwesomeIcon icon={faDumbbell} style={iconStyle}/>
                         <span style={fontStyle}>
                         운동
@@ -483,7 +482,7 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
                     </Link>
                 </NavButton>
                 <NavButton onClick={onCommunityClick}>
-                    <Link to={'/mate'} style={style}>
+                    <Link to={MATE} style={style}>
                         <FontAwesomeIcon icon={faPeopleGroup} style={iconStyle}/>
                         <span style={fontStyle}>
                         메이트
@@ -492,7 +491,7 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
                 </NavButton>
 
                 <NavButton onClick={onAccountClick}>
-                    <Link to={'/account'} style={style}>
+                    <Link to={ACCOUNT} style={style}>
                         <FontAwesomeIcon icon={faUser} style={iconStyle}/>
                         <span style={fontStyle}>
                         계정

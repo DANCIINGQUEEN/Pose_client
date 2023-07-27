@@ -75,6 +75,10 @@ export const authSlice = createSlice({
             state.dDay = dDay;
             state.goals = goals;
             console.log('putGoals success!')
+        },
+        putAttain: (state, action) => {
+            state.attain=action.payload.attain
+
         }
     }
 })
@@ -86,6 +90,7 @@ export const {
     fetchName,
     getUserFullInfo,
     putFollow,
-    putGoals
+    putGoals,
+    putAttain
 } = authSlice.actions
 export default authSlice.reducer

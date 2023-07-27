@@ -11,7 +11,6 @@ const SquareBox = ({componentToRender, data}) => {
     const squatPercent = data.squat / 100
     const pullUpPercent = data.pullUp / 100
     const pushUpPercent = data.pushUp / 100
-    // console.log(squatPercent, pullUpPercent, pushUpPercent)
     const chartData = {
         labels: ['턱걸이', '스쿼트', '푸쉬업'],
         datasets: [
@@ -80,7 +79,6 @@ const SquareBox = ({componentToRender, data}) => {
             arc: {
                 borderWidth: 190,
                 borderColor: 'transparent',
-                // borderRadius: 50,
             },
         },
     };
@@ -116,8 +114,10 @@ const Carousel = ({componentToRender, data}) => {
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            marginBottom: '-17px',
+                            marginBottom: '-15px',
                             fontWeight: 'bold',
+                            fontSize: '13px',
+
                         }}
                         >{data.name}
                         </span>
@@ -155,11 +155,7 @@ const NoMate = () => {
         </div>
     )
 }
-
-function StateOfMate(props) {
-    const following = useSelector((state) => state.following)
-    // console.log(following)
-
+const UserMate = () => {
     const usersData = {
         john: {
             name: 'john',
@@ -211,23 +207,31 @@ function StateOfMate(props) {
         }
     }
     return (
+        <div style={{width: '390px'}}>
+
+            <div style={{marginLeft: '30px', display: 'flex', justifyContent: 'space-between'}}>
+                <p>
+                    메이트들의 운동 현황
+                </p>
+                <Link to={'/mate'} style={{textDecoration: 'none', color: 'black'}}>
+                    <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>
+                </Link>
+            </div>
+            <Carousel data={usersData} componentToRender={<SquareBox/>}/>
+        </div>
+    )
+}
+
+function StateOfMate(props) {
+    const following = useSelector((state) => state.following)
+
+    return (
         <div style={{maxWidth: '390px'}}>
             {following ?
-                (
-                    <NoMate/>
-                )
+                (<UserMate/>)
                 :
-                (
-                    <div style={{marginLeft: '30px', display: 'flex', justifyContent: 'space-between'}}>
-                        <div>
-                            메이트들의 운동 현황
-                        </div>
-                        <Link to={'/mate'} style={{textDecoration: 'none', color: 'black'}}>
-                            <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px'}}/>
-                        </Link>
-                        <Carousel data={usersData} componentToRender={<SquareBox/>}/>
-                    </div>
-                )}
+                (<NoMate/>)
+            }
 
         </div>
     );

@@ -28,25 +28,25 @@ const VideoPlayer = () => {
 
     return (
         <div>
-            {!isPlaying && (
-                <div>
-                    <h3>{videoTitle}</h3>
-                    <img
-                        src="https://img.youtube.com/vi/nWhS28U6bCY/maxresdefault.jpg"
-                        alt="Video Thumbnail"
-                        onClick={handlePlayToggle}
-                        style={{width:'50%'}}
-                    />
-                </div>
-            )}
-            {isPlaying && (
-                <YouTube
-                    videoId="nWhS28U6bCY"
-                    opts={opts}
-                    onReady={handlePlayerReady}
-                    onEnd={handlePlayToggle}
-                />
-            )}
+            {/*{!isPlaying && (*/}
+            {/*    <div>*/}
+            {/*        <h3>{videoTitle}</h3>*/}
+            {/*        <img*/}
+            {/*            src="https://img.youtube.com/vi/nWhS28U6bCY/maxresdefault.jpg"*/}
+            {/*            alt="Video Thumbnail"*/}
+            {/*            onClick={handlePlayToggle}*/}
+            {/*            style={{width:'50%'}}*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*)}*/}
+            {/*{isPlaying && (*/}
+            {/*    <YouTube*/}
+            {/*        videoId="nWhS28U6bCY"*/}
+            {/*        opts={opts}*/}
+            {/*        onReady={handlePlayerReady}*/}
+            {/*        onEnd={handlePlayToggle}*/}
+            {/*    />*/}
+            {/*)}*/}
         </div>
     );
 };

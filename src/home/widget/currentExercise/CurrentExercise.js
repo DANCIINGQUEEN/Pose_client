@@ -7,19 +7,17 @@ import {useSelector} from "react-redux";
 import {Doughnut} from "react-chartjs-2";
 
 
-const RecBox = ({componentToRender, data}) => {
-    const label=data.label
-    const cycle=data.cycle
-    const number=data.number
-    const attain=10
-    const percent=attain/number*100
-    // console.log(number, percent)
+const RecBox = ({data}) => {
+    const label = data.label
+    const number = data.number
+    const attain = 10
+    const percent = attain / number * 100
     const chartData = {
-        labels:[exerciseName[label]],
-        datasets:[
+        labels: [exerciseName[label]],
+        datasets: [
             {
-                data:[percent, 100-percent],
-                backgroundColor:['hotpink', 'rgba(0, 0, 0, 0)']
+                data: [percent, 100 - percent],
+                backgroundColor: ['hotpink', 'rgba(0, 0, 0, 0)']
             }
         ]
     }
@@ -48,7 +46,7 @@ const RecBox = ({componentToRender, data}) => {
                 data: [100, 0],
                 backgroundColor: ['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 0, 0)']
             }
-            ]
+        ]
     }
     const backgroundOptions = {
         cutoutPercentage: 30,
@@ -81,7 +79,6 @@ const RecBox = ({componentToRender, data}) => {
             fontSize: "30px",
             borderRadius: '16px',
         }}>
-            {/*<p>{label}</p>*/}
             <span style={{position: 'relative', zIndex: '1', left: '150px'}}>
                 {<Doughnut data={backgroundData} options={backgroundOptions}/>}
             </span>
@@ -92,8 +89,7 @@ const RecBox = ({componentToRender, data}) => {
     );
 };
 
-const Carousel= ({componentToRender, data}) => {
-    // console.log(data)
+const Carousel = ({componentToRender, data}) => {
     return (
         <Scroll>
             {Object.values(data).map((data, index) => (
@@ -114,7 +110,7 @@ const Carousel= ({componentToRender, data}) => {
         </Scroll>
     )
 }
-const NoGoal= () => {
+const NoGoal = () => {
     return (
         <div
             style={{
@@ -126,7 +122,7 @@ const NoGoal= () => {
                 padding: '20px',
                 backgroundColor: ThemeColor.divColor
             }}>
-            <h3 style={{marginTop: '0px'}}>선택한 운동이 없습니다!</h3>
+            <h3 style={{marginTop: '0px'}}>선택된 운동이 없습니다!</h3>
             <Link to={'/exercise/wishexercise'} style={{
                 textDecoration: 'none',
                 color: 'black',
@@ -146,31 +142,29 @@ const UserCurrentExercise = ({goals}) => {
     const name = useSelector((state) => state.name)
 
     return (
-        <div style={{width:'390px'}}>
-            <div style={{marginLeft: '30px', display:'flex', justifyContent:'space-between'}}>
+        <div style={{width: '390px'}}>
+            <div style={{marginLeft: '30px', display: 'flex', justifyContent: 'space-between'}}>
                 <p>
                     {name}님의 현재 운동
                 </p>
-                <Link to={'/exercise/current'} style={{textDecoration:'none', color:'black'}}>
-                    <FontAwesomeIcon icon={faArrowRight} style={{marginRight:'20px', marginTop:'15px'}}/>
+                <Link to={'/exercise/current'} style={{textDecoration: 'none', color: 'black'}}>
+                    <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>
                 </Link>
             </div>
             <Carousel data={goals} componentToRender={<RecBox/>}/>
         </div>
     );
 }
+
 function CurrentExercise() {
     const goals = useSelector((state) => state.goals)
-    // console.log(goals)
-
     return (
-
         <>
-        {goals?
+            {goals ?
                 (<UserCurrentExercise goals={goals}/>)
                 :
                 (<NoGoal/>)
-        }
+            }
         </>
     );
 }

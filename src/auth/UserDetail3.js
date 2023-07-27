@@ -4,6 +4,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 import {REGISTER} from '../api'
 import axios from "axios";
+import confetti from "canvas-confetti";
 
 const ButtonGroup = ({buttons, onChange}) => {
     const [selectedButtons, setSelectedButtons] = useState([]);
@@ -16,9 +17,9 @@ const ButtonGroup = ({buttons, onChange}) => {
             updatedButtons = [...selectedButtons, button]
         }
         setSelectedButtons(updatedButtons)
-        console.log(updatedButtons)
         onChange(updatedButtons)
     }
+
     return (
         <div>
             {buttons.map((button) => (
@@ -50,34 +51,27 @@ function UserDetail3(props) {
 
     const location = useLocation()
     const navigate = useNavigate();
-    console.log(location)
 
     const handleOptionsChange = (selectedOptions) => {
         setSelectedOptions(selectedOptions);
-        console.log(selectedOptions)
     }
-    // const handleButtonClick = () => {
-    //     navigate('/input2', {state:{
-    //         ...location.state,
-    //         wishList: selectedOptions}
-    //     });
-    //     console.log(location.state, selectedOptions)
-    // };
-
+    function particle() {   //폭죽
+        confetti({
+            particleCount: 50,
+            spread: 50
+        });
+    }
 
     const handleSubmit = async (e) => {
-        // e.preventDefault();
         try {
             let formData = {
                 ...location.state,
                 wishList: selectedOptions
             }
-            console.log(formData)
             await axios.post(REGISTER, formData
             )
-            // e.preventDefault()
+            particle()
             alert("Signup successful");
-            console.log(formData)
             navigate('/')
         } catch (error) {
             alert("An error occurred while signing up");
