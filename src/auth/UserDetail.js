@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Container, CustomSelect} from '../UI/UIPackage';
 import {useLocation, useNavigate} from "react-router-dom";
+import {USER_DETAIL_2} from '../api'
 
 
 const UserDetail = (props) => {
@@ -18,8 +19,8 @@ const UserDetail = (props) => {
 
     const location = useLocation()
     const name = location.state?.name || ''
-    const email = location.state?.email || ''
-    const password = location.state?.password || ''
+    // const email = location.state?.email || ''
+    // const password = location.state?.password || ''
 
     const handleSexChange = (selectedSex) => {
         setSex(selectedSex)
@@ -40,7 +41,7 @@ const UserDetail = (props) => {
 
     const navigate = useNavigate();
     const handleButtonClick = () => {
-        navigate('/userdetail2', {
+        navigate(USER_DETAIL_2, {
             state: {
                 ...location.state,
                 sex: sex,
@@ -56,7 +57,7 @@ const UserDetail = (props) => {
         <Container>
             <h1>자세한 유저 정보</h1>
             <h3 style={{margin: '-5px 0 -10px 0'}}>안녕하세요 {name}님!</h3>
-            <h5>다양한 정보를 입력해주세요</h5>
+            <h5>세부 정보를 입력해주세요</h5>
             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '90%'}}>
                 <CustomSelect options={sexList} item='성별' onChange={handleSexChange}/>
                 <CustomSelect options={areaList} item='지역' onChange={handleAreaChange}/>

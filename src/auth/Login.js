@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import axios from "axios";
-import {LOGIN} from '../api'
+import {LOGIN, NEW_USER} from '../api'
 import {login} from "../state/userState";
 
 
 import {Container, Input, Button, Loading} from '../UI/UIPackage';
+
 
 function Login(props) {
     const [email, setEmail] = useState('');
@@ -76,7 +77,7 @@ function Login(props) {
                 }}>{loginErrorMessage}</p>}
             </div>
             <br/>
-            <h5>계정이 없으신가요?&nbsp;&nbsp;<a href='/register' style={{textDecoration: 'none'}}>회원가입</a></h5>
+            <h5>계정이 없으신가요?&nbsp;&nbsp;<Link to={NEW_USER} style={{textDecoration: 'none'}}>회원가입</Link></h5>
         </Container>
     );
 }

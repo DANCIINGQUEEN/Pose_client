@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
-import {SEND_VERIFY_CODE, VERIFY_CODE, REGISTER} from '../api'
+import {Link, useNavigate} from "react-router-dom";
+import {SEND_VERIFY_CODE, VERIFY_CODE, USER_DETAIL} from '../api'
 
 
 import {ThemeColor, Container, Input, Button, Loading} from '../UI/UIPackage';
@@ -76,7 +76,7 @@ function Register(props) {
     }
 
     const handleSendSubmit = () => {
-        navigate('/userdetail', {state: {name: name, email: email, password: password}})
+        navigate(USER_DETAIL, {state: {name: name, email: email, password: password}})
     }
 
     return (
@@ -128,7 +128,7 @@ function Register(props) {
                     </Button>
                 </form>
             </div>
-            <h5>계정이 있으신가요?&nbsp;&nbsp;<a href='/' style={{textDecoration: 'none'}}>로그인</a></h5>
+            <h5>계정이 있으신가요?&nbsp;&nbsp;<Link to='/' style={{textDecoration: 'none'}}>로그인</Link></h5>
         </Container>
     );
 }

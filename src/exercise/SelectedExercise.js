@@ -4,11 +4,13 @@ import {useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {TRAINING, EXERCISE} from '../api'
+
 
 const RecBox = ({image, text, label}) => {
     const navigate = useNavigate();
     const handleButtonClick = () => {
-        navigate('/exercise/training', {
+        navigate(TRAINING, {
             state: {exercise: text,
                     label: label}
         })
@@ -79,7 +81,7 @@ function SelectedExercise(props) {
                     alignItems: 'center',
                     padding: '20px',
                 }}>
-                <Link to={'/exercise'} style={{
+                <Link to={EXERCISE} style={{
                     textDecoration: 'none',
                     color: 'black',
                     display: 'flex',
@@ -87,7 +89,7 @@ function SelectedExercise(props) {
                     alignItems: 'center',
                     width: '160px'
                 }}>
-                    <div>모든 운동 보기</div>
+                    <p>모든 운동 보기</p>
                     <FontAwesomeIcon icon={faArrowRight}/>
                 </Link>
 

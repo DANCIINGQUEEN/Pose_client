@@ -1,6 +1,8 @@
 import React from 'react';
 import {Container, Input, Button} from '../UI/UIPackage';
 import {useLocation, useNavigate} from "react-router-dom";
+import {USER_DETAIL_3} from '../api'
+
 
 function UserDetail2(props) {
     const navigate = useNavigate();
@@ -8,21 +10,13 @@ function UserDetail2(props) {
     const location = useLocation()
     const name = location.state?.name || ''
 
-    const handleHealthButtonClick = () => {
-        navigate('/userdetail3', {
+    const handleButtonClick = (value) => {
+        navigate(USER_DETAIL_3, {
             state: {
                 ...location.state,
-                exercise: '헬스'
+                exercise: value
             }
-        });
-    };
-    const handleHomeButtonClick = () => {
-        navigate('/userdetail3', {
-            state: {
-                ...location.state,
-                exercise: '홈 트레이닝'
-            }
-        });
+        })
     }
     return (
         <Container>
@@ -31,9 +25,9 @@ function UserDetail2(props) {
             <h5>하시는 운동에 맞게 추천해드릴게요</h5>
 
             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '90%'}}>
-                <Button onClick={handleHealthButtonClick}>헬스</Button>
+                <Button onClick={()=>handleButtonClick('헬스')}>헬스</Button>
                 <br/>
-                <Button onClick={handleHomeButtonClick}>홈 트레이닝</Button>
+                <Button onClick={()=>handleButtonClick('홈 트레이닝')}>홈 트레이닝</Button>
             </div>
         </Container>
     );

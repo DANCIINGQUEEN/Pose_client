@@ -6,6 +6,8 @@ import styled from "styled-components";
 import {useSelector} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {TRAINING, SELECTED_EXERCISE} from '../api'
+
 
 // import squat from '../public/exercise/lowerBody/squat.jpg'
 
@@ -41,12 +43,11 @@ const Carousel = ({data}) => {
 const RecBox = ({image, text}) => {
     const navigate = useNavigate();
     const handleButtonClick = () => {
-        navigate('/exercise/training', {
+        navigate(TRAINING, {
             state: {exercise: text}
         })
     }
     const image_url = process.env.PUBLIC_URL + '/' + image
-    // console.log(image_url)
     return (
         <>
             <button onClick={handleButtonClick}
@@ -118,7 +119,7 @@ function Exercise(props) {
                     alignItems: 'center',
                     padding: '20px',
                 }}>
-                <Link to={'/exercise/selected'} style={{
+                <Link to={SELECTED_EXERCISE} style={{
                     textDecoration: 'none',
                     color: 'black',
                     display: 'flex',
@@ -126,7 +127,7 @@ function Exercise(props) {
                     alignItems: 'center',
                     width: '190px'
                 }}>
-                    <div>내가 선택한 운동 보기</div>
+                    <p>내가 선택한 운동 보기</p>
                     <FontAwesomeIcon icon={faArrowRight}/>
                 </Link>
 
