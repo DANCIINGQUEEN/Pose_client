@@ -77,8 +77,7 @@ function Home(props) {
     const dispatch = useDispatch();
 
 
-    const name = useSelector((state) => state.name)
-    const email = useSelector((state) => state.email)
+    const {name, email}=useSelector((state)=>state)
 
 
 

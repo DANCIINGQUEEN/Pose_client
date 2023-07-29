@@ -19,8 +19,7 @@ const UserDetail = (props) => {
 
     const location = useLocation()
     const name = location.state?.name || ''
-    // const email = location.state?.email || ''
-    // const password = location.state?.password || ''
+
 
     const handleSexChange = (selectedSex) => {
         setSex(selectedSex)

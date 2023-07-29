@@ -22,11 +22,12 @@ export const authSlice = createSlice({
     reducers: {
         login: (state, action) => {
             state.token = action.payload.token
-            console.log('login success!')
+            // console.log('login success!')
         },
         logout: (state) => {
+            sessionStorage.removeItem('jwt');
             Object.assign(state, initialState);
-            console.log('logout success!')
+            // console.log('logout success!')
 
         },
         getUser: (state, action) => {
@@ -74,11 +75,10 @@ export const authSlice = createSlice({
             const {dDay, goals} = action.payload;
             state.dDay = dDay;
             state.goals = goals;
-            console.log('putGoals success!')
+            // console.log('putGoals success!')
         },
         putAttain: (state, action) => {
             state.attain=action.payload.attain
-
         }
     }
 })

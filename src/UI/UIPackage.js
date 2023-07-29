@@ -112,6 +112,30 @@ export const Button = styled.button`
     animation: ${rainbowAnimation} 5s linear infinite;
   }
 `
+export const InfoBox = styled.div`
+  width: 130px;
+  border-radius: 16px;
+  background-color: ${ThemeColor.divColor};
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin: 10px;
+
+  > :nth-child(1) {
+    margin: 0;
+    padding: 10px 0 0 15px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  > :nth-child(2) {
+    font-size: 20px;
+    padding: 10px 0 10px 15px;
+    margin: -5px 0 0 0;
+    font-weight: bold;
+  }
+`
 export const Scroll = styled.div`
   overflow: scroll;
   display: flex;
@@ -407,6 +431,70 @@ export const CarouselList = ({componentToRender, list}) => {
         </div>
     );
 }
+
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const ModalOverlay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: ${fadeIn} 0.3s ease;
+`;
+
+const ModalContent = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  //justify-content: center;
+  align-items: center;
+`;
+
+
+export const Modal = ({ componentToRender, buttonComponent}) => {
+    const [showModal, setShowModal] = useState(false);
+
+    const handleButtonClick = () => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
+    return (
+        <div>
+            <button onClick={handleButtonClick} style={{border:"none", backgroundColor:'transparent'}}>{React.cloneElement(buttonComponent)}</button>
+            {showModal && (
+                <ModalOverlay>
+                    <ModalContent>
+                        {React.cloneElement(componentToRender)}
+                        <Button onClick={closeModal} style={{width: '78px'}}>닫기</Button>
+                    </ModalContent>
+                </ModalOverlay>
+            )}
+        </div>
+    );
+};
+
 const Nav = styled.nav`
   z-index: 999;
   position: fixed;
@@ -537,6 +625,7 @@ export default {
     Container,
     Input,
     Button,
+    InfoBox,
     CustomSelect,
     Exit,
     UserProfile,
@@ -548,6 +637,7 @@ export default {
     NavigationBar,
     Loading,
     HorizonLine,
+    Modal,
     rainbowAnimation,
     exerciseName,
     exerciseImage

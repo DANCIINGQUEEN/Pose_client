@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
 import {Doughnut} from "react-chartjs-2";
+import {CURRENT, WISH_EXERCISE} from "../../../api";
 
 
 const RecBox = ({data}) => {
@@ -123,7 +124,7 @@ const NoGoal = () => {
                 backgroundColor: ThemeColor.divColor
             }}>
             <h3 style={{marginTop: '0px'}}>선택된 운동이 없습니다!</h3>
-            <Link to={'/exercise/wishexercise'} style={{
+            <Link to={WISH_EXERCISE} style={{
                 textDecoration: 'none',
                 color: 'black',
                 display: 'flex',
@@ -145,9 +146,9 @@ const UserCurrentExercise = ({goals}) => {
         <div style={{width: '390px'}}>
             <div style={{marginLeft: '30px', display: 'flex', justifyContent: 'space-between'}}>
                 <p>
-                    {name}님의 현재 운동
+                    {name}님의 운동
                 </p>
-                <Link to={'/exercise/current'} style={{textDecoration: 'none', color: 'black'}}>
+                <Link to={CURRENT} style={{textDecoration: 'none', color: 'black'}}>
                     <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>
                 </Link>
             </div>
