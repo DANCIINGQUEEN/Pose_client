@@ -47,6 +47,7 @@ function Account(props) {
         name,
         email,
         age,
+        area,
         weight,
         height,
         exercise,
@@ -60,8 +61,6 @@ function Account(props) {
             logout()
         )
     }
-
-
 
     return (
         <Container>
@@ -103,6 +102,10 @@ function Account(props) {
                     <InfoBox>
                         <p>나이</p>
                         <p>{age}</p>
+                    </InfoBox>
+                    <InfoBox>
+                        <p>지역</p>
+                        <p>{area}</p>
                     </InfoBox>
                     <InfoBox>
                         <p>몸무게</p>

@@ -91,7 +91,7 @@ function Home(props) {
         axios.get(GET_USER_FULL_INFO, {
             headers: headers
         }).then(response => {
-            const { name, email, age, weight, height, exercise, wishList, followers, following, goal } = response.data;
+            const { _id,name, email, age,area, weight, height, exercise, wishList, followers, following, goal } = response.data;
 
             const followersList=followers.length>0?followers:null
             const followingList=following.length>0?following:null
@@ -99,9 +99,11 @@ function Home(props) {
             const goals = goal ? goal.goals : null;
             dispatch(
                 getUserFullInfo({
+                    _id: _id,
                     name: name,
                     email: email,
                     age: age,
+                    area: area,
                     weight: weight,
                     height: height,
                     exercise: exercise,
@@ -112,6 +114,7 @@ function Home(props) {
                     goals: goals,
                 })
             )
+            console.log(response.data)
             setIsLoading(false)
         }).catch(error => console.error(error))
     }

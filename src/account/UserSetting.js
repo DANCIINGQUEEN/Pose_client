@@ -23,7 +23,17 @@ import {
     HeightSetting,
     Hello,
     SettingModal,
-    UserProfileSetting, WeightSetting
+    UserProfileSetting,
+    ChangeUserProfile,
+    WeightSetting,
+    ShowFollowingFollower,
+    FollowingSetting,
+    FollowersSetting,
+    ChangeAge,
+    AreaSetting,
+    ChangeArea,
+    ShowFollowing,
+    ShowFollowers, ChangeWeight, ChangeHeight
 } from "./DetailSetting";
 
 const RainbowDiv = styled.div`
@@ -57,6 +67,7 @@ function UserSetting(props) {
         name,
         email,
         age,
+        area,
         weight,
         height,
         exercise,
@@ -83,14 +94,24 @@ function UserSetting(props) {
 
             }}>
 
-                <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                <div style={{display: 'flex',flexWrap:'wrap', justifyContent: 'center'}}>
                     <Modal buttonComponent={<UserProfileSetting email={email} name={name}/>}
-                           componentToRender={<Hello/>}/>
-                    <Modal buttonComponent={<FollowingFollowerSetting followers={followers} following={following}/>}
-                           componentToRender={<Hello/>}/>
-                    <Modal buttonComponent={<AgeSetting age={age}/>} componentToRender={<Hello/>}/>
-                    <Modal buttonComponent={<WeightSetting weight={weight}/>} componentToRender={<Hello/>}/>
-                    <Modal buttonComponent={<HeightSetting height={height}/>} componentToRender={<Hello/>}/>
+                           componentToRender={<ChangeUserProfile email={email} name={name}/>}/>
+
+                    <Modal buttonComponent={<FollowersSetting followers={followers} />}
+                           componentToRender={<ShowFollowers followers={followers} />}/>
+
+                    <Modal buttonComponent={<FollowingSetting following={following}/>}
+                           componentToRender={<ShowFollowing following={following}/>}/>
+
+
+                    <Modal buttonComponent={<AgeSetting age={age}/>} componentToRender={<ChangeAge/>}/>
+
+                    <Modal buttonComponent={<AreaSetting area={area}/>} componentToRender={<ChangeArea/>}/>
+
+                    <Modal buttonComponent={<WeightSetting weight={weight}/>} componentToRender={<ChangeWeight/>}/>
+
+                    <Modal buttonComponent={<HeightSetting height={height}/>} componentToRender={<ChangeHeight/>}/>
 
                 </div>
                 <RainbowDiv>

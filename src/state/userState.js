@@ -1,19 +1,24 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
+    _id:null,
     email: null,
     name: null,
     token: null,
     age: null,
+    area: null,
     sex: null,
     weight: null,
     height: null,
     exercise: null,
     wishList: null,
     followers: null,
+    followerNames:null,
     following: null,
+    followingNames:null,
     dDay: null,
     goals: null,
+
 }
 
 export const authSlice = createSlice({
@@ -40,9 +45,11 @@ export const authSlice = createSlice({
         },
         getUserFullInfo: (state, action) => {
             const {
+                _id,
                 email,
                 name,
                 age,
+                area,
                 sex,
                 exercise,
                 wishList,
@@ -54,9 +61,11 @@ export const authSlice = createSlice({
                 goals
             } = action.payload;
             Object.assign(state, {
+                _id,
                 email,
                 name,
                 age,
+                area,
                 sex,
                 exercise,
                 wishList,
@@ -79,6 +88,16 @@ export const authSlice = createSlice({
         },
         putAttain: (state, action) => {
             state.attain=action.payload.attain
+        },
+        putFollowerNames: (state, action) => {
+            const {followerNames} = action.payload;
+            state.followerNames = followerNames;
+            // console.log('hello',followerNames,state.followerNames)
+        },
+        putFollowingNames: (state, action) => {
+            const {followingNames} = action.payload;
+            state.followingNames = followingNames;
+            // console.log('putFollowingNames success!', state.followingNames)
         }
     }
 })
@@ -91,6 +110,8 @@ export const {
     getUserFullInfo,
     putFollow,
     putGoals,
-    putAttain
+    putAttain,
+    putFollowerNames,
+    putFollowingNames
 } = authSlice.actions
 export default authSlice.reducer

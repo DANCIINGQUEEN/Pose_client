@@ -18,6 +18,8 @@ const API={
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,
     //유저의 운동 목표 설정
     GOAL_SETTING: `${API_BASE_URL}/user/goalSetting`,
+    GET_FOLLOWERS:`${API_BASE_URL}/user/getFollowers`,
+    GET_FOLLOWING:`${API_BASE_URL}/user/getFollowing`,
 
 
     //URL
@@ -48,6 +50,7 @@ const API={
     //계정
     USER_SETTING:'/usersetting',
     ACCOUNT:'/account',
+
 
 
 

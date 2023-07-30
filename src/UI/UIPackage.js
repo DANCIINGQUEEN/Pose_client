@@ -25,12 +25,12 @@ export const ThemeColor = {
     disabledButtonColor: 'rgb(163,183,233)',
     buttonColor: 'rgba(97, 137, 239, 1)'
 }
-export const UserBoxSize={
-    large:35,
-    medium:30,
-    small:25,
-    xSmall:15,
-    xxSmall:10
+export const UserBoxSize = {
+    large: 35,
+    medium: 30,
+    small: 25,
+    xSmall: 15,
+    xxSmall: 10
 }
 
 export const rainbowAnimation = keyframes`
@@ -72,8 +72,8 @@ export const Box = styled.div`
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  margin-bottom:37px;
-  width:370px;
+  margin-bottom: 37px;
+  width: 370px;
 `
 export const Input = styled.input`
   width: 100%;
@@ -90,7 +90,7 @@ export const Input = styled.input`
     outline: none;
     border: 2px solid;
     animation: ${rainbowAnimation} 5s linear infinite;
-    
+
   }
 
 `
@@ -147,12 +147,13 @@ export const Scroll = styled.div`
     border-radius: 5px;
     background-color: ${ThemeColor.containerColor};
   }
+
   &::-webkit-scrollbar-thumb {
-    width:10px;
+    width: 10px;
     background-color: ${ThemeColor.importantColor};
     border-radius: 5px;
   }
-  
+
 `
 
 const SelectContainer = styled.div`
@@ -322,8 +323,8 @@ export const UserBox = ({name, email, size}) => {
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <UserProfile text={name} size={size}/>
             <div style={{textAlign: 'left', marginLeft: '10px'}}>
-                <div style={{fontSize:fontSize}}>{name}</div>
-                <div style={{fontSize:fontSize}}>{email}</div>
+                <div style={{fontSize: fontSize}}>{name}</div>
+                <div style={{fontSize: fontSize}}>{email}</div>
             </div>
         </div>
     )
@@ -446,6 +447,7 @@ const fadeIn = keyframes`
 
 const ModalOverlay = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -460,7 +462,7 @@ const ModalOverlay = styled.div`
 const ModalContent = styled.div`
   background-color: white;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
@@ -469,7 +471,7 @@ const ModalContent = styled.div`
 `;
 
 
-export const Modal = ({ componentToRender, buttonComponent}) => {
+export const Modal = ({componentToRender, buttonComponent}) => {
     const [showModal, setShowModal] = useState(false);
 
     const handleButtonClick = () => {
@@ -482,13 +484,17 @@ export const Modal = ({ componentToRender, buttonComponent}) => {
 
     return (
         <div>
-            <button onClick={handleButtonClick} style={{border:"none", backgroundColor:'transparent'}}>{React.cloneElement(buttonComponent)}</button>
+            <button onClick={handleButtonClick} style={{
+                border: "none",
+                backgroundColor: 'transparent'
+            }}>{React.cloneElement(buttonComponent)}</button>
             {showModal && (
                 <ModalOverlay>
                     <ModalContent>
                         {React.cloneElement(componentToRender)}
-                        <Button onClick={closeModal} style={{width: '78px'}}>닫기</Button>
                     </ModalContent>
+                    {/*<CloseButton onClick={closeModal} style={{width: '78px'}}>닫기</CloseButton>*/}
+                    <Button onClick={closeModal} style={{width: '78px', marginTop:'20px'}}>닫기</Button>
                 </ModalOverlay>
             )}
         </div>
@@ -554,7 +560,7 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
         <BodyPadding>
             <Nav>
                 <NavButton onClick={() => handleLinkClick('exercise')}>
-                    <Link to={goals?SELECTED_EXERCISE:WISH_EXERCISE} style={style}>
+                    <Link to={goals ? SELECTED_EXERCISE : WISH_EXERCISE} style={style}>
                         <FontAwesomeIcon icon={faDumbbell} style={iconStyle}/>
                         <span style={fontStyle}>
                         운동
@@ -603,20 +609,20 @@ export const exerciseName = {
     legRaise: '레그 레이즈'
 }
 export const exerciseImage = {
-     squat: 'exercise2/lower/squat.jpg',
-     lunge: 'exercise2/lower/lunge.jpg',
+    squat: 'exercise2/lower/squat.jpg',
+    lunge: 'exercise2/lower/lunge.jpg',
     deadLift: 'exercise2/lower/deadLift.jpg',
 
     //abdominal
-     plank: 'exercise2/abdominal/plank.jpg',
-     crunch: 'exercise2/abdominal/crunch.jpg',
+    plank: 'exercise2/abdominal/plank.jpg',
+    crunch: 'exercise2/abdominal/crunch.jpg',
     legRaise: 'exercise2/abdominal/legRaise.jpg',
 
     //arm
-     pushUp: 'exercise2/arm/pushUp.jpg',
-     shoulderPress: 'exercise2/arm/shoulderPress.jpg',
-     dumbbellRow: 'exercise2/arm/dumbbellRow.jpg',
-     hammerCurl: 'exercise2/arm/hammerCurl.jpg'
+    pushUp: 'exercise2/arm/pushUp.jpg',
+    shoulderPress: 'exercise2/arm/shoulderPress.jpg',
+    dumbbellRow: 'exercise2/arm/dumbbellRow.jpg',
+    hammerCurl: 'exercise2/arm/hammerCurl.jpg'
 }
 
 
