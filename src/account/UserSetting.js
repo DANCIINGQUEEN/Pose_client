@@ -1,44 +1,37 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
-    Button,
     Container,
-    InfoBox,
     NavigationBar,
     Modal,
     rainbowAnimation,
     ThemeColor,
-    UserBox,
-    UserBoxSize,
 } from "../UI/UIPackage";
-import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../state/userState";
-import {Link} from "react-router-dom";
-import {USER_SETTING} from "../api";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faGear} from "@fortawesome/free-solid-svg-icons";
+import {useSelector} from "react-redux";
+
 import styled from "styled-components";
 import {
     AgeSetting,
-    FollowingFollowerSetting,
     HeightSetting,
-    Hello,
-    SettingModal,
     UserProfileSetting,
     ChangeUserProfile,
     WeightSetting,
-    ShowFollowingFollower,
     FollowingSetting,
     FollowersSetting,
     ChangeAge,
     AreaSetting,
     ChangeArea,
     ShowFollowing,
-    ShowFollowers, ChangeWeight, ChangeHeight
+    ShowFollowers,
+    ChangeWeight,
+    ChangeHeight,
+    ExerciseSetting,
+    ChangeExercise,
+    ChangeWishList, WishListSettingButton
 } from "./DetailSetting";
 
 const RainbowDiv = styled.div`
   border: 2px solid;
-  width: 300px;
+  width: 280px;
   border-radius: 16px;
   margin-top: 20px;
   padding: 0 0 10px 10px;
@@ -62,7 +55,6 @@ const RainbowDiv = styled.div`
 
 
 function UserSetting(props) {
-    const dispatch = useDispatch();
     const {
         name,
         email,
@@ -80,7 +72,6 @@ function UserSetting(props) {
         <Container>
             <h1>유저 정보 수정</h1>
             <h5>각 항목을 클릭하면 수정할 수 있습니다</h5>
-
             <div style={{
                 borderRadius: '20px',
                 backgroundColor: `${ThemeColor.containerColor}`,
@@ -90,37 +81,43 @@ function UserSetting(props) {
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
-                padding: '20px'
-
+                padding: '20px',
             }}>
 
-                <div style={{display: 'flex',flexWrap:'wrap', justifyContent: 'center'}}>
-                    <Modal buttonComponent={<UserProfileSetting email={email} name={name}/>}
-                           componentToRender={<ChangeUserProfile email={email} name={name}/>}/>
+                <Modal width={'280px'}
+                       button={<UserProfileSetting email={email} name={name}/>}
+                       render={<ChangeUserProfile email={email} name={name}/>}/>
+                <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>
 
-                    <Modal buttonComponent={<FollowersSetting followers={followers} />}
-                           componentToRender={<ShowFollowers followers={followers} />}/>
+                    <Modal button={<FollowersSetting followers={followers}/>}
+                           render={<ShowFollowers followers={followers}/>}/>
 
-                    <Modal buttonComponent={<FollowingSetting following={following}/>}
-                           componentToRender={<ShowFollowing following={following}/>}/>
+                    <Modal button={<FollowingSetting following={following}/>}
+                           render={<ShowFollowing following={following}/>}/>
 
 
-                    <Modal buttonComponent={<AgeSetting age={age}/>} componentToRender={<ChangeAge/>}/>
+                    <Modal button={<AgeSetting age={age}/>} render={<ChangeAge age={age}/>}/>
 
-                    <Modal buttonComponent={<AreaSetting area={area}/>} componentToRender={<ChangeArea/>}/>
+                    <Modal button={<AreaSetting area={area}/>} render={<ChangeArea area={area}/>}/>
 
-                    <Modal buttonComponent={<WeightSetting weight={weight}/>} componentToRender={<ChangeWeight/>}/>
+                    <Modal button={<WeightSetting weight={weight}/>} render={<ChangeWeight weight={weight}/>}/>
 
-                    <Modal buttonComponent={<HeightSetting height={height}/>} componentToRender={<ChangeHeight/>}/>
+                    <Modal button={<HeightSetting height={height}/>} render={<ChangeHeight height={height}/>}/>
 
                 </div>
+                <Modal width={'280px'}
+                       button={<ExerciseSetting exercise={exercise}/>} render={<ChangeExercise/>}/>
                 <RainbowDiv>
-                    <p>주로 하는 운동</p>
-                    <p>{exercise}</p>
-                </RainbowDiv>
-                <RainbowDiv>
-                    <p>해결하고싶은 고민</p>
-
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        alignItems: 'center'
+                    }}>
+                        <p>해결하고싶은 고민</p>
+                        <Modal width={'75px'} button={<WishListSettingButton/>}
+                               render={<ChangeWishList wishList={wishList}/>}/>
+                    </div>
                     {
                         wishList.map((item, index) => {
                                 return (
@@ -129,15 +126,10 @@ function UserSetting(props) {
                             }
                         )
                     }
-
                 </RainbowDiv>
-
-
+                <br/>
             </div>
-
             <NavigationBar/>
-
-
         </Container>
     );
 }

@@ -18,8 +18,17 @@ const API={
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,
     //유저의 운동 목표 설정
     GOAL_SETTING: `${API_BASE_URL}/user/goalSetting`,
+    //유저의 팔로워, 팔로잉 목록
     GET_FOLLOWERS:`${API_BASE_URL}/user/getFollowers`,
     GET_FOLLOWING:`${API_BASE_URL}/user/getFollowing`,
+    //유저 정보 수정
+    UPDATE_PROFILE:`${API_BASE_URL}/user/updateProfile`,
+    UPDATE_AGE:`${API_BASE_URL}/user/updateAge`,
+    UPDATE_WEIGHT:`${API_BASE_URL}/user/updateWeight`,
+    UPDATE_HEIGHT:`${API_BASE_URL}/user/updateHeight`,
+    UPDATE_AREA:`${API_BASE_URL}/user/updateArea`,
+    UPDATE_EXERCISE:`${API_BASE_URL}/user/updateExercise`,
+    UPDATE_WISHLIST:`${API_BASE_URL}/user/updateWishList`,
 
 
     //URL

@@ -98,6 +98,35 @@ export const authSlice = createSlice({
             const {followingNames} = action.payload;
             state.followingNames = followingNames;
             // console.log('putFollowingNames success!', state.followingNames)
+        },
+        updateProfile: (state, action) => {
+            const {name, email}=action.payload
+            state.name=name;
+            state.email=email;
+        },
+        updateAge: (state, action) => {
+            const {age}=action.payload
+            state.age=age;
+        },
+        updateArea: (state, action) => {
+            const {area}=action.payload
+            state.area=area;
+        },
+        updateWeight: (state, action) => {
+            const {weight}=action.payload
+            state.weight=weight;
+        },
+        updateHeight: (state, action) => {
+            const {height}=action.payload
+            state.height=height;
+        },
+        updateExercise: (state, action) => {
+            const {exercise}=action.payload
+            state.exercise=exercise;
+        },
+        updateWishList: (state, action) => {
+            const {wishList}=action.payload
+            state.wishList=wishList;
         }
     }
 })
@@ -112,6 +141,13 @@ export const {
     putGoals,
     putAttain,
     putFollowerNames,
-    putFollowingNames
+    putFollowingNames,
+    updateProfile,
+    updateAge,
+    updateArea,
+    updateWeight,
+    updateHeight,
+    updateExercise,
+    updateWishList
 } = authSlice.actions
 export default authSlice.reducer

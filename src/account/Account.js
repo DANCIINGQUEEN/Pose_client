@@ -4,7 +4,16 @@ import styled, {keyframes} from "styled-components";
 import {Link} from "react-router-dom";
 
 
-import {Button, Container, NavigationBar, UserBox, ThemeColor, UserBoxSize, InfoBox, rainbowAnimation} from "../UI/UIPackage";
+import {
+    Button,
+    Container,
+    NavigationBar,
+    UserBox,
+    ThemeColor,
+    UserBoxSize,
+    InfoBox,
+    rainbowAnimation
+} from "../UI/UIPackage";
 import {USER_SETTING} from '../api'
 
 import {getUserFullInfo, logout} from "../state/userState";
@@ -55,6 +64,8 @@ function Account(props) {
         followers,
         following,
     } = useSelector((state) => state);
+    const stringWeight = weight.toString()
+    const stringHeight = height.toString()
 
     async function setLogout() {
         dispatch(
@@ -109,11 +120,35 @@ function Account(props) {
                     </InfoBox>
                     <InfoBox>
                         <p>몸무게</p>
-                        <p>{weight} <span style={{fontSize: '15px'}}>kg</span></p>
+                        {stringWeight.includes('이상') || stringWeight.includes('이하') ? (
+                            <p>
+                                {stringWeight.substring(0, 2)}
+                                <span style={{fontSize: '15px'}}>
+                                    kg {stringWeight.includes('이상') ? '이상' : '이하'}
+                                </span>
+                            </p>
+                        ) : (
+                            <p>
+                                {weight}kg
+                            </p>
+                        )}
                     </InfoBox>
                     <InfoBox>
                         <p>키</p>
-                        <p>{height} <span style={{fontSize: '15px'}}>cm</span></p>
+                        {stringHeight.includes('이상') || stringHeight.includes('이하') ? (
+                                <p>
+                                    {stringHeight.substring(0, 3)} <span style={{fontSize: '15px'}}>
+                                    cm {stringHeight.includes('이상') ? '이상' : '이하'}
+                                    </span>
+                                </p>
+                            )
+                            :
+                            (
+                                <p>
+                                    {height}<span style={{fontSize: '15px'}}>cm</span>
+                                </p>
+                            )
+                        }
                     </InfoBox>
                 </div>
                 <RainbowDiv>

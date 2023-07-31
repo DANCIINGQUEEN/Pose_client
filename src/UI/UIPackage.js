@@ -108,7 +108,7 @@ export const Button = styled.button`
 
   &:focus {
     outline: none;
-    border: 2px solid;
+    border: 3px solid;
     animation: ${rainbowAnimation} 5s linear infinite;
   }
 `
@@ -463,15 +463,37 @@ const ModalContent = styled.div`
   background-color: white;
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  //justify-content: center;
   align-items: center;
 `;
+const ModalButton = styled.button`
+  border: none;
+  width: 130px;
+  background-color: ${ThemeColor.divColor};
+  border-radius: 16px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  :hover{
+    background-color: ${ThemeColor.primaryColor};
+  }
 
+  p:first-child {
+    font-weight: bold;
+    margin-left: 5px;
+  }
 
-export const Modal = ({componentToRender, buttonComponent}) => {
+  p:last-child {
+    font-size: 20px;
+    font-weight: bold;
+    margin:-10px 0 10px 5px;
+
+  }
+
+`
+
+export const Modal = ({render, button, width}) => {
     const [showModal, setShowModal] = useState(false);
 
     const handleButtonClick = () => {
@@ -483,21 +505,19 @@ export const Modal = ({componentToRender, buttonComponent}) => {
     };
 
     return (
-        <div>
-            <button onClick={handleButtonClick} style={{
-                border: "none",
-                backgroundColor: 'transparent'
-            }}>{React.cloneElement(buttonComponent)}</button>
+        <>
+            <ModalButton onClick={handleButtonClick} style={{width:width}}>
+                    {React.cloneElement(button)}
+            </ModalButton>
             {showModal && (
                 <ModalOverlay>
                     <ModalContent>
-                        {React.cloneElement(componentToRender)}
+                        {React.cloneElement(render)}
                     </ModalContent>
-                    {/*<CloseButton onClick={closeModal} style={{width: '78px'}}>닫기</CloseButton>*/}
-                    <Button onClick={closeModal} style={{width: '78px', marginTop:'20px'}}>닫기</Button>
+                    <Button onClick={closeModal} style={{width: '78px', marginTop: '20px'}}>닫기</Button>
                 </ModalOverlay>
             )}
-        </div>
+        </>
     );
 };
 
