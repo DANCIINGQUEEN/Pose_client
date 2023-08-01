@@ -2,51 +2,47 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
+import {Button, CustomSelect, InfoBox, Input, Loading, ThemeColor, UserBox, UserBoxSize,} from "../UI/UIPackage";
 import {
-    Button,
-    CustomSelect,
-    Input,
-    InfoBox,
-    Loading,
-    UserBox,
-    UserBoxSize, ThemeColor,
-} from "../UI/UIPackage";
-import {
-    UPDATE_PROFILE,
-    GET_FOLLOWING,
     GET_FOLLOWERS,
+    GET_FOLLOWING,
+    IS_PASSWORD_CORRECT,
     UPDATE_AGE,
     UPDATE_AREA,
-    UPDATE_HEIGHT,
-    UPDATE_WEIGHT,
     UPDATE_EXERCISE,
+    UPDATE_HEIGHT,
+    UPDATE_PASSWORD,
+    UPDATE_PROFILE,
+    UPDATE_WEIGHT,
     UPDATE_WISHLIST
 } from "../api";
 import {
-    putFollowingNames,
     putFollowerNames,
-    updateProfile,
+    putFollowingNames,
     updateAge,
-    updateHeight,
     updateArea,
-    updateWeight,
     updateExercise,
+    updateHeight,
+    updateProfile,
+    updateWeight,
     updateWishList
 } from "../state/userState";
 import {ButtonGroup} from "../auth/UserDetail3";
 
-const updateData = async (url, dataToUpdate, dispatchUpdateAction, setIsLoading, setIsSuccessMessage, dispatch) => {
+const getJWT = () => {
     const jwt = sessionStorage.getItem('jwt');
-    const headers = {
+    return {
         'Authorization': `Bearer ${jwt}`,
         'Content-Type': 'application/json'
     };
+}
+const updateData = async (url, dataToUpdate, dispatchUpdateAction, setIsLoading, setIsSuccessMessage, dispatch) => {
+    const headers = getJWT()
     setIsLoading(true);
     try {
         const response = await axios.put(url, dataToUpdate, {headers});
-        const data = response.data;
         dispatch(dispatchUpdateAction(dataToUpdate));
-        if (data.state) {
+        if (response.data.state) {
             setIsLoading(false);
             setIsSuccessMessage(true);
             setTimeout(() => {
@@ -64,16 +60,106 @@ export const UserProfileSetting = ({name, email}) => {
         </>
     )
 }
-const StyledSpan = styled.span`
-  margin: 5px 180px 5px 2px;
-`;
+const StyledSpan = styled.span`margin: 5px 180px 5px 2px;`;
+const OldPassword = ({setIsPasswordCorrect}) => {
+    //새 비밀번호
+    const [oldPassword, setOldPassword] = useState("");
+    //api 통신 로딩
+    const [isLoading, setIsLoading] = useState(false);
+    //비밀번호 일치 여부
+    const [isFailed, setIsFailed] = useState(false);
+
+    const handlePasswordChange = (e) => {
+        setOldPassword(e.target.value);
+    }
+    const handleOldPassword = async () => {
+        const headers = getJWT()
+        setIsLoading(true);
+        try {
+            const response = await axios.post(IS_PASSWORD_CORRECT,
+                {password: oldPassword},
+                {headers: headers});
+            if (response.data.state) {
+                setIsLoading(false);
+                setIsPasswordCorrect(false)
+                setIsFailed(false)
+            } else {
+                setIsLoading(false);
+                setIsPasswordCorrect(true)
+                setIsFailed(true)
+                setTimeout(() => {
+                    setIsFailed(false)
+                }, 2000);
+            }
+            setIsPasswordCorrect(response.data.state);
+        } catch (error) {
+            console.error('API 요청 에러:', error);
+        }
+    }
+
+    return (
+        <>
+            <StyledSpan>기존 비밀번호</StyledSpan>
+            <Input type="password" placeholder="기존 비밀번호를 입력하세요" onChange={handlePasswordChange}/>
+            {isFailed && <span>비밀번호가 틀렸습니다</span>}
+            <Button onClick={handleOldPassword}>{isLoading ? (<Loading/>) : ("확인")}</Button>
+
+        </>
+    )
+}
+const NewPassword = () => {
+    //새 비밀번호
+    const [newPassword, setNewPassword] = useState("");
+    //api 통신 로딩
+    const [isLoading, setIsLoading] = useState(false);
+    //비밀번호 수정 성공 메시지
+    const [isSuccessMessage, setIsSuccessMessage] = useState(false);
+    //수정 버튼 잠금
+    const [isNoChange, setIsNoChange] = useState(false)
+    const handlePasswordChange = (e) => {
+        setNewPassword(e.target.value);
+    }
+    const handleUpdate = async () => {
+        const headers = getJWT()
+        setIsLoading(true);
+        try {
+            const response = await axios.put(UPDATE_PASSWORD,
+                {newPassword: newPassword},
+                {headers: headers});
+            if (response.data.state) {
+                setIsLoading(false);
+                setIsSuccessMessage(true);
+                setNewPassword("")
+                setTimeout(() => {
+                    setIsSuccessMessage(false);
+                }, 2000);
+            }
+        } catch (error) {
+            console.error('API 요청 에러:', error);
+        }
+    }
+    useEffect(() => {
+        setIsNoChange(newPassword === "");
+    }, [newPassword]);
+    return (
+        <>
+            <StyledSpan>새 비밀번호</StyledSpan>
+            <Input type="password" placeholder="새 비밀번호를 입력하세요" defaultValue={newPassword}
+                   onChange={handlePasswordChange}/>
+            {isSuccessMessage && <span>수정 완료</span>}
+            <Button onClick={handleUpdate} disabled={isNoChange}>{isLoading ? (<Loading/>) : ("수정")}</Button>
+
+        </>
+    )
+}
+
 export const ChangeUserProfile = ({name, email}) => {
     const [newName, setNewName] = useState(name)
     const [newEmail, setNewEmail] = useState(email);
-    const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isNoChange, setIsNoChange] = useState(false)
+    const [isPasswordCorrect, setIsPasswordCorrect] = useState(false)
 
     const dispatch = useDispatch();
     const handleNameChange = (event) => {
@@ -83,38 +169,26 @@ export const ChangeUserProfile = ({name, email}) => {
     const handleEmailChange = (event) => {
         setNewEmail(event.target.value);
     }
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    }
 
     useEffect(() => {
-        if (newName === name && newEmail === email) {
-            setIsNoChange(true)
-        } else {
-            setIsNoChange(false)
-        }
+        setIsNoChange(newName === name && newEmail === email)
     }, [newName, newEmail])
+
     const handleUpdate = () => {
         updateData(
-            UPDATE_PROFILE,
-            {
+            UPDATE_PROFILE, {
                 name: newName,
                 email: newEmail
             },
             updateProfile, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
-            (success) => {
-                console.log(success);
+            () => {
             },
             (error) => {
                 console.error(error);
             }
         );
     };
-    //비밀번호가 없으면 없는대로 업데이트 하고 있으면 같이 서버로 보내는 함수 작성
-    const handlePasswordUpdate=()=>{
-        console.log(password)
-    }
 
 
     return (
@@ -126,9 +200,7 @@ export const ChangeUserProfile = ({name, email}) => {
             {isSuccessMessage && <p>수정 완료</p>}
             <Button onClick={handleUpdate} disabled={isNoChange}>{isLoading ? (<Loading/>) : ("수정")}</Button>
             <br/>
-            <StyledSpan>비밀번호</StyledSpan>
-            <Input type="password" defaultValue={''} onChange={handlePasswordChange}/>
-            <Button onClick={handlePasswordUpdate}>수정</Button>
+            {isPasswordCorrect ? (<NewPassword/>) : (<OldPassword setIsPasswordCorrect={setIsPasswordCorrect}/>)}
         </>
     )
 }
@@ -142,41 +214,31 @@ export const FollowingSetting = ({following}) => {
 }
 export const ShowFollowing = ({following}) => {
     const [isLoading, setIsLoading] = useState(false)
-
     const dispatch = useDispatch();
 
     const fetchData = async () => {
-        const jwt = sessionStorage.getItem('jwt')
-        const headers = {
-            'Authorization': `Bearer ${jwt}`,
-            'Content-Type': 'application/json'
-        }
+        const headers = getJWT()
         setIsLoading(true)
         try {
-            const response = await axios.post(GET_FOLLOWING, {
-                    following,
-                },
+            const response = await axios.post(GET_FOLLOWING, {following},
                 {headers: headers});
             const data = response.data;
             dispatch(
                 putFollowingNames({followingNames: data.following})
             )
-            setIsLoading(false)
+            console.log('get data complete!')
 
+            setIsLoading(false)
         } catch (error) {
             console.error('API 요청 에러:', error);
         }
     };
     useEffect(() => {
-            fetchData().then(() => {
-                console.log('get data complete!')
-            })
-        }
-        , [following])
+        fetchData()
+    }, [following])
 
     const {followingNames} = useSelector(state => state)
     if (isLoading) return (<Loading/>)
-
     if (followingNames?.length === 0) return (<span>팔로잉한 계정이 없습니다.</span>)
     return (
         <>
@@ -192,7 +254,7 @@ export const ShowFollowing = ({following}) => {
                             />
                         </InfoBox>
                     ))}
-                </span>
+            </span>
         </>
     )
 }
@@ -208,31 +270,24 @@ export const ShowFollowers = ({followers}) => {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
     const fetchData = async () => {
-        const jwt = sessionStorage.getItem('jwt')
-        const headers = {
-            'Authorization': `Bearer ${jwt}`,
-            'Content-Type': 'application/json'
-        }
+        const headers = getJWT()
         setIsLoading(true)
         try {
-            const response = await axios.post(GET_FOLLOWERS, {
-                    followers,
-                },
+            const response = await axios.post(GET_FOLLOWERS, {followers},
                 {headers: headers});
             const data = response.data;
-            // console.log('hi',data.followers);
             dispatch(
                 putFollowerNames({followerNames: data.followers})
             )
+            console.log('get data complete!')
+
             setIsLoading(false)
         } catch (error) {
             console.error('API 요청 에러:', error);
         }
     };
     useEffect(() => {
-        fetchData().then(() => {
-            console.log('get data complete!')
-        })
+        fetchData()
     }, [followers])
 
     const {followerNames} = useSelector(state => state)
@@ -277,24 +332,19 @@ export const ChangeArea = ({area}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_AREA,
-            {area: newArea},
+            UPDATE_AREA, {area: newArea},
             updateArea, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             (success) => {
-                console.log(success);
             },
             (error) => {
                 console.error(error);
             }
         );
     };
+
     useEffect(() => {
-        if (!newArea) {
-            setIsNoChange(true)
-        } else {
-            setIsNoChange(false)
-        }
+        setIsNoChange(!newArea)
     }, [newArea])
     return (
         <div style={{width: '300px'}}>
@@ -328,22 +378,18 @@ export const ChangeAge = ({age}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_AGE,
-            {age: newAge},
+            UPDATE_AGE, {age: newAge},
             updateAge, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
-            () => {},
+            () => {
+            },
             (error) => {
                 console.error(error);
             }
         );
     };
     useEffect(() => {
-        if (!newAge) {
-            setIsNoChange(true)
-        } else {
-            setIsNoChange(false)
-        }
+        setIsNoChange(!newAge)
     }, [newAge])
     return (
         <div style={{width: '300px'}}>
@@ -364,8 +410,10 @@ export const WeightSetting = ({weight}) => {
             <p>몸무게</p>
             {stringWeight.includes('이상') || stringWeight.includes('이하') ? (
                 <p>
-                    {stringWeight.substring(0, 2)} <span
-                    style={{fontSize: '15px'}}>kg {stringWeight.includes('이상') ? '이상' : '이하'}</span>
+                    {stringWeight.substring(0, 2)}
+                    <span style={{fontSize: '15px'}}>
+                        kg {stringWeight.includes('이상') ? '이상' : '이하'}
+                    </span>
                 </p>
             ) : (
                 <p>
@@ -395,25 +443,25 @@ export const ChangeWeight = ({weight}) => {
             {weight: newWeight},
             updateWeight, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
-            () => {},
+            () => {
+            },
             (error) => {
                 console.error(error);
             }
         );
     };
+
     useEffect(() => {
-        if (!newWeight) {
-            setIsNoChange(true)
-        } else {
-            setIsNoChange(false)
-        }
+        setIsNoChange(!newWeight)
     }, [newWeight])
     return (
         <div style={{width: '300px'}}>
             <p>현재 몸무게 : {stringWeight.includes('이상') || stringWeight.includes('이하') ? (
                 <>
-                    {stringWeight.substring(0, 2)} <span
-                    style={{fontSize: '15px'}}>kg {stringWeight.includes('이상') ? '이상' : '이하'}</span>
+                    {stringWeight.substring(0, 2)}
+                    <span style={{fontSize: '15px'}}>
+                    kg {stringWeight.includes('이상') ? '이상' : '이하'}
+                </span>
                 </>
             ) : (
                 <>
@@ -430,14 +478,15 @@ export const ChangeWeight = ({weight}) => {
 }
 export const HeightSetting = ({height}) => {
     const stringHeight = height.toString()
-
     return (
         <>
             <p>키</p>
             {stringHeight.includes('이상') || stringHeight.includes('이하') ? (
                     <p>
-                        {stringHeight.substring(0, 3)} <span
-                        style={{fontSize: '15px'}}>cm {stringHeight.includes('이상') ? '이상' : '이하'}</span>
+                        {stringHeight.substring(0, 3)}
+                        <span style={{fontSize: '15px'}}>
+                            cm {stringHeight.includes('이상') ? '이상' : '이하'}
+                        </span>
                     </p>
                 )
                 :
@@ -469,25 +518,25 @@ export const ChangeHeight = ({height}) => {
             {height: newHeight},
             updateHeight, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
-            () => {},
+            () => {
+            },
             (error) => {
                 console.error(error);
             }
         );
     };
+
     useEffect(() => {
-        if (!newHeight) {
-            setIsNoChange(true)
-        } else {
-            setIsNoChange(false)
-        }
+        setIsNoChange(!newHeight)
     }, [newHeight])
     return (
         <div style={{width: '300px'}}>
             <p>현재 키 : {stringHeight.includes('이상') || stringHeight.includes('이하') ? (
                     <>
-                        {stringHeight.substring(0, 3)} <span
-                        style={{fontSize: '15px'}}>cm {stringHeight.includes('이상') ? '이상' : '이하'}</span>
+                        {stringHeight.substring(0, 3)}
+                        <span style={{fontSize: '15px'}}>
+                            cm {stringHeight.includes('이상') ? '이상' : '이하'}
+                        </span>
                     </>
                 )
                 :
@@ -519,13 +568,13 @@ export const ChangeExercise = () => {
     const dispatch = useDispatch();
 
     const handleClickChange = (selectedExercise) => {
-        console.log(selectedExercise)
         updateData(
             UPDATE_EXERCISE,
             {exercise: selectedExercise},
             updateExercise, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
-            () => {},
+            () => {
+            },
             (error) => {
                 console.error(error);
             }
@@ -552,7 +601,6 @@ export const WishListSettingButton = () => {
 export const ChangeWishList = ({wishList}) => {
     const [selectedOptions, setSelectedOptions] = useState([]);
     const newWishList = ['평생 숙제 다이어트', '뱃살, 옆구리살 빼기', '마른 몸 벗어나기', '탄탄한 몸 만들기', '넓은 어깨 갖기', '슬림한 하체 만들기', '벌크업 하기', '굵코 큰 팔 만들기', '힙업', '팔뚝 군살 제거', '전체적인 근육량 증가', '선명한 복근 만들기', '굵은 하체 만들기']
-
     const [isNoChange, setIsNoChange] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isSuccessMessage, setIsSuccessMessage] = useState(false)
@@ -563,12 +611,7 @@ export const ChangeWishList = ({wishList}) => {
     }
 
     useEffect(() => {
-        if (selectedOptions.length === 0) {
-            setIsNoChange(true)
-        } else {
-            setIsNoChange(false)
-        }
-
+        setIsNoChange(selectedOptions.length === 0)
     }, [selectedOptions])
     const handleUpdate = () => {
         updateData(
@@ -576,7 +619,8 @@ export const ChangeWishList = ({wishList}) => {
             {wishList: selectedOptions},
             updateWishList, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
-            () => {},
+            () => {
+            },
             (error) => {
                 console.error(error);
             }

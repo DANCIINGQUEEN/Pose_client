@@ -1,6 +1,6 @@
 import React from 'react';
 import {useLocation} from "react-router-dom";
-import Like from "./Like";
+import Like, {SlidingComponent} from "./Like";
 import PoseNetprtc from "./PoseNetprtc";
 
 function InputToss2(props) {
@@ -37,7 +37,11 @@ function InputToss2(props) {
             <p>{exercise}</p>
             <p>{wishList}</p>
             <Like text={'like'}/>
-            <PoseNetprtc/>
+            {/*<PoseNetprtc/>*/}
+            <div style={{width:'300px'}}>
+
+            <SlidingComponent/>
+            </div>
         </>
     );
 }
