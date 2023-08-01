@@ -12,7 +12,7 @@ import {
     ThemeColor,
     UserBoxSize,
     InfoBox,
-    rainbowAnimation
+    rainbowAnimation, Modal
 } from "../UI/UIPackage";
 import {USER_SETTING} from '../api'
 
@@ -23,6 +23,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGear} from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
 import {GET_USER_FULL_INFO} from "../api";
+import {
+    AgeSetting,
+    AreaSetting, ExerciseSetting,
+    FollowersSetting,
+    FollowingSetting, HeightSetting,
+    ShowFollowers,
+    ShowFollowing, WeightSetting
+} from "./DetailSetting";
 
 const RainbowDiv = styled.div`
   border: 2px solid;
@@ -101,59 +109,26 @@ function Account(props) {
 
                 <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
 
-                    <InfoBox>
-                        <p>팔로워</p>
-                        <p>{followers ? followers && followers.length : '0'}명</p>
-                    </InfoBox>
+                    <Modal button={<FollowersSetting followers={followers}/>}
+                           render={<ShowFollowers followers={followers}/>}/>
 
+                    <Modal button={<FollowingSetting following={following}/>}
+                           render={<ShowFollowing following={following}/>}/>
                     <InfoBox>
-                        <p>팔로잉</p>
-                        <p>{following ? following && following.length : '0'}명</p>
+                        <AgeSetting age={age}/>
                     </InfoBox>
                     <InfoBox>
-                        <p>나이</p>
-                        <p>{age}</p>
+                        <AreaSetting area={area}/>
                     </InfoBox>
                     <InfoBox>
-                        <p>지역</p>
-                        <p>{area}</p>
+                        <WeightSetting weight={weight}/>
                     </InfoBox>
                     <InfoBox>
-                        <p>몸무게</p>
-                        {stringWeight.includes('이상') || stringWeight.includes('이하') ? (
-                            <p>
-                                {stringWeight.substring(0, 2)}
-                                <span style={{fontSize: '15px'}}>
-                                    kg {stringWeight.includes('이상') ? '이상' : '이하'}
-                                </span>
-                            </p>
-                        ) : (
-                            <p>
-                                {weight}kg
-                            </p>
-                        )}
-                    </InfoBox>
-                    <InfoBox>
-                        <p>키</p>
-                        {stringHeight.includes('이상') || stringHeight.includes('이하') ? (
-                                <p>
-                                    {stringHeight.substring(0, 3)} <span style={{fontSize: '15px'}}>
-                                    cm {stringHeight.includes('이상') ? '이상' : '이하'}
-                                    </span>
-                                </p>
-                            )
-                            :
-                            (
-                                <p>
-                                    {height}<span style={{fontSize: '15px'}}>cm</span>
-                                </p>
-                            )
-                        }
+                        <HeightSetting height={height}/>
                     </InfoBox>
                 </div>
                 <RainbowDiv>
-                    <p>주로 하는 운동</p>
-                    <p>{exercise}</p>
+                    <ExerciseSetting exercise={exercise}/>
                 </RainbowDiv>
                 <RainbowDiv>
                     <p>해결하고싶은 고민</p>

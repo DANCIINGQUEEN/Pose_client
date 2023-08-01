@@ -7,14 +7,10 @@ import {
     GET_FOLLOWERS,
     GET_FOLLOWING,
     IS_PASSWORD_CORRECT,
-    UPDATE_AGE,
-    UPDATE_AREA,
-    UPDATE_EXERCISE,
-    UPDATE_HEIGHT,
     UPDATE_PASSWORD,
     UPDATE_PROFILE,
-    UPDATE_WEIGHT,
-    UPDATE_WISHLIST
+    UPDATE_INFORMATION,
+    GET_UNFOLLOW
 } from "../api";
 import {
     putFollowerNames,
@@ -107,7 +103,7 @@ const OldPassword = ({setIsPasswordCorrect}) => {
         </>
     )
 }
-const NewPassword = () => {
+const NewPassword = ({setIsPasswordCorrect}) => {
     //새 비밀번호
     const [newPassword, setNewPassword] = useState("");
     //api 통신 로딩
@@ -132,6 +128,7 @@ const NewPassword = () => {
                 setNewPassword("")
                 setTimeout(() => {
                     setIsSuccessMessage(false);
+                    setIsPasswordCorrect(false)
                 }, 2000);
             }
         } catch (error) {
@@ -200,7 +197,7 @@ export const ChangeUserProfile = ({name, email}) => {
             {isSuccessMessage && <p>수정 완료</p>}
             <Button onClick={handleUpdate} disabled={isNoChange}>{isLoading ? (<Loading/>) : ("수정")}</Button>
             <br/>
-            {isPasswordCorrect ? (<NewPassword/>) : (<OldPassword setIsPasswordCorrect={setIsPasswordCorrect}/>)}
+            {isPasswordCorrect ? (<NewPassword setIsPasswordCorrect={setIsPasswordCorrect}/>) : (<OldPassword setIsPasswordCorrect={setIsPasswordCorrect}/>)}
         </>
     )
 }
@@ -210,6 +207,51 @@ export const FollowingSetting = ({following}) => {
             <p>팔로잉</p>
             <p>{following ? following && following.length : '0'}명</p>
         </>
+    )
+}
+const FFDiv=styled.div`
+  width: 270px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${ThemeColor.containerColor};
+  margin: 7px 0;
+  border-radius: 16px;
+  padding:0 20px;
+  height: 60px;
+`
+const FFButton=styled.button`
+  background-color: ${props => (props.delete ? `${ThemeColor.buttonColor}`: `${ThemeColor.disabledButtonColor}`)};
+  border:none;
+  border-radius: 5px;
+  padding: 5px 10px;
+`
+const DeleteFF=({friend})=>{
+    const [isDelete,setIsDelete]=useState(true)
+    const [isLoading, setIsLoading] = useState(false)
+    const handleClick=()=>{
+        setIsDelete(prevIsDelete => !prevIsDelete)
+        const headers = getJWT()
+        const dataToSend = {
+            friend: friend,
+            state:isDelete
+        };
+        setIsLoading(true)
+        axios.post(GET_UNFOLLOW, dataToSend, { headers })
+            .then(response => {
+                console.log(response.data);
+                setIsLoading(false)
+            })
+            .catch(error => {
+                console.error('API 요청 에러:', error);
+                setIsLoading(false)
+            });
+    }
+    return (
+        <FFButton onClick={handleClick} delete={isDelete}>
+            {isLoading ? <Loading /> : isDelete ? "삭제" : "취소"}
+        </FFButton>
+
     )
 }
 export const ShowFollowing = ({following}) => {
@@ -222,12 +264,10 @@ export const ShowFollowing = ({following}) => {
         try {
             const response = await axios.post(GET_FOLLOWING, {following},
                 {headers: headers});
-            const data = response.data;
             dispatch(
-                putFollowingNames({followingNames: data.following})
+                putFollowingNames({followingNames: response.data.following})
             )
             console.log('get data complete!')
-
             setIsLoading(false)
         } catch (error) {
             console.error('API 요청 에러:', error);
@@ -243,18 +283,17 @@ export const ShowFollowing = ({following}) => {
     return (
         <>
             <span>팔로잉</span>
-            <span>
-                    {followingNames?.map((user) => (
-                        <InfoBox style={{width: '230px'}} key={user[1]}>
-                            <UserBox
-                                name={user[0]}
-                                email={user[1]}
-                                size={UserBoxSize.medium}
-                                style={{padding: '5px 0px'}}
-                            />
-                        </InfoBox>
-                    ))}
-            </span>
+            {followingNames?.map((user) => (
+                <FFDiv key={user[0]}>
+                    <UserBox
+                        name={user[1]}
+                        email={user[2]}
+                        size={UserBoxSize.medium}
+                    />
+                    <DeleteFF friend={following[0]}/>
+                </FFDiv>
+            ))}
+
         </>
     )
 }
@@ -297,14 +336,15 @@ export const ShowFollowers = ({followers}) => {
         <>
             <span>팔로워</span>
             {followerNames?.map((user) => (
-                <InfoBox style={{width: '230px'}} key={user[1]}>
+                <FFDiv key={user[0]}>
                     <UserBox
-                        name={user[0]}
-                        email={user[1]}
+                        name={user[1]}
+                        email={user[2]}
                         size={UserBoxSize.medium}
                         style={{padding: '5px 0px'}}
                     />
-                </InfoBox>
+                    <DeleteFF friend={followers}/>
+                </FFDiv>
             ))}
         </>
     )
@@ -332,7 +372,7 @@ export const ChangeArea = ({area}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_AREA, {area: newArea},
+            UPDATE_INFORMATION, {area: newArea, item:'area'},
             updateArea, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             (success) => {
@@ -378,7 +418,7 @@ export const ChangeAge = ({age}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_AGE, {age: newAge},
+            UPDATE_INFORMATION, {age: newAge, item:'age'},
             updateAge, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -439,8 +479,8 @@ export const ChangeWeight = ({weight}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_WEIGHT,
-            {weight: newWeight},
+            UPDATE_INFORMATION,
+            {weight: newWeight, item:'weight'},
             updateWeight, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -514,8 +554,8 @@ export const ChangeHeight = ({height}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_HEIGHT,
-            {height: newHeight},
+            UPDATE_INFORMATION,
+            {height: newHeight, item:'height'},
             updateHeight, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -569,8 +609,8 @@ export const ChangeExercise = () => {
 
     const handleClickChange = (selectedExercise) => {
         updateData(
-            UPDATE_EXERCISE,
-            {exercise: selectedExercise},
+            UPDATE_INFORMATION,
+            {exercise: selectedExercise, item:'exercise'},
             updateExercise, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -615,8 +655,8 @@ export const ChangeWishList = ({wishList}) => {
     }, [selectedOptions])
     const handleUpdate = () => {
         updateData(
-            UPDATE_WISHLIST,
-            {wishList: selectedOptions},
+            UPDATE_INFORMATION,
+            {wishList: selectedOptions, item:'wishList'},
             updateWishList, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {

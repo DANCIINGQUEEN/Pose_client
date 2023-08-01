@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import styled, {keyframes} from 'styled-components';
@@ -13,7 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 //아이콘
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faDumbbell, faHouse, faPeopleGroup, faUser} from '@fortawesome/free-solid-svg-icons';
-import {SELECTED_EXERCISE, WISH_EXERCISE, ACCOUNT, MATE} from '../api'
+import {ACCOUNT, MATE, SELECTED_EXERCISE, WISH_EXERCISE} from '../api'
 
 export const ThemeColor = {
     rootColor: 'rgba(217, 217, 217, 0.11)',
@@ -249,9 +249,8 @@ export const CustomSelect = ({item, options, onChange}) => {
 };
 
 export const Exit = ({text}) => {
-    const q = text
     return (
-        <div>{q}</div>
+        <div>{text}</div>
     )
 }
 export const HorizonLine = () => {
@@ -466,6 +465,7 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  //border:1px solid black;
 `;
 const ModalButton = styled.button`
   border: none;
