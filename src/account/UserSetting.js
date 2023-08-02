@@ -107,17 +107,9 @@ function UserSetting(props) {
                 </div>
                 <Modal width={'280px'}
                        button={<ExerciseSetting exercise={exercise}/>} render={<ChangeExercise/>}/>
+
                 <RainbowDiv>
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                        alignItems: 'center'
-                    }}>
-                        <p>해결하고싶은 고민</p>
-                        <Modal width={'75px'} button={<WishListSettingButton/>}
-                               render={<ChangeWishList wishList={wishList}/>}/>
-                    </div>
+                    <p>해결하고싶은 고민</p>
                     {
                         wishList.map((item, index) => {
                                 return (
@@ -127,6 +119,8 @@ function UserSetting(props) {
                         )
                     }
                 </RainbowDiv>
+                <Modal width={'75px'} button={<WishListSettingButton/>}
+                       render={<ChangeWishList wishList={wishList}/>}/>
                 <br/>
             </div>
             <NavigationBar/>

@@ -659,7 +659,7 @@ export const ChangeWishList = ({wishList}) => {
         );
     };
     return (
-        <div style={{width: '370px'}}>
+        <div style={{width: '335px'}}>
             <h2>고민 재선택</h2>
             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
                 <ButtonGroup buttons={newWishList} selectedWishList={wishList} onChange={handleOptionsChange}/>

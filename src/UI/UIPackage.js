@@ -449,12 +449,13 @@ const ModalOverlay = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
+  //position: fixed;
+  //top: 0;
+  //left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  //background-color: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
   animation: ${fadeIn} 0.3s ease;
 `;
 
@@ -560,8 +561,7 @@ export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick
 
     const style = {
         textDecoration: 'none',
-        color: activateLink === 'exercise' || 'ranking' || 'home' || 'community' || 'account' ? 'black' : '#9b9b9b',
-        // fontWeight: activateLink === 'exercise' ? 'bold' : 'normal',
+        color:'black',
         display: 'flex',
         flexDirection: 'column',
     }
