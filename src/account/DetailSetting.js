@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {Button, CustomSelect, InfoBox, Input, Loading, ThemeColor, UserBox, UserBoxSize,} from "../UI/UIPackage";
+import {Button, CustomSelect, InfoBox, Input, Loading, ThemeColor, UserBox, UserBoxSize, getJWT} from "../UI/UIPackage";
 import {
     GET_FOLLOWERS,
     GET_FOLLOWING,
@@ -13,6 +13,7 @@ import {
     GET_UNFOLLOW
 } from "../api";
 import {
+    putFollow,
     putFollowerNames,
     putFollowingNames,
     updateAge,
@@ -25,13 +26,6 @@ import {
 } from "../state/userState";
 import {ButtonGroup} from "../auth/UserDetail3";
 
-const getJWT = () => {
-    const jwt = sessionStorage.getItem('jwt');
-    return {
-        'Authorization': `Bearer ${jwt}`,
-        'Content-Type': 'application/json'
-    };
-}
 const updateData = async (url, dataToUpdate, dispatchUpdateAction, setIsLoading, setIsSuccessMessage, dispatch) => {
     const headers = getJWT()
     setIsLoading(true);
@@ -221,26 +215,24 @@ const FFDiv=styled.div`
   height: 60px;
 `
 const FFButton=styled.button`
-  background-color: ${props => (props.delete ? `${ThemeColor.buttonColor}`: `${ThemeColor.disabledButtonColor}`)};
+  background-color: ${ThemeColor.buttonColor};
   border:none;
   border-radius: 5px;
   padding: 5px 10px;
 `
 const DeleteFF=({friend})=>{
-    const [isDelete,setIsDelete]=useState(true)
     const [isLoading, setIsLoading] = useState(false)
+    const dispatch = useDispatch();
     const handleClick=()=>{
-        setIsDelete(prevIsDelete => !prevIsDelete)
         const headers = getJWT()
-        const dataToSend = {
-            friend: friend,
-            state:isDelete
-        };
+        const dataToSend = {friend: friend,};
         setIsLoading(true)
         axios.post(GET_UNFOLLOW, dataToSend, { headers })
             .then(response => {
-                console.log(response.data);
                 setIsLoading(false)
+                // console.log(response.data.following)
+                dispatch(putFollow({following:response.data.following}))
+                dispatch(putFollowingNames({followingNames:response.data.followingNames}))
             })
             .catch(error => {
                 console.error('API 요청 에러:', error);
@@ -248,8 +240,8 @@ const DeleteFF=({friend})=>{
             });
     }
     return (
-        <FFButton onClick={handleClick} delete={isDelete}>
-            {isLoading ? <Loading /> : isDelete ? "삭제" : "취소"}
+        <FFButton onClick={handleClick}>
+            {isLoading ? <Loading /> : "삭제"}
         </FFButton>
 
     )
@@ -267,7 +259,7 @@ export const ShowFollowing = ({following}) => {
             dispatch(
                 putFollowingNames({followingNames: response.data.following})
             )
-            console.log('get data complete!')
+            console.log(response.data)
             setIsLoading(false)
         } catch (error) {
             console.error('API 요청 에러:', error);
@@ -276,6 +268,7 @@ export const ShowFollowing = ({following}) => {
     useEffect(() => {
         fetchData()
     }, [following])
+    // console.log(following)
 
     const {followingNames} = useSelector(state => state)
     if (isLoading) return (<Loading/>)
@@ -288,9 +281,9 @@ export const ShowFollowing = ({following}) => {
                     <UserBox
                         name={user[1]}
                         email={user[2]}
-                        size={UserBoxSize.medium}
+                        size={UserBoxSize.small}
                     />
-                    <DeleteFF friend={following[0]}/>
+                    <DeleteFF friend={user[0]}/>
                 </FFDiv>
             ))}
 
@@ -318,8 +311,7 @@ export const ShowFollowers = ({followers}) => {
             dispatch(
                 putFollowerNames({followerNames: data.followers})
             )
-            console.log('get data complete!')
-
+            // console.log('get data complete!')
             setIsLoading(false)
         } catch (error) {
             console.error('API 요청 에러:', error);
@@ -343,7 +335,7 @@ export const ShowFollowers = ({followers}) => {
                         size={UserBoxSize.medium}
                         style={{padding: '5px 0px'}}
                     />
-                    <DeleteFF friend={followers}/>
+                    {/*<DeleteFF friend={followers}/>*/}
                 </FFDiv>
             ))}
         </>

@@ -1,9 +1,11 @@
 import React from 'react';
+import RecommendUser from "./RecommendUser";
 
 function MateDashboard(props) {
     return (
         <div>
-            hello
+            <RecommendUser/>
+
         </div>
     );
 }

@@ -9,7 +9,7 @@ import {GET_USER_FULL_INFO} from '../api'
 
 import {getUserFullInfo, logout} from "../state/userState";
 
-import {Container, UserBox, NavigationBar, UserBoxSize} from '../UI/UIPackage';
+import {Container, UserBox, NavigationBar, UserBoxSize, getJWT} from '../UI/UIPackage';
 
 import CurrentExercise from "./widget/currentExercise/CurrentExercise";
 import HomeRanking from "./widget/HomeRanking";
@@ -82,11 +82,12 @@ function Home(props) {
 
 
     const getUserInfo = () => {
-        const jwt = sessionStorage.getItem('jwt')
-        const headers = {
-            'Authorization': `Bearer ${jwt}`,
-            'Content-Type': 'application/json'
-        }
+        // const jwt = sessionStorage.getItem('jwt')
+        // const headers = {
+        //     'Authorization': `Bearer ${jwt}`,
+        //     'Content-Type': 'application/json'
+        // }
+        const headers=getJWT()
         setIsLoading(true)
         axios.get(GET_USER_FULL_INFO, {
             headers: headers
@@ -114,7 +115,7 @@ function Home(props) {
                     goals: goals,
                 })
             )
-            console.log(response.data)
+            // console.log(response.data)
             setIsLoading(false)
         }).catch(error => console.error(error))
     }

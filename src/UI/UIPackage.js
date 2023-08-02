@@ -503,7 +503,6 @@ export const Modal = ({render, button, width}) => {
     const closeModal = () => {
         setShowModal(false);
     };
-
     return (
         <>
             <ModalButton onClick={handleButtonClick} style={{width:width}}>
@@ -643,6 +642,13 @@ export const exerciseImage = {
     shoulderPress: 'exercise2/arm/shoulderPress.jpg',
     dumbbellRow: 'exercise2/arm/dumbbellRow.jpg',
     hammerCurl: 'exercise2/arm/hammerCurl.jpg'
+}
+export const getJWT = () => {
+    const jwt = sessionStorage.getItem('jwt');
+    return {
+        'Authorization': `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+    };
 }
 
 

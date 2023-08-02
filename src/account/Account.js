@@ -15,14 +15,13 @@ import {
     rainbowAnimation, Modal
 } from "../UI/UIPackage";
 import {USER_SETTING} from '../api'
-
 import {getUserFullInfo, logout} from "../state/userState";
 
 //아이콘
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGear} from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
-import {GET_USER_FULL_INFO} from "../api";
+import {API, GET_USER_FULL_INFO} from "../api";
 import {
     AgeSetting,
     AreaSetting, ExerciseSetting,
@@ -57,8 +56,6 @@ const RainbowDiv = styled.div`
 `;
 
 function Account(props) {
-
-
     const dispatch = useDispatch();
     const {
         name,
@@ -72,8 +69,6 @@ function Account(props) {
         followers,
         following,
     } = useSelector((state) => state);
-    const stringWeight = weight.toString()
-    const stringHeight = height.toString()
 
     async function setLogout() {
         dispatch(

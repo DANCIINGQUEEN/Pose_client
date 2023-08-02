@@ -20,7 +20,6 @@ function InputToss2(props) {
     const wishList = location.state?.wishList || ''
 
 
-    // console.log(location.state)
 
     return (
         <>

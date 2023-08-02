@@ -99,6 +99,19 @@ export const authSlice = createSlice({
             state.followingNames = followingNames;
             // console.log('putFollowingNames success!', state.followingNames)
         },
+        follow_user: (state, action) => {
+            const {userIdToFollow} = action.payload;
+            const isFollowing = state.following.includes(userIdToFollow);
+            if (!isFollowing) {
+                state.following= [...state.following, userIdToFollow]
+            }
+            console.log('fo',state.following, userIdToFollow)
+        },
+        unfollow_user: (state, action) => {
+            const unfollowUser = action.payload;
+            state.following = state.following.filter((userId) => userId !== unfollowUser);
+            console.log('un',state.following, unfollowUser)
+        },
         updateProfile: (state, action) => {
             const {name, email}=action.payload
             state.name=name;
@@ -137,6 +150,8 @@ export const {
     getUser,
     fetchName,
     getUserFullInfo,
+    follow_user,
+    unfollow_user,
     putFollow,
     putGoals,
     putAttain,

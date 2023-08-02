@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
-import {GET_RECOMMEND_USER} from '../api'
-import {Button, Loading, ThemeColor, UserBox, UserBoxSize} from "../UI/UIPackage";
+import {GET_RECOMMEND_USER, GET_UNFOLLOW} from '../api'
+import {Button, Loading, ThemeColor, UserBox, UserBoxSize, getJWT} from "../UI/UIPackage";
 import styled from "styled-components";
 
 import {FOLLOW_USER} from "../api";
+import {useDispatch} from "react-redux";
+import {putFollow, putFollowingNames} from "../state/userState";
 
 const UserInfoBox = styled.div`
   width: 320px;
@@ -24,51 +26,52 @@ const Detail = styled.p`
   padding: 5px;
 `
 
-const FollowButton=()=>{
+const FollowButton = ({userId}) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [isFollowing, setIsFollowing] = useState(false);
+    const dispatch = useDispatch();
+    const handleFollow = async () => {
+        try {
+            setIsLoading(true);
+            const headers = getJWT();
+            const url = isFollowing ? GET_UNFOLLOW : FOLLOW_USER;
+            const data = isFollowing ? { friend: userId } : { userIdToFollow: userId };
+
+            const response = await axios.post(url, data, { headers });
+
+            dispatch(putFollow({ following: response.data.following }));
+            dispatch(putFollowingNames({ followingNames: response.data.followingNames }));
+            setIsFollowing((isFollowing) => !isFollowing);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
-        <Button>
-            팔로우
+        <Button style={{
+            width: '95px',
+            backgroundColor: isFollowing ? ThemeColor.disabledButtonColor : ThemeColor.buttonColor
+        }}
+                onClick={handleFollow}>
+            {isLoading ? <Loading/> : isFollowing ? "취소" : "팔로잉"}
         </Button>
     )
 }
 const RecommendUser = () => {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [followLoading, setFollowLoading] = useState(false);
-    const [isFollowing, setIsFollowing] = useState(false);
-
-    const handleFollow = async (userIdToFollow) => {
-        setFollowLoading(true)
-        try {
-            const token = sessionStorage.getItem('jwt'); // Assuming the JWT token is stored in localStorage
-            const headers = {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-            const response = await axios.post(FOLLOW_USER,
-                {userIdToFollow},
-                {headers: headers},
-            )
-            if (response.status === 200) {
-                setIsFollowing(true);
-            }
-            setFollowLoading(false)
-        } catch (error) {
-            console.error(error);
-            setFollowLoading(false)
-        }
-    };
-
-
     const fetchUsers = async () => {
-        setIsLoading(true);
         try {
-            const response = await axios.get(GET_RECOMMEND_USER);
-            setUsers(response.data);
-            // console.log(response.data)
-            setIsLoading(false);
+            setIsLoading(true);
+            const headers = getJWT()
+            const response = await axios.get(GET_RECOMMEND_USER,
+                {headers: headers});
+            setUsers(response.data.recommendedUsers);
         } catch (error) {
             console.error(error);
+        }finally {
             setIsLoading(false);
         }
     };
@@ -77,16 +80,13 @@ const RecommendUser = () => {
         fetchUsers()
     }, []);
 
-
     return (
         <div>
             <h2>추천 유저</h2>
-            <div style={{display:'flex', justifyContent:'center'}}>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
                 {isLoading && (<Loading/>)}
             </div>
-
-
-            {users.map(user => (
+            {users?.map(user => (
                 <UserInfoBox key={user._id}>
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                         <UserBox name={user.name} email={user.email} size={UserBoxSize.small}/>
@@ -96,12 +96,7 @@ const RecommendUser = () => {
                             <Detail>{user.age}</Detail>
                         </div>
                     </div>
-                    <Button
-                        style={{width: '89px', fontSize: UserBoxSize.xSmall}}
-                        onClick={() => handleFollow(user._id)}>
-                        {isFollowing ? `팔로잉` : '팔로우'}
-                    </Button>
-
+                    <FollowButton userId={user._id}/>
                 </UserInfoBox>
             ))}
         </div>

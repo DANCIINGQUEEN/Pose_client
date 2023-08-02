@@ -26,16 +26,10 @@ const API={
     GET_FOLLOWERS:`${API_BASE_URL}/user/getFollowers`,
     GET_FOLLOWING:`${API_BASE_URL}/user/getFollowing`,
     //언팔
-    GET_UNFOLLOW:`${API_BASE_URL}/user/followingChange`,
+    GET_UNFOLLOW:`${API_BASE_URL}/user/getUnfollow`,
 
     //유저 정보 수정
     UPDATE_PROFILE:`${API_BASE_URL}/user/updateProfile`,
-    // UPDATE_AGE:`${API_BASE_URL}/user/updateAge`,
-    // UPDATE_WEIGHT:`${API_BASE_URL}/user/updateWeight`,
-    // UPDATE_HEIGHT:`${API_BASE_URL}/user/updateHeight`,
-    // UPDATE_AREA:`${API_BASE_URL}/user/updateArea`,
-    // UPDATE_EXERCISE:`${API_BASE_URL}/user/updateExercise`,
-    // UPDATE_WISHLIST:`${API_BASE_URL}/user/updateWishList`,
     UPDATE_INFORMATION:`${API_BASE_URL}/user/updateInformation`,
     IS_PASSWORD_CORRECT:`${API_BASE_URL}/user/isPasswordCorrect`,
     UPDATE_PASSWORD:`${API_BASE_URL}/user/updatePassword`,
@@ -70,11 +64,6 @@ const API={
     USER_SETTING:'/usersetting',
     ACCOUNT:'/account',
 
-
-
-
 }
 
-
-module.exports = API
-
+module.exports = API;
