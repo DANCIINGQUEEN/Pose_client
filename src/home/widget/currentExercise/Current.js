@@ -3,7 +3,10 @@ import {Box, Container, ThemeColor, exerciseName, NavigationBar} from "../../../
 import {Doughnut} from "react-chartjs-2";
 import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
-import {useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {CURRENT, WISH_EXERCISE} from "../../../api";
 
 const DoughnutBox = styled.div`
   width: 205px;
@@ -174,6 +177,25 @@ function Current(props) {
                     <EachExercise key={index} dDay={dDay} goal={goal} attain={attain}/>
                 ))
             }
+            <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: '16px',
+                    padding: '20px',
+                    backgroundColor: ThemeColor.divColor}}>
+                <Link to={WISH_EXERCISE} style={{
+                    textDecoration: 'none',
+                    color: 'black',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '160px'}}>
+                    <div>새로운 운동 선택</div>
+                    <FontAwesomeIcon icon={faArrowRight}/>
+                </Link>
+            </div>
             <NavigationBar/>
         </Container>
     );

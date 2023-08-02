@@ -140,6 +140,10 @@ export const authSlice = createSlice({
         updateWishList: (state, action) => {
             const {wishList}=action.payload
             state.wishList=wishList;
+        },
+        initialGoal: (state, action) => {
+            state.dDay=null;
+            state.goals=null;
         }
     }
 })
@@ -163,6 +167,7 @@ export const {
     updateWeight,
     updateHeight,
     updateExercise,
-    updateWishList
+    updateWishList,
+    initialGoal
 } = authSlice.actions
 export default authSlice.reducer

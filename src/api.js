@@ -21,6 +21,8 @@ const API={
 
     //유저의 운동 목표 설정
     GOAL_SETTING: `${API_BASE_URL}/user/goalSetting`,
+    //운동 목표 초기화
+    INITIAL_GOAL: `${API_BASE_URL}/user/initialGoal`,
 
     //유저의 팔로워, 팔로잉 목록
     GET_FOLLOWERS:`${API_BASE_URL}/user/getFollowers`,

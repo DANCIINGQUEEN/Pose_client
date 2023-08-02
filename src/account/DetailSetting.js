@@ -302,9 +302,9 @@ export const ShowFollowers = ({followers}) => {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
     const fetchData = async () => {
-        const headers = getJWT()
-        setIsLoading(true)
         try {
+            const headers = getJWT()
+            setIsLoading(true)
             const response = await axios.post(GET_FOLLOWERS, {followers},
                 {headers: headers});
             const data = response.data;
