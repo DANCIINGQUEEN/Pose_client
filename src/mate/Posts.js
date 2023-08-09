@@ -86,7 +86,9 @@ function Posts(props) {
             {loading && <Loading/>}
             {posts?.map((post, index) => {
                     const image = post.post.image.replace('public\\', '').replace(/\\/g, '/');
-                    const imagePath = GET_IMAGE + image;
+                    const image2 = post.post.image.replace(/\\/g, '/');
+                console.log(image2)
+                    const imagePath = GET_IMAGE +'./'+ image;
 
                     const targetDate = new Date(post.post.date);
                     const currentDate = new Date();
