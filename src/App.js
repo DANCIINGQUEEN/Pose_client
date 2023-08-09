@@ -27,12 +27,27 @@ import GoalSetting from "./home/widget/currentExercise/GoalSetting";
 import Current from "./home/widget/currentExercise/Current";
 import SelectedExercise from "./exercise/SelectedExercise";
 
-import {ACCOUNT, SELECTED_EXERCISE, RANKING, MATE, USER_SETTING, EXERCISE, TRAINING, WISH_EXERCISE
-,GOAL, CURRENT, NEW_USER, USER_DETAIL, USER_DETAIL_2, USER_DETAIL_3} from './api'
+import {
+    ACCOUNT,
+    SELECTED_EXERCISE,
+    RANKING,
+    MATE,
+    RECOMMEND_USER,
+    UPLOAD_POST,
+    USER_SETTING,
+    EXERCISE,
+    TRAINING,
+    WISH_EXERCISE,
+    GOAL,
+    CURRENT,
+    NEW_USER,
+    USER_DETAIL,
+    USER_DETAIL_2,
+    USER_DETAIL_3
+} from './api'
+import RecommendUser from "./mate/RecommendUser";
+import PostUpload from "./mate/PostUpload";
 const App = () => {
-    // const goals = useSelector((state) => state.goals)
-    // console.log(goals)
-
     return (
         <div className="App">
             <BrowserRouter>
@@ -50,6 +65,11 @@ const App = () => {
                     //운동
                     <Route path={EXERCISE} element={<Exercise/>}/>
                     <Route path={TRAINING} element={<Training/>}/>
+
+                    //메이트
+                    <Route path={MATE} element={<Mate/>}/>
+                    <Route path={RECOMMEND_USER} element={<RecommendUser/>}/>
+                    <Route path={UPLOAD_POST} element={<PostUpload/>}/>
 
 
                     //현재 유저 운동 상태

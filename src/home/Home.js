@@ -64,7 +64,7 @@ const DecimalDay = () => {
         return () => clearInterval(intervalId);
     }, [dDay]);
     return (
-        <>
+        <>  
             {dDay ? (
                 <>
                     {goalMonth && goalDay && <h3>{`${goalMonth}월 ${goalDay}일 까지`}</h3>}

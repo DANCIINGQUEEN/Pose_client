@@ -99,6 +99,7 @@ const RecommendUser = () => {
                     <FollowButton userId={user._id}/>
                 </UserInfoBox>
             ))}
+
         </div>
     );
 };

@@ -15,6 +15,12 @@ const API={
 
     //추천 유저
     GET_RECOMMEND_USER: `${API_BASE_URL}/user/getRecommendUsers`,
+    //게시물 업로드
+    UPLOAD_USER_POST: `${API_BASE_URL}/user/uploadPost`,
+    //팔로잉하는 유저들의 게시물 가져오기
+    GET_POSTS: `${API_BASE_URL}/user/getPosts`,
+    //이미지 경로
+    GET_IMAGE: `${API_BASE_URL}/`,
 
     //유저 팔로우
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,
@@ -61,6 +67,10 @@ const API={
 
     //메이트
     MATE:'/mate',
+    //추천 유저
+    RECOMMEND_USER:'/recommendUser',
+    //게시물 업로드
+    UPLOAD_POST:'/uploadPost',
 
     //계정
     USER_SETTING:'/usersetting',
