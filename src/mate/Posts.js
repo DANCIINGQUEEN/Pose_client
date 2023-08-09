@@ -87,8 +87,9 @@ function Posts(props) {
             {posts?.map((post, index) => {
                     const image = post.post.image.replace('public\\', '').replace(/\\/g, '/');
                     const image2 = post.post.image.replace(/\\/g, '/');
-                console.log(image2)
-                    const imagePath = GET_IMAGE +'./'+ image;
+                    const urlPath='https://competitive-leticia-danciingqueen.koyeb.app/'
+                    const imagePath = urlPath+ image;
+                console.log(imagePath)
 
                     const targetDate = new Date(post.post.date);
                     const currentDate = new Date();
