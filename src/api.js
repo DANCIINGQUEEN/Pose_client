@@ -29,6 +29,8 @@ const API={
     GOAL_SETTING: `${API_BASE_URL}/user/goalSetting`,
     //운동 목표 초기화
     INITIAL_GOAL: `${API_BASE_URL}/user/initialGoal`,
+    //운동 기록 업데이트
+    UPDATE_ATTAIN: `${API_BASE_URL}/user/updateUserExerciseAttain`,
 
     //유저의 팔로워, 팔로잉 목록
     GET_FOLLOWERS:`${API_BASE_URL}/user/getFollowers`,
@@ -58,6 +60,7 @@ const API={
     EXERCISE:'/exercise',
     GOAL:'/exercise/goal',
     TRAINING:'/exercise/training',
+
 
     //운동상태
     CURRENT:'/exercise/current',

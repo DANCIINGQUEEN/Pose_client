@@ -1,11 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Button, Container, ThemeColor} from "../UI/UIPackage";
-import * as ml5 from "ml5";
-import PoseNetprtc from "../prtc/PoseNetprtc";
+import {Button, Container, getJWT, Loading, ThemeColor} from "../UI/UIPackage";
 import styled from "styled-components";
 import {useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import confetti from "canvas-confetti";
+import axios from "axios";
+import {UPDATE_ATTAIN} from "../api";
+import {updateAttain} from "../state/userState";
 
 const MeterBar = styled.div`
   width: 300px;
@@ -24,8 +25,12 @@ const Progressbar = styled.div`
   border-radius: 10px;
 
   background-color: blue;`
-const ProgressBar = ({goal, onComplete}) => {
+const ProgressBar = ({goal, label}) => {
     const [progress, setProgress] = useState(0);
+    const [isComplete, setIsComplete] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const dispatch = useDispatch();
 
 
     const handleButtonClick = () => {
@@ -35,8 +40,8 @@ const ProgressBar = ({goal, onComplete}) => {
         }
         if (progress + 1 === parseInt(goal)) {
             // setComplete(true);
-            onComplete(true)
-            console.log('success')
+            setIsComplete(true)
+            // console.log('success')
             particle();
         }
     };
@@ -50,6 +55,30 @@ const ProgressBar = ({goal, onComplete}) => {
 
 
     const percent = ((progress / goal) * 100).toFixed(2);
+
+
+   const handleUpdateAttain = () => {
+       const headers=getJWT();
+       setIsLoading(true)
+       axios.post(UPDATE_ATTAIN,{
+           exercise: label,
+           attain: progress
+       },{headers})
+           .then((res)=>{
+               console.log(res)
+               setIsLoading(false)
+               dispatch(updateAttain({
+                   label: label,
+                    attain: progress
+               }))
+           })
+          .catch((err)=>{
+              console.log(err)
+              setIsLoading(false)
+          })
+   }
+   // const goals=useSelector((state)=>state.goals)
+   //  console.log(goals)
 
     return (
         <div style={{textAlign: 'center', padding: '20px'}}>
@@ -70,17 +99,25 @@ const ProgressBar = ({goal, onComplete}) => {
                 </Progressbar>
             </MeterBar>
             <button onClick={handleButtonClick}>+</button>
+            <br/>
+            <br/>
+            <Button onClick={handleUpdateAttain}
+                style={{
+                backgroundColor: isComplete ? ThemeColor.buttonColor : ThemeColor.disabledButtonColor,
+                width: '120px', height: '35px',
+
+            }}>{isLoading?<Loading/>:'기록 저장'}</Button>
         </div>
     );
 }
 
 function AiTraining({text}) {
-    const [isComplete, setIsComplete] = useState(false);
-
-
-    const handleProgressBarComplete = (isComplete) => {
-        setIsComplete(isComplete);
-    };
+    // const [isComplete, setIsComplete] = useState(false);
+    //
+    //
+    // const handleProgressBarComplete = (isComplete) => {
+    //     setIsComplete(isComplete);
+    // };
     const location = useLocation()
     const label = location.state?.label || ''
     const goals = useSelector((state) => state.goals)
@@ -90,17 +127,15 @@ function AiTraining({text}) {
     return (
         <Container>
             <h1>{text}</h1>
-
-            {/*<PoseNetprtc/>*/}
             <br/>
             {goal ? (
                     <>
-                        <ProgressBar goal={goal} onComplete={handleProgressBarComplete}/>
-                        <Button style={{
-                            backgroundColor: isComplete ? ThemeColor.buttonColor : ThemeColor.disabledButtonColor,
-                            width: '110px', height: '35px',
+                        <ProgressBar goal={goal} label={label}/>
+                        {/*<Button style={{*/}
+                        {/*    backgroundColor: isComplete ? ThemeColor.buttonColor : ThemeColor.disabledButtonColor,*/}
+                        {/*    width: '110px', height: '35px',*/}
 
-                        }}>기록 저장</Button>
+                        {/*}}>기록 저장</Button>*/}
                     </>
                 )
                 :

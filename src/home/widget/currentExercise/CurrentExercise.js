@@ -11,7 +11,7 @@ import {CURRENT, WISH_EXERCISE} from "../../../api";
 const RecBox = ({data}) => {
     const label = data.label
     const number = data.number
-    const attain = 10
+    const attain = data.attain
     const percent = attain / number * 100
     const chartData = {
         labels: [exerciseName[label]],

@@ -86,8 +86,21 @@ export const authSlice = createSlice({
             state.goals = goals;
             // console.log('putGoals success!')
         },
-        putAttain: (state, action) => {
-            state.attain=action.payload.attain
+        updateAttain: (state, action) => {
+            const {label, attain} = action.payload;
+            const goals = state.goals.map(goal => {
+                if (goal.label === label) {
+                    return {
+                        ...goal,
+                        attain: attain.toString()
+                    };
+                }
+                return goal;
+            });
+
+            // 새로운 goals 배열로 상태를 업데이트
+            state.goals = goals;
+            // console.log(state.goals)
         },
         putFollowerNames: (state, action) => {
             const {followerNames} = action.payload;
@@ -158,7 +171,7 @@ export const {
     unfollow_user,
     putFollow,
     putGoals,
-    putAttain,
+    updateAttain,
     putFollowerNames,
     putFollowingNames,
     updateProfile,
