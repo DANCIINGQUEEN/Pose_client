@@ -116,13 +116,14 @@ const ExerciseData = ({data, exercise}) => {
         </DoughnutBox>
     )
 }
-const EachExercise = ({dDay, goal, attain}) => {
+const EachExercise = ({dDay, goal}) => {
     const year = dDay.substring(2, 4)
     const month = dDay.substring(5, 7)
     const day = dDay.substring(8, 10)
     const label = goal.label
     const cycle = goal.cycle
     const goalNum = goal.number
+    const attain = goal.attain
     const percent = attain / goalNum * 100
 
     return (
@@ -168,13 +169,13 @@ function Current(props) {
     const dDay = useSelector((state) => state.dDay)
     const goals = useSelector((state) => state.goals)
     // console.log(dDay, goals)
-    const attain = 2
+    // const attain = 2
     return (
         <Container>
             <h1>{name}님의 현재 운동</h1>
             {
                 goals.map((goal, index) => (
-                    <EachExercise key={index} dDay={dDay} goal={goal} attain={attain}/>
+                    <EachExercise key={index} dDay={dDay} goal={goal}/>
                 ))
             }
             <div style={{
