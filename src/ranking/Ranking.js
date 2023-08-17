@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-    Carousel,
     CarouselList,
     Container,
     CustomSelect,

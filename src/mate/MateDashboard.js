@@ -5,7 +5,6 @@ function MateDashboard(props) {
     return (
         <div>
             <RecommendUser/>
-
         </div>
     );
 }

@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import {Container, ThemeColor, Button, getJWT, Loading} from "../UI/UIPackage";
 import axios from "axios";
-import {UPLOAD_USER_POST, MATE} from "../api";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+
+
+import {Container, ThemeColor, Button, Loading} from "../UI/UIPackage";
+import {functions} from "../UI/Functions";
+import {UPLOAD_USER_POST, MATE} from "../api";
 
 const Label = styled.label`
   display: block;
@@ -41,11 +44,9 @@ const DeleteButton = styled.button`
 `
 const Textarea = styled.textarea`
   width: 320px;
-  //height: 100%;
   min-height: 100px;
   height: auto;
   resize: none;
-  //overflow-y: hidden; 
   border: none;
   border-radius: 16px;
   background-color: ${ThemeColor.divColor};
@@ -77,7 +78,7 @@ function PostUpload(props) {
     }
     const handleSubmit = async () => {
         setIsLoading(true)
-        let headers=getJWT()
+        let headers=functions.getJWT()
         headers={...headers, 'Content-Type': 'multipart/form-data'}
         const formData = new FormData();
         formData.append('content', content);
@@ -85,7 +86,6 @@ function PostUpload(props) {
         formData.append('file', file);
         // console.log(formData, file, content)
         try {
-            // const headers = getJWT()
             const res = await axios.post(UPLOAD_USER_POST, formData, {headers: headers})
             console.log(res)
         } catch (error) {
@@ -128,7 +128,6 @@ function PostUpload(props) {
             <Button style={{width: '100px'}} onClick={handleSubmit} disabled={!file}>
                 {isLoading ? <Loading/> : '업로드'}
             </Button>
-            {/*<PortUpload/>*/}
         </Container>
     );
 }

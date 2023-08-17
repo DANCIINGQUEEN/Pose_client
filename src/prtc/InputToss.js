@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Container, SquareBox} from "../UI/UIPackage";
+import {Container} from "../UI/UIPackage";
 import {useNavigate} from "react-router-dom";
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {Doughnut} from "react-chartjs-2";
@@ -125,16 +125,16 @@ function InputToss(props) {
             <p>진행률 : <progress max='100' value="25">25%</progress></p>
             <p>진행률 : <meter max='100' value="25">25%</meter></p>
 
-            <div>
-                <SquareBox componentToRender={<Doughnut data={data2} options={options2}/>}/>
-            </div>
-            <div>
-                {/*<Doughnut data={data} options={options}/>*/}
-                <Doughnut data={data2} options={options2}/>
-            </div>
-            <div>
-                <Gallery componentToRender={<SquareBox/>}/>
-            </div>
+            {/*<div>*/}
+            {/*    <SquareBox componentToRender={<Doughnut data={data2} options={options2}/>}/>*/}
+            {/*</div>*/}
+            {/*<div>*/}
+            {/*    /!*<Doughnut data={data} options={options}/>*!/*/}
+            {/*    <Doughnut data={data2} options={options2}/>*/}
+            {/*</div>*/}
+            {/*<div>*/}
+            {/*    <Gallery componentToRender={<SquareBox/>}/>*/}
+            {/*</div>*/}
             <div >
                 <StateOfMate/>
             </div>

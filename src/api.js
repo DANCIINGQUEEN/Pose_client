@@ -21,6 +21,8 @@ const API={
     GET_POSTS: `${API_BASE_URL}/user/getPosts`,
     //이미지 경로
     GET_IMAGE: `${API_BASE_URL}/`,
+    //댓글 입력
+    POST_USER_POST_COMMENT: `${API_BASE_URL}/user/postUserPostComment`,
 
     //유저 팔로우
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,

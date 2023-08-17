@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {Button, CustomSelect, InfoBox, Input, Loading, ThemeColor, UserBox, UserBoxSize, getJWT} from "../UI/UIPackage";
+import {Button, CustomSelect, Input, Loading, ThemeColor, UserBox, UserBoxSize} from "../UI/UIPackage";
+import {functions} from "../UI/Functions";
 import {
     GET_FOLLOWERS,
     GET_FOLLOWING,
@@ -27,7 +28,7 @@ import {
 import {ButtonGroup} from "../auth/UserDetail3";
 
 const updateData = async (url, dataToUpdate, dispatchUpdateAction, setIsLoading, setIsSuccessMessage, dispatch) => {
-    const headers = getJWT()
+    const headers = functions.getJWT()
     setIsLoading(true);
     try {
         const response = await axios.put(url, dataToUpdate, {headers});
@@ -63,7 +64,7 @@ const OldPassword = ({setIsPasswordCorrect}) => {
         setOldPassword(e.target.value);
     }
     const handleOldPassword = async () => {
-        const headers = getJWT()
+        const headers = functions.getJWT()
         setIsLoading(true);
         try {
             const response = await axios.post(IS_PASSWORD_CORRECT,
@@ -110,7 +111,7 @@ const NewPassword = ({setIsPasswordCorrect}) => {
         setNewPassword(e.target.value);
     }
     const handleUpdate = async () => {
-        const headers = getJWT()
+        const headers = functions.getJWT()
         setIsLoading(true);
         try {
             const response = await axios.put(UPDATE_PASSWORD,
@@ -224,7 +225,7 @@ const DeleteFF=({friend})=>{
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
     const handleClick=()=>{
-        const headers = getJWT()
+        const headers = functions.getJWT()
         const dataToSend = {friend: friend,};
         setIsLoading(true)
         axios.post(GET_UNFOLLOW, dataToSend, { headers })
@@ -251,7 +252,7 @@ export const ShowFollowing = ({following}) => {
     const dispatch = useDispatch();
 
     const fetchData = async () => {
-        const headers = getJWT()
+        const headers = functions.getJWT()
         setIsLoading(true)
         try {
             const response = await axios.post(GET_FOLLOWING, {following},
@@ -303,7 +304,7 @@ export const ShowFollowers = ({followers}) => {
     const dispatch = useDispatch();
     const fetchData = async () => {
         try {
-            const headers = getJWT()
+            const headers = functions.getJWT()
             setIsLoading(true)
             const response = await axios.post(GET_FOLLOWERS, {followers},
                 {headers: headers});

@@ -9,7 +9,8 @@ import {GET_USER_FULL_INFO, ACCOUNT, INITIAL_GOAL, WISH_EXERCISE} from '../api'
 
 import {getUserFullInfo, logout} from "../state/userState";
 
-import {Container, UserBox, NavigationBar, UserBoxSize, getJWT, ThemeColor} from '../UI/UIPackage';
+import {Container, UserBox, NavigationBar, UserBoxSize, ThemeColor} from '../UI/UIPackage';
+import {functions} from "../UI/Functions";
 
 import CurrentExercise from "./widget/currentExercise/CurrentExercise";
 import HomeRanking from "./widget/HomeRanking";
@@ -24,15 +25,7 @@ const DecimalDay = () => {
     const dDay = useSelector((state) => state.dDay)
     const goalMonth = dDay?.substring(5, 7).replace(/^0+/, '');
     const goalDay = dDay?.substring(8, 10).replace(/^0+/, '');
-    // const initGoal=async ()=>{
-    //     try{
-    //         const headers=getJWT()
-    //         const res=await axios.get(INITIAL_GOAL,{headers:headers})
-    //         console.log(res.data)
-    //     }catch(err){
-    //         console.error(err)
-    //     }
-    // }
+
     let targetDate, now, timeDifference;
     const calculateRemainingTime = () => {
 
@@ -111,7 +104,7 @@ function Home(props) {
 
     const getUserInfo = async () => {
         try {
-            const headers = getJWT()
+            const headers = functions.getJWT()
             setIsLoading(true)
             const res = await axios.get(GET_USER_FULL_INFO, {headers: headers})
             const {

@@ -2,9 +2,6 @@ import React, {useState} from 'react';
 import {Container, NavigationBar, ThemeColor} from "../UI/UIPackage";
 import {useSelector} from "react-redux";
 import RecommendUser from "./RecommendUser";
-import MateDashboard from "./MateDashboard";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 import {RECOMMEND_USER, UPLOAD_POST} from '../api';
 
@@ -29,11 +26,7 @@ const PlusButton = styled(Link)`
 
   &:hover {
     background-color: ${ThemeColor.importantColor};
-
   }
-  // &:focus {
-  //   background-color: ${ThemeColor.importantColor};
-  // }
 `
 const AnimatedButton = styled(Link)`
   position: fixed;
@@ -52,6 +45,7 @@ const AnimatedButton = styled(Link)`
   align-items: center;
   cursor: pointer;
   padding-top: 4px;
+  display:${({visible})=>visible?'block':'none'};
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transform: translateY(${({ visible }) => (visible ? '0' : '20px')});
   transition: opacity 0.3s, transform 0.3s;
@@ -74,31 +68,24 @@ function Community(props) {
     return (
         <Container>
             <h1>메이트</h1>
-            <PlusButton
-                // to={UPLOAD_POST}
-                onClick={handlePlusButtonClick}>+</PlusButton>
             {
                 following ?
                     (
                         <>
-                                <Posts/>
-
+                        <Posts/>
+                        <PlusButton onClick={handlePlusButtonClick}>+</PlusButton>
+                        <AnimatedButton visible={showButtons} distance={140} to={UPLOAD_POST}>
+                            게시물 업로드
+                        </AnimatedButton>
+                        <AnimatedButton visible={showButtons} distance={190} to={RECOMMEND_USER}>
+                            추천 메이트
+                        </AnimatedButton>
                         </>
                     )
                     :
-                    (
-                        <RecommendUser/>
-                    )
-
+                    (<RecommendUser/>)
             }
-            <AnimatedButton visible={showButtons} distance={140} to={UPLOAD_POST}>
-                게시물 업로드
-            </AnimatedButton>
-            <AnimatedButton visible={showButtons} distance={190} to={RECOMMEND_USER}>
-                추천 메이트
-            </AnimatedButton>
             <NavigationBar/>
-
         </Container>
     );
 }

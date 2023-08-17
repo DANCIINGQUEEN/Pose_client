@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import {GET_RECOMMEND_USER, GET_UNFOLLOW} from '../api'
-import {Button, Loading, ThemeColor, UserBox, UserBoxSize, getJWT} from "../UI/UIPackage";
+import {Button, Loading, ThemeColor, UserBox, UserBoxSize} from "../UI/UIPackage";
+import {functions} from '../UI/Functions'
 import styled from "styled-components";
 
 import {FOLLOW_USER} from "../api";
@@ -33,7 +34,8 @@ const FollowButton = ({userId}) => {
     const handleFollow = async () => {
         try {
             setIsLoading(true);
-            const headers = getJWT();
+            // const headers = getJWT();
+            const headers=functions.getJWT();
             const url = isFollowing ? GET_UNFOLLOW : FOLLOW_USER;
             const data = isFollowing ? { friend: userId } : { userIdToFollow: userId };
 
@@ -65,7 +67,7 @@ const RecommendUser = () => {
     const fetchUsers = async () => {
         try {
             setIsLoading(true);
-            const headers = getJWT()
+            const headers = functions.getJWT()
             const response = await axios.get(GET_RECOMMEND_USER,
                 {headers: headers});
             setUsers(response.data.recommendedUsers);
