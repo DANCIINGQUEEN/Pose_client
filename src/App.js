@@ -34,6 +34,7 @@ import {
     MATE,
     RECOMMEND_USER,
     UPLOAD_POST,
+    MY_POSTS,
     USER_SETTING,
     EXERCISE,
     TRAINING,
@@ -47,6 +48,7 @@ import {
 } from './api'
 import RecommendUser from "./mate/RecommendUser";
 import PostUpload from "./mate/PostUpload";
+import MyPosts from "./mate/MyPosts";
 const App = () => {
     return (
         <div className="App">
@@ -70,6 +72,7 @@ const App = () => {
                     <Route path={MATE} element={<Mate/>}/>
                     <Route path={RECOMMEND_USER} element={<RecommendUser/>}/>
                     <Route path={UPLOAD_POST} element={<PostUpload/>}/>
+                    <Route path={MY_POSTS} element={<MyPosts/>}/>
 
 
                     //현재 유저 운동 상태

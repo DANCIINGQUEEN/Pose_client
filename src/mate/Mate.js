@@ -3,10 +3,11 @@ import {Container, NavigationBar, ThemeColor} from "../UI/UIPackage";
 import {useSelector} from "react-redux";
 import RecommendUser from "./RecommendUser";
 import {Link} from "react-router-dom";
-import {RECOMMEND_USER, UPLOAD_POST} from '../api';
+import {RECOMMEND_USER, UPLOAD_POST, MY_POSTS, GET_POSTS} from '../api';
 
 import styled from 'styled-components';
 import Posts from "./Posts";
+import MateTeam from "./MateTeam";
 
 const PlusButton = styled(Link)`
   position: fixed;
@@ -56,35 +57,67 @@ const AnimatedButton = styled(Link)`
   }
 `;
 
-function Community(props) {
+const MateNav= styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  //margin: 10px 0 10px 10px;
+  width: 200px;
+  height:30px;
+  button{
+    border: none;
+    background-color: transparent;
+    font-size: 18px;
+  }
+`
+const AllPosts=()=>{
     const [showButtons, setShowButtons] = useState(false);
-
+    const following = useSelector((state) => state.following)
     const handlePlusButtonClick = () => {
         setShowButtons(!showButtons);
     };
-    const following = useSelector((state) => state.following)
-
-
-    return (
-        <Container>
-            <h1>메이트</h1>
+    return(
+        <>
             {
                 following ?
                     (
                         <>
-                        <Posts/>
-                        <PlusButton onClick={handlePlusButtonClick}>+</PlusButton>
-                        <AnimatedButton visible={showButtons} distance={140} to={UPLOAD_POST}>
-                            게시물 업로드
-                        </AnimatedButton>
-                        <AnimatedButton visible={showButtons} distance={190} to={RECOMMEND_USER}>
-                            추천 메이트
-                        </AnimatedButton>
+                            <Posts API={GET_POSTS}/>
+                            <PlusButton onClick={handlePlusButtonClick}>+</PlusButton>
+                            <AnimatedButton visible={showButtons} distance={140} to={UPLOAD_POST}>
+                                게시물 업로드
+                            </AnimatedButton>
+                            <AnimatedButton visible={showButtons} distance={190} to={MY_POSTS}>
+                                내 게시물 보기
+                            </AnimatedButton>
+                            <AnimatedButton visible={showButtons} distance={240} to={RECOMMEND_USER}>
+                                추천 메이트
+                            </AnimatedButton>
                         </>
                     )
                     :
                     (<RecommendUser/>)
             }
+        </>
+    )
+}
+function Community(props) {
+    const [isPostsClicked, setIsPostsClicked] = useState(true);
+    const [isMateTeamClicked, setIsMateTeamClicked] = useState(false);
+    
+    const handleNavButtonClick = () => {
+        setIsPostsClicked(!isPostsClicked);
+        setIsMateTeamClicked(!isMateTeamClicked);
+    }
+
+    return (
+        <Container>
+            <h1>메이트</h1>
+            <MateNav>
+            <button onClick={handleNavButtonClick} style={{fontWeight:isPostsClicked?'bold':'normal'}}>게시글</button>
+            <button onClick={handleNavButtonClick} style={{fontWeight:isMateTeamClicked?'bold':'normal'}}>메이트 팀</button>
+            </MateNav>
+            {isPostsClicked? <AllPosts/> : <MateTeam/>}
             <NavigationBar/>
         </Container>
     );

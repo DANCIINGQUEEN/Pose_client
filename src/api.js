@@ -19,10 +19,14 @@ const API={
     UPLOAD_USER_POST: `${API_BASE_URL}/user/uploadPost`,
     //팔로잉하는 유저들의 게시물 가져오기
     GET_POSTS: `${API_BASE_URL}/user/getPosts`,
+    //내 게시물 가져오기
+    GET_MY_POSTS: `${API_BASE_URL}/user/getMyPosts`,
     //이미지 경로
-    GET_IMAGE: `${API_BASE_URL}/`,
+    GET_IMAGE: `https://competitive-leticia-danciingqueen.koyeb.app/`,
     //댓글 입력
     POST_USER_POST_COMMENT: `${API_BASE_URL}/user/postUserPostComment`,
+    //좋아요 클릭
+    POST_USER_POST_HEART: `${API_BASE_URL}/user/postUserPostHeart`,
 
     //유저 팔로우
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,
@@ -76,6 +80,8 @@ const API={
     RECOMMEND_USER:'/recommendUser',
     //게시물 업로드
     UPLOAD_POST:'/uploadPost',
+    //내 게시물 보기
+    MY_POSTS:'/myPosts',
 
     //계정
     USER_SETTING:'/usersetting',
