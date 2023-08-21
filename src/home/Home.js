@@ -9,7 +9,7 @@ import {GET_USER_FULL_INFO, ACCOUNT, INITIAL_GOAL, WISH_EXERCISE} from '../api'
 
 import {getUserFullInfo, logout} from "../state/userState";
 
-import {Container, UserBox, NavigationBar, UserBoxSize, ThemeColor} from '../UI/UIPackage';
+import {Container, UserBox, NavigationBar, UserBoxSize, ThemeColor, Button} from '../UI/UIPackage';
 import {functions} from "../UI/Functions";
 
 import CurrentExercise from "./widget/currentExercise/CurrentExercise";
@@ -148,6 +148,11 @@ function Home(props) {
             setIsLoading(false)
         }
     }
+    async function setLogout() {
+        dispatch(
+            logout()
+        )
+    }
 
     useEffect(() => {
         getUserInfo()
@@ -178,6 +183,11 @@ function Home(props) {
             <br/>
             <br/>
             <NavigationBar/>
+            <Link to={'/'}>
+                <Button onClick={setLogout}>
+                    로그아웃
+                </Button>
+            </Link>
         </Container>
     );
 }

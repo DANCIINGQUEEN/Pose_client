@@ -80,8 +80,7 @@ const AllPosts=()=>{
         <>
             {
                 following ?
-                    (
-                        <>
+                    <>
                             <Posts API={GET_POSTS}/>
                             <PlusButton onClick={handlePlusButtonClick}>+</PlusButton>
                             <AnimatedButton visible={showButtons} distance={140} to={UPLOAD_POST}>
@@ -94,9 +93,8 @@ const AllPosts=()=>{
                                 추천 메이트
                             </AnimatedButton>
                         </>
-                    )
                     :
-                    (<RecommendUser/>)
+                    <RecommendUser/>
             }
         </>
     )
@@ -104,7 +102,7 @@ const AllPosts=()=>{
 function Community(props) {
     const [isPostsClicked, setIsPostsClicked] = useState(true);
     const [isMateTeamClicked, setIsMateTeamClicked] = useState(false);
-    
+
     const handleNavButtonClick = () => {
         setIsPostsClicked(!isPostsClicked);
         setIsMateTeamClicked(!isMateTeamClicked);

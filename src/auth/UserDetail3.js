@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {ThemeColor, Container, Input, Button} from '../UI/UIPackage';
 import {useLocation, useNavigate} from "react-router-dom";
 
-import {REGISTER} from '../api'
+import {REGISTER_DETAIL_USER} from '../api'
 import axios from "axios";
 import confetti from "canvas-confetti";
 
@@ -69,13 +69,13 @@ export const UserDetail3=(props)=> {
                 ...location.state,
                 wishList: selectedOptions
             }
-            await axios.post(REGISTER, formData
+            await axios.post(REGISTER_DETAIL_USER, formData
             )
             particle()
-            alert("Signup successful");
+            alert("회원가입이 완료되었습니다");
             navigate('/')
         } catch (error) {
-            alert("An error occurred while signing up");
+            alert("이메일 인증 도중 오류가 발생했습니다. 다시 시도해주세요.");
         }
     }
 

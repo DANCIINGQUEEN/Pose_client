@@ -104,9 +104,11 @@ const CommentsList = styled.div`
   }
 `
 
-const CommentList = ({display, onChange, post}) => {
+const CommentList = ({display, onChange, post, userName}) => {
     const comment=useRef("")
     const [isLoading, setIsLoading] = useState(false)
+    const [comments, setComments] = useState(post.post.comments)
+    console.log(comments)
     const handleCommentSubmit = async () => {
         setIsLoading(true)
         const headers = functions.getJWT()
@@ -116,12 +118,13 @@ const CommentList = ({display, onChange, post}) => {
                 postId: post.post._id,
                 content: comment.current.value
             }, {headers: headers})
-            comment.current.value=""
-            window.location.reload();
+            setComments(comments => [...comments, {user:userName, content: comment.current.value}])
         } catch (e) {
             console.log(e)
         } finally {
             setIsLoading(false)
+            // comment.current.value=""
+
         }
     }
 
@@ -134,8 +137,8 @@ const CommentList = ({display, onChange, post}) => {
     }
     return (
         <FeedbackList style={buttonStyle}>
-            {(post.post.comments.length === 0) && <p>댓글이 없습니다.</p>}
-            {post.post.comments?.map((comment, index) => {
+            {(comments.length === 0) && <p>댓글이 없습니다.</p>}
+            {comments?.map((comment, index) => {
                 return (
                     <CommentsList key={index}>
                         <div>
@@ -150,7 +153,7 @@ const CommentList = ({display, onChange, post}) => {
             <Input type="text" placeholder={'댓글을 입력하세요'} style={{width: '250px'}}
                 ref={comment}
             />
-            <button onClick={handleCommentSubmit} disabled={!comment}
+            <button onClick={handleCommentSubmit}
                     style={{backgroundColor: !comment ? ThemeColor.disabledButtonColor : ThemeColor.buttonColor}}>
                 {isLoading ? <Loading/> : '등록'}
             </button>
@@ -169,13 +172,12 @@ const Comments = ({comments, handleCommentButtonClick}) => {
 }
 
 
-const Likes = ({post}) => {
+const Likes = ({post, userName}) => {
     const [like, setLike] = useState(post.post.likes)
     const [isLikeButtonClick, setIsLikeButtonClick] = useState(false)
     const [isAlreadyLike, setIsAlreadyLike] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const name = useSelector((state) => state.name)
-    // console.log(like, name)
+    // const name = useSelector((state) => state.name)
     const handleLikeButtonClick = async () => {
         const headers = functions.getJWT()
         setIsLikeButtonClick(isLikeButtonClick => !isLikeButtonClick)
@@ -185,7 +187,7 @@ const Likes = ({post}) => {
                 userId: post._id,
                 postId: post.post._id,
             }, {headers: headers})
-            like.includes(name) ? setLike(like => like.filter((item) => item !== name)) : setLike(like => [...like, name])
+            like.includes(userName) ? setLike(like => like.filter((item) => item !== userName)) : setLike(like => [...like, userName])
         } catch (e) {
             console.log(e)
         } finally {
@@ -193,7 +195,7 @@ const Likes = ({post}) => {
         }
     }
     useEffect(() => {
-        if (like.includes(name)) {
+        if (like.includes(userName)) {
             setIsAlreadyLike(true);
             setIsLikeButtonClick(true)
         }
@@ -213,6 +215,8 @@ const Likes = ({post}) => {
 }
 const Post = ({postTime, imagePath, post}) => {
     const [isCommentButtonClick, setIsCommentButtonClick] = useState(false)
+    const name = useSelector((state) => state.name)
+
     const handleCommentButtonClick = () => {
         setIsCommentButtonClick(isCommentButtonClick => !isCommentButtonClick)
     }
@@ -228,7 +232,7 @@ const Post = ({postTime, imagePath, post}) => {
                 </PostHeader>
                 <Img src={imagePath} alt=""/>
                 <PostFeedback>
-                    <Likes post={post}/>
+                    <Likes post={post} userName={name}/>
                     <Comments comments={post.post.comments} handleCommentButtonClick={handleCommentButtonClick}/>
                 </PostFeedback>
                 <PostContent>
@@ -236,7 +240,7 @@ const Post = ({postTime, imagePath, post}) => {
                     <span>{post.post.content}</span>
                 </PostContent>
             </div>
-            <CommentList post={post} display={isCommentButtonClick}
+            <CommentList post={post} display={isCommentButtonClick} userName={name}
                          onChange={() => setIsCommentButtonClick((isCommentButtonClick) => !isCommentButtonClick)}/>
         </>
     )
@@ -284,15 +288,9 @@ function Posts({API}) {
     return (
         <Container>
             {loading && <Loading/>}
-            {posts?.map((post, index) => {
-                    const imagePath = replaceImgUrl(post.post.image)
-                    const postTime = calcPostTime(post.post.date)
-                    return (
-                        <Post postTime={postTime} imagePath={imagePath} post={post} key={index}/>
-                    )
-                }
-            )
-            }
+            {posts?.map((post, index) =>
+                (<Post postTime={calcPostTime(post.post.date)} imagePath={replaceImgUrl(post.post.image)} post={post} key={index}/>)
+            )}
         </Container>
     );
 }

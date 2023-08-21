@@ -92,7 +92,7 @@ export const Button = styled.button`
 
   &:focus {
     outline: none;
-    border: 3px solid;
+    border: 1px solid;
     animation: ${rainbowAnimation} 5s linear infinite;
   }
 `

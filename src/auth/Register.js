@@ -1,11 +1,20 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {Link, useNavigate} from "react-router-dom";
-import {SEND_VERIFY_CODE, VERIFY_CODE, USER_DETAIL} from '../api'
+import {SEND_VERIFY_CODE, VERIFY_CODE, USER_DETAIL,REGISTER_SIMPLE_USER} from '../api'
 
 
 import {ThemeColor, Container, Input, Button, Loading} from '../UI/UIPackage';
+import styled from "styled-components";
+import confetti from "canvas-confetti";
 
+
+const LoginForm = styled.div`
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;`
 
 function Register(props) {
     const [name, setName] = useState('')
@@ -13,12 +22,11 @@ function Register(props) {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState('');
-
     const [isVerifyCodeLoading, setIsVerifyCodeLoading] = useState(false)
-
     const [verificationCode, setVerificationCode] = useState("");
     const [isVerified, setIsVerified] = useState(false);
-
+    const [isSignUpButtonClicked, setIsSignUpButtonClicked] = useState(false);
+    const [isSignUpLoading, setIsSignUpLoading] = useState(false);
     const navigate = useNavigate();
 
 
@@ -78,11 +86,37 @@ function Register(props) {
     const handleSendSubmit = () => {
         navigate(USER_DETAIL, {state: {name: name, email: email, password: password}})
     }
+    function particle() {   //폭죽
+        confetti({
+            particleCount: 50,
+            spread: 50
+        });
+    }
+    const handleSignUpButtonClick =async () => {
+        try{
+            setIsSignUpLoading(true)
+            let formData = {
+                name: name,
+                email: email,
+                password: password,
+            }
+            await axios.post(REGISTER_SIMPLE_USER, formData)
+            particle()
+            alert('회원가입이 완료되었습니다')
+            navigate('/')
+
+        }catch (e) {
+            alert('회원가입에 실패하였습니다')
+        }finally {
+            setIsSignUpLoading(false)
+        }
+
+    }
 
     return (
         <Container>
             <h1>계정을 등록하세요</h1>
-            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '90%'}}>
+            <LoginForm>
                 <form onSubmit={handleSendSubmit}>
                     <Input type="name" placeholder='이름' value={name} onChange={handleNameChange}/>
                     <div className="emailContainer" style={{
@@ -94,8 +128,9 @@ function Register(props) {
                         <Input style={{width: '80%', marginRight: '10px'}} type="email" placeholder='Email'
                                value={email}
                                onChange={handleEmailChange}/>
-                        <Button style={{width: '25%'}} onClick={handleSendVerifyCode}>확인</Button>
-                        {isVerifyCodeLoading && (<Loading/>)}
+                        <Button style={{width: '25%'}} onClick={handleSendVerifyCode}>
+                            {isVerifyCodeLoading ? <Loading/> : '확인'}
+                        </Button>
                     </div>
 
                     <div className="verifyContainer"
@@ -123,11 +158,23 @@ function Register(props) {
                         display: 'flex',
                         justifyContent: 'center'
                     }}>{message}</span>
-                    <Button type='submit'>
-                        회원가입
-                    </Button>
+                    {/*<Button type='submit'>*/}
+                    {/*    회원가입*/}
+                    {/*</Button>*/}
+                    <Button type={'button'} onClick={()=>setIsSignUpButtonClicked(true)} style={{display:isSignUpButtonClicked?'none':'block'}}>회원가입</Button>
+                    {isSignUpButtonClicked && (
+                        <div style={{display: 'flex', flexDirection: 'column', alignItems:'center',justifyContent: 'center'}}>
+                            <p>세부 정보를 등록하고 싶으신가요?</p>
+                            <div style={{width:'330px',display:'flex',justifyContent:'space-evenly'}}>
+                                <Button style={{width: '150px'}} type='button' onClick={handleSignUpButtonClick}>{
+                                    isSignUpLoading ? <Loading/> : '나중에 함'
+                                }</Button>
+                                <Button style={{width: '150px'}} type='submit'>세부 정보 입력</Button>
+                            </div>
+                        </div>
+                    )}
                 </form>
-            </div>
+            </LoginForm>
             <h5>계정이 있으신가요?&nbsp;&nbsp;<Link to='/' style={{textDecoration: 'none'}}>로그인</Link></h5>
         </Container>
     );

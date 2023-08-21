@@ -11,7 +11,8 @@ const API={
     //회원가입
     SEND_VERIFY_CODE: `${API_BASE_URL}/user/sendVerificationCode`,
     VERIFY_CODE: `${API_BASE_URL}/user/verifyCode`,
-    REGISTER: `${API_BASE_URL}/user/register`,
+    REGISTER_SIMPLE_USER: `${API_BASE_URL}/user/registerSimpleUser`,
+    REGISTER_DETAIL_USER: `${API_BASE_URL}/user/registerDetailUser`,
 
     //추천 유저
     GET_RECOMMEND_USER: `${API_BASE_URL}/user/getRecommendUsers`,
