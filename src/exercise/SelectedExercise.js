@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, exerciseImage, exerciseName, NavigationBar, ThemeColor} from "../UI/UIPackage";
+import {Container, exerciseImage, exerciseName, NavigationBar, ThemeColor, LinkBox} from "../UI/UIPackage";
 import {useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -73,27 +73,8 @@ function SelectedExercise(props) {
             }
             </div>
 
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: '20px',
-                }}>
-                <Link to={EXERCISE} style={{
-                    textDecoration: 'none',
-                    color: 'black',
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                    width: '160px'
-                }}>
-                    <p>모든 운동 보기</p>
-                    <FontAwesomeIcon icon={faArrowRight}/>
-                </Link>
-
-            </div>
+            <br/>
+            <LinkBox url={EXERCISE} content={'모든 운동 보기'}/>
 
             <NavigationBar/>
         </Container>

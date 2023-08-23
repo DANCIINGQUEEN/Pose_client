@@ -108,7 +108,6 @@ const CommentList = ({display, onChange, post, userName}) => {
     const comment=useRef("")
     const [isLoading, setIsLoading] = useState(false)
     const [comments, setComments] = useState(post.post.comments)
-    console.log(comments)
     const handleCommentSubmit = async () => {
         setIsLoading(true)
         const headers = functions.getJWT()
@@ -154,7 +153,7 @@ const CommentList = ({display, onChange, post, userName}) => {
                 ref={comment}
             />
             <button onClick={handleCommentSubmit}
-                    style={{backgroundColor: !comment ? ThemeColor.disabledButtonColor : ThemeColor.buttonColor}}>
+                    style={{backgroundColor: !comment ? ThemeColor.disabledButtonColor : ThemeColor.buttonColor, height:'48px'}}>
                 {isLoading ? <Loading/> : '등록'}
             </button>
             <br/>
@@ -199,7 +198,7 @@ const Likes = ({post, userName}) => {
             setIsAlreadyLike(true);
             setIsLikeButtonClick(true)
         }
-    }, [like])
+    }, [userName, like])
 
     return (
         <>
@@ -288,6 +287,7 @@ function Posts({API}) {
     return (
         <Container>
             {loading && <Loading/>}
+            {posts.length===0&&<p>게시물이 없습니다</p>}
             {posts?.map((post, index) =>
                 (<Post postTime={calcPostTime(post.post.date)} imagePath={replaceImgUrl(post.post.image)} post={post} key={index}/>)
             )}

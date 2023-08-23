@@ -9,7 +9,7 @@ import {GET_USER_FULL_INFO, ACCOUNT, INITIAL_GOAL, WISH_EXERCISE} from '../api'
 
 import {getUserFullInfo, logout} from "../state/userState";
 
-import {Container, UserBox, NavigationBar, UserBoxSize, ThemeColor, Button} from '../UI/UIPackage';
+import {Container, UserBox, NavigationBar, UserBoxSize, ThemeColor, Button, LinkBox} from '../UI/UIPackage';
 import {functions} from "../UI/Functions";
 
 import CurrentExercise from "./widget/currentExercise/CurrentExercise";
@@ -63,29 +63,7 @@ const DecimalDay = () => {
                     {goalMonth && goalDay && <h3>{`${goalMonth}월 ${goalDay}일 까지`}</h3>}
                     {dDay && <div>{remainingTime}</div>}
                     <br/>
-                    {initGoalExecuted&& <div
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: '16px',
-                            padding: '20px',
-                            backgroundColor: ThemeColor.divColor
-                        }}>
-                        <Link to={WISH_EXERCISE} style={{
-                            textDecoration: 'none',
-                            color: 'black',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            width: '160px'
-                        }}>
-                            <div>운동 선택하러 가기</div>
-                            <FontAwesomeIcon icon={faArrowRight}/>
-                        </Link>
-
-                    </div>}
+                    {initGoalExecuted&& <LinkBox url={WISH_EXERCISE} content={'운동 선택하러 가기'}/>}
                 </>
             ) : (
                 <>
@@ -98,14 +76,12 @@ const DecimalDay = () => {
 }
 
 function Home(props) {
-    const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
     const {name, email} = useSelector((state) => state)
 
     const getUserInfo = async () => {
         try {
             const headers = functions.getJWT()
-            setIsLoading(true)
             const res = await axios.get(GET_USER_FULL_INFO, {headers: headers})
             const {
                 _id,
@@ -142,20 +118,12 @@ function Home(props) {
                     goals: goals,
                 })
             )
-            setIsLoading(false)
         } catch (error) {
             console.error(error)
-            setIsLoading(false)
         }
     }
-    async function setLogout() {
-        dispatch(
-            logout()
-        )
-    }
-
     useEffect(() => {
-        getUserInfo()
+        getUserInfo().then()
     }, [name])
 
     return (
@@ -168,7 +136,7 @@ function Home(props) {
                 <Link to={ACCOUNT} style={{textDecoration: 'none', color: 'black'}}>
                     <div>
                         <UserBox name={name} email={email} size={UserBoxSize.large}/>
-                    </div>
+                       </div>
                 </Link>
             }
             <br/>
@@ -182,12 +150,12 @@ function Home(props) {
             <HomeRanking/>
             <br/>
             <br/>
-            <NavigationBar/>
             <Link to={'/'}>
-                <Button onClick={setLogout}>
+                <Button onClick={()=>dispatch(logout())}>
                     로그아웃
                 </Button>
             </Link>
+            <NavigationBar/>
         </Container>
     );
 }

@@ -29,6 +29,24 @@ const API={
     //좋아요 클릭
     POST_USER_POST_HEART: `${API_BASE_URL}/user/postUserPostHeart`,
 
+    //메이트 팀
+    //팀 생성
+    CREATE_TEAM: `${API_BASE_URL}/team/createTeam`,
+    //팀 목록
+    GET_ALL_TEAMS: `${API_BASE_URL}/team/getAllTeams`,
+    //팀 가입
+    JOIN_TEAM: `${API_BASE_URL}/team/joinTeam`,
+    //가입한 팀 목록
+    GET_JOINED_TEAMS: `${API_BASE_URL}/team/getJoinedTeams`,
+    //팀 정보
+    GET_TEAM_INFO: `${API_BASE_URL}/team/getTeamInfo`,
+    //팀 탈퇴
+    QUIT_TEAM: `${API_BASE_URL}/team/quitTeam`,
+    //팀 공지 등록
+    POST_TEAM_NOTICE: `${API_BASE_URL}/team/postTeamNotice`,
+    //팀 공지 가져오기
+    GET_TEAM_NOTICE: `${API_BASE_URL}/team/getTeamNotice`,
+
     //유저 팔로우
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,
 
@@ -52,6 +70,8 @@ const API={
     UPDATE_PASSWORD:`${API_BASE_URL}/user/updatePassword`,
 
 
+
+    //----------------------------------------------------------------------------------
     //URL
     //회원가입
     NEW_USER: '/register',
@@ -83,6 +103,24 @@ const API={
     UPLOAD_POST:'/uploadPost',
     //내 게시물 보기
     MY_POSTS:'/myPosts',
+    //메이트 팀 만들기
+    CREATE_MATE_TEAM:'/createMateTeam',
+    //메이트 팀 목록
+    MATE_TEAM_LIST:'/mateTeamList',
+    //팀 입장
+    ENTER_TEAM:'/enterTeam',
+    //팀 공지
+    TEAM_NOTICE:'/teamNotice',
+    //팀 게시판
+    TEAM_BOARD:'/teamBoard',
+    //팀 운동
+    TEAM_EXERCISE:'/teamExercise',
+    //팀 채팅
+    TEAM_CHAT:'/teamChat',
+    //팀 회원
+    TEAM_MEMBERS:'/teamMembers',
+    //팀 세부 정보
+    TEAM_DETAIL:'/teamDetail',
 
     //계정
     USER_SETTING:'/usersetting',

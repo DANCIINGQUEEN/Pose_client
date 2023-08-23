@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 
 import {GET_RECOMMEND_USER, GET_UNFOLLOW} from '../api'
-import {Button, Loading, ThemeColor, UserBox, UserBoxSize} from "../UI/UIPackage";
+import {Button, Container, Loading, ThemeColor, UserBox, UserBoxSize} from "../UI/UIPackage";
 import {functions} from '../UI/Functions'
 import styled from "styled-components";
 
@@ -83,7 +83,7 @@ const RecommendUser = () => {
     }, []);
 
     return (
-        <div>
+        <Container>
             <h2>추천 유저</h2>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 {isLoading && (<Loading/>)}
@@ -102,7 +102,7 @@ const RecommendUser = () => {
                 </UserInfoBox>
             ))}
 
-        </div>
+        </Container>
     );
 };
 

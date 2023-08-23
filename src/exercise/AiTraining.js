@@ -3,8 +3,6 @@ import {useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
 import axios from "axios";
-import confetti from "canvas-confetti";
-
 
 import {Button, Container, Loading, ThemeColor} from "../UI/UIPackage";
 import {functions} from "../UI/Functions";
@@ -33,9 +31,7 @@ const ProgressBar = ({goal, label}) => {
     const [progress, setProgress] = useState(0);
     const [isComplete, setIsComplete] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
     const dispatch = useDispatch();
-
 
     const handleButtonClick = () => {
         console.log(progress)
@@ -44,20 +40,10 @@ const ProgressBar = ({goal, label}) => {
         }
         if (progress + 1 === parseInt(goal)) {
             setIsComplete(true)
-            particle();
+            functions.particle();
         }
     };
-
-    function particle() {   //폭죽
-        confetti({
-            particleCount: 50,
-            spread: 50
-        });
-    }
-
-
     const percent = ((progress / goal) * 100).toFixed(2);
-
 
     const handleUpdateAttain = () => {
         const headers = functions.getJWT();
@@ -68,16 +54,13 @@ const ProgressBar = ({goal, label}) => {
         }, {headers})
             .then((res) => {
                 console.log(res)
-                setIsLoading(false)
                 dispatch(updateAttain({
                     label: label,
                     attain: progress
                 }))
             })
-            .catch((err) => {
-                console.log(err)
-                setIsLoading(false)
-            })
+            .catch((err) => console.log(err))
+            .finally(()=> setIsLoading(false))
     }
     return (
         <div style={{textAlign: 'center', padding: '20px'}}>

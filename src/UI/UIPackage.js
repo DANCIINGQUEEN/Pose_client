@@ -15,6 +15,8 @@ import {Loading} from "./Loading";
 import {UserBox} from "./UserBox";
 import {Modal} from "./Modal";
 import {NavigationBar} from "./NavigationBar";
+import {PlusButton} from "./PlusButton";
+import {LinkBox} from "./LinkBox";
 
 
 export const rainbowAnimation = keyframes`
@@ -96,7 +98,7 @@ export const Button = styled.button`
     animation: ${rainbowAnimation} 5s linear infinite;
   }
 `
-export const InfoBox = styled.div`
+export const AccountInfoBox = styled.div`
   width: 130px;
   border-radius: 16px;
   background-color: ${ThemeColor.divColor};
@@ -125,19 +127,109 @@ export const Scroll = styled.div`
   display: flex;
   flex-direction: row;
   overflow-y: hidden;
-  //overflow-x: hidden;
   &::-webkit-scrollbar {
-    height: 10px;
-    border-radius: 5px;
-    background-color: ${ThemeColor.containerColor};
+    display:none;
+  }
+`
+export const Hashtag = styled.span`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width: 330px;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 
-  &::-webkit-scrollbar-thumb {
-    width: 10px;
+  span {
+    padding: 0 10px;
+    margin-left: 10px;
+    font-size: 20px;
     background-color: ${ThemeColor.importantColor};
-    border-radius: 5px;
+    border-radius: 10px;
+    font-weight: bold;
+
+    &:before {
+      content: '#';
+    }
+
+  }
+`
+export const TeamSummaryBox = styled(Box)`
+  width: 330px;
+
+  h2, h3 {
+    margin-left: 20px;
   }
 
+  div {
+    width: 92%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    justify-content: space-between;
+
+  }
+
+  Button {
+    width: 120px;
+    font-weight: bold;
+  }
+
+  .feedback {
+    width: 110px;
+    justify-content: space-around;
+  }
+`
+export const TeamInfoBox=styled.button`
+  background-color: ${ThemeColor.containerColor};
+  border: none;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content:space-around;
+  margin-bottom: 20px;
+  width: 330px;
+  padding-bottom: 10px;
+  :hover {
+    background-color: ${ThemeColor.divColor};
+  }
+
+  h2 {
+    font-size: 25px;
+    margin-left: 10px;
+  }
+
+  p {
+    margin: 1px 0 15px 10px;
+    font-size: 18px;
+  }
+
+  span {
+    margin:-5px 0 5px 10px;
+    font-size: 15px;
+  }
+
+  .board {
+    margin: 1px 0 15px 0;
+    display: flex;
+    flex-direction: row;
+    >:first-child{
+      font-weight: bold;
+    }
+    >:nth-child(2){
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+   }
+  }
 `
 
 export const RecBox = ({componentToRender}) => {
@@ -238,6 +330,8 @@ export {
     UserBox,
     Modal,
     NavigationBar,
+    PlusButton,
+    LinkBox,
     ThemeColor,
     UserBoxSize
 

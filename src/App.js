@@ -27,6 +27,15 @@ import GoalSetting from "./home/widget/currentExercise/GoalSetting";
 import Current from "./home/widget/currentExercise/Current";
 import SelectedExercise from "./exercise/SelectedExercise";
 
+//메이트
+import RecommendUser from "./mate/RecommendUser";
+import PostUpload from "./mate/PostUpload";
+import MyPosts from "./mate/MyPosts";
+import CreateTeam from "./mate/CreateTeam";
+import MateTeamList from "./mate/MateTeamList";
+import MyTeam from "./mate/MyTeam";
+
+//URL
 import {
     ACCOUNT,
     SELECTED_EXERCISE,
@@ -44,11 +53,13 @@ import {
     NEW_USER,
     USER_DETAIL,
     USER_DETAIL_2,
-    USER_DETAIL_3
+    USER_DETAIL_3,
+    CREATE_MATE_TEAM,
+    MATE_TEAM_LIST,
+    ENTER_TEAM,
+    TEAM_DETAIL
 } from './api'
-import RecommendUser from "./mate/RecommendUser";
-import PostUpload from "./mate/PostUpload";
-import MyPosts from "./mate/MyPosts";
+import TeamDetail from "./mate/teamDetail/TeamDetail";
 const App = () => {
     return (
         <div className="App">
@@ -73,6 +84,10 @@ const App = () => {
                     <Route path={RECOMMEND_USER} element={<RecommendUser/>}/>
                     <Route path={UPLOAD_POST} element={<PostUpload/>}/>
                     <Route path={MY_POSTS} element={<MyPosts/>}/>
+                    <Route path={CREATE_MATE_TEAM} element={<CreateTeam/>}/>
+                    <Route path={MATE_TEAM_LIST} element={<MateTeamList/>}/>
+                    <Route path={ENTER_TEAM+'/:teamId'} element={<MyTeam/>}/>
+                    <Route path={ENTER_TEAM+'/:teamId'+TEAM_DETAIL} element={<TeamDetail/>}/>
 
 
                     //현재 유저 운동 상태

@@ -192,7 +192,8 @@ export const ChangeUserProfile = ({name, email}) => {
             {isSuccessMessage && <p>수정 완료</p>}
             <Button onClick={handleUpdate} disabled={isNoChange}>{isLoading ? (<Loading/>) : ("수정")}</Button>
             <br/>
-            {isPasswordCorrect ? (<NewPassword setIsPasswordCorrect={setIsPasswordCorrect}/>) : (<OldPassword setIsPasswordCorrect={setIsPasswordCorrect}/>)}
+            {isPasswordCorrect ? (<NewPassword setIsPasswordCorrect={setIsPasswordCorrect}/>) : (
+                <OldPassword setIsPasswordCorrect={setIsPasswordCorrect}/>)}
         </>
     )
 }
@@ -204,7 +205,7 @@ export const FollowingSetting = ({following}) => {
         </>
     )
 }
-const FFDiv=styled.div`
+const FFDiv = styled.div`
   width: 270px;
   display: flex;
   justify-content: space-between;
@@ -212,28 +213,28 @@ const FFDiv=styled.div`
   background-color: ${ThemeColor.containerColor};
   margin: 7px 0;
   border-radius: 16px;
-  padding:0 20px;
+  padding: 0 20px;
   height: 60px;
 `
-const FFButton=styled.button`
+const FFButton = styled.button`
   background-color: ${ThemeColor.buttonColor};
-  border:none;
+  border: none;
   border-radius: 5px;
   padding: 5px 10px;
 `
-const DeleteFF=({friend})=>{
+const DeleteFF = ({friend}) => {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
-    const handleClick=()=>{
+    const handleClick = () => {
         const headers = functions.getJWT()
         const dataToSend = {friend: friend,};
         setIsLoading(true)
-        axios.post(GET_UNFOLLOW, dataToSend, { headers })
+        axios.post(GET_UNFOLLOW, dataToSend, {headers})
             .then(response => {
                 setIsLoading(false)
                 // console.log(response.data.following)
-                dispatch(putFollow({following:response.data.following}))
-                dispatch(putFollowingNames({followingNames:response.data.followingNames}))
+                dispatch(putFollow({following: response.data.following}))
+                dispatch(putFollowingNames({followingNames: response.data.followingNames}))
             })
             .catch(error => {
                 console.error('API 요청 에러:', error);
@@ -242,7 +243,7 @@ const DeleteFF=({friend})=>{
     }
     return (
         <FFButton onClick={handleClick}>
-            {isLoading ? <Loading /> : "삭제"}
+            {isLoading ? <Loading/> : "삭제"}
         </FFButton>
 
     )
@@ -347,7 +348,11 @@ export const AreaSetting = ({area}) => {
     return (
         <>
             <p>지역</p>
-            <p>{area}</p>
+            {!area ? <p style={{fontSize: '15px'}}>
+                    등록되지않음
+                </p> :
+                <p>{area}</p>
+            }
         </>
     )
 }
@@ -365,7 +370,7 @@ export const ChangeArea = ({area}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_INFORMATION, {area: newArea, item:'area'},
+            UPDATE_INFORMATION, {area: newArea, item: 'area'},
             updateArea, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             (success) => {
@@ -394,7 +399,12 @@ export const AgeSetting = ({age}) => {
     return (
         <>
             <p>나이</p>
-            <p>{age}</p>
+            {!age ?
+                <p style={{fontSize: '15px'}}>
+                    등록되지않음
+                </p>
+                : <p>{age}</p>
+            }
         </>
     )
 }
@@ -411,7 +421,7 @@ export const ChangeAge = ({age}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_INFORMATION, {age: newAge, item:'age'},
+            UPDATE_INFORMATION, {age: newAge, item: 'age'},
             updateAge, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -437,6 +447,14 @@ export const ChangeAge = ({age}) => {
 }
 
 export const WeightSetting = ({weight}) => {
+    if (!weight) return (
+        <>
+            <p>몸무게</p>
+            <p style={{fontSize: '15px'}}>
+                등록되지 않음
+            </p>
+        </>
+    )
     const stringWeight = weight.toString()
     return (
         <>
@@ -473,7 +491,7 @@ export const ChangeWeight = ({weight}) => {
     const handleUpdate = () => {
         updateData(
             UPDATE_INFORMATION,
-            {weight: newWeight, item:'weight'},
+            {weight: newWeight, item: 'weight'},
             updateWeight, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -510,6 +528,15 @@ export const ChangeWeight = ({weight}) => {
     )
 }
 export const HeightSetting = ({height}) => {
+    if (!height) return (
+        <>
+            <p>키</p>
+            <p style={{fontSize: '15px'}}>
+                등록되지 않음
+            </p>
+        </>
+    )
+
     const stringHeight = height.toString()
     return (
         <>
@@ -548,7 +575,7 @@ export const ChangeHeight = ({height}) => {
     const handleUpdate = () => {
         updateData(
             UPDATE_INFORMATION,
-            {height: newHeight, item:'height'},
+            {height: newHeight, item: 'height'},
             updateHeight, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -591,6 +618,7 @@ export const ExerciseSetting = ({exercise}) => {
     return (
         <>
             <p>주로 하는 운동</p>
+            {!exercise && <p style={{fontSize: '15px'}}>등록되지 않음</p>}
             <p>{exercise}</p>
         </>
     )
@@ -603,7 +631,7 @@ export const ChangeExercise = () => {
     const handleClickChange = (selectedExercise) => {
         updateData(
             UPDATE_INFORMATION,
-            {exercise: selectedExercise, item:'exercise'},
+            {exercise: selectedExercise, item: 'exercise'},
             updateExercise, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -649,7 +677,7 @@ export const ChangeWishList = ({wishList}) => {
     const handleUpdate = () => {
         updateData(
             UPDATE_INFORMATION,
-            {wishList: selectedOptions, item:'wishList'},
+            {wishList: selectedOptions, item: 'wishList'},
             updateWishList, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {

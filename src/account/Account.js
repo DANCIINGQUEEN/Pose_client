@@ -11,7 +11,7 @@ import {
     UserBox,
     ThemeColor,
     UserBoxSize,
-    InfoBox,
+    AccountInfoBox,
     rainbowAnimation, Modal
 } from "../UI/UIPackage";
 import {USER_SETTING} from '../api'
@@ -109,25 +109,25 @@ function Account(props) {
 
                     <Modal button={<FollowingSetting following={following}/>}
                            render={<ShowFollowing following={following}/>}/>
-                    <InfoBox>
+                    <AccountInfoBox>
                         <AgeSetting age={age}/>
-                    </InfoBox>
-                    <InfoBox>
+                    </AccountInfoBox>
+                    <AccountInfoBox>
                         <AreaSetting area={area}/>
-                    </InfoBox>
-                    <InfoBox>
+                    </AccountInfoBox>
+                    <AccountInfoBox>
                         <WeightSetting weight={weight}/>
-                    </InfoBox>
-                    <InfoBox>
+                    </AccountInfoBox>
+                    <AccountInfoBox>
                         <HeightSetting height={height}/>
-                    </InfoBox>
+                    </AccountInfoBox>
                 </div>
                 <RainbowDiv>
                     <ExerciseSetting exercise={exercise}/>
                 </RainbowDiv>
                 <RainbowDiv>
                     <p>해결하고싶은 고민</p>
-
+                    {wishList.length===0 &&<p style={{fontSize: '15px'}}>등록되지 않음</p>}
                     {
                         wishList.map((item, index) => {
                                 return (

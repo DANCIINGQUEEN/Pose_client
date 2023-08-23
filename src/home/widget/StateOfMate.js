@@ -1,10 +1,11 @@
 import React from 'react';
-import {ThemeColor, Scroll} from "../../UI/UIPackage";
+import {ThemeColor, Scroll, LinkBox} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
+import {MATE} from "../../api";
 
 
 const SquareBox = ({componentToRender, data}) => {
@@ -127,34 +128,7 @@ const Carousel = ({componentToRender, data}) => {
         </Scroll>
     )
 }
-const NoMate = () => {
-    return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '16px',
-                padding: '20px',
-                backgroundColor: ThemeColor.divColor
-            }}>
-            <h3 style={{marginTop: '0px'}}>메이트가 없습니다!</h3>
-            <Link to={'/mate'} style={{
-                textDecoration: 'none',
-                color: 'black',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '160px'
-            }}>
-                <div>메이트 찾으러 가기</div>
-                <FontAwesomeIcon icon={faArrowRight}/>
-            </Link>
 
-        </div>
-    )
-}
 const UserMate = () => {
     const usersData = {
         john: {
@@ -228,9 +202,9 @@ function StateOfMate(props) {
     return (
         <div style={{maxWidth: '390px'}}>
             {following ?
-                (<UserMate/>)
+                <UserMate/>
                 :
-                (<NoMate/>)
+                <LinkBox url={MATE} title={'메이트가 없습니다!'} content={'메이트 찾으러 가기'}/>
             }
 
         </div>

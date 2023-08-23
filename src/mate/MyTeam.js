@@ -1,0 +1,103 @@
+import React, {useEffect, useState} from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
+import {Button, Container, PlusButton, TeamInfoBox} from "../UI/UIPackage";
+import axios from "axios";
+import {GET_TEAM_INFO, QUIT_TEAM, MATE, TEAM_DETAIL, ENTER_TEAM} from "../api";
+import {functions} from "../UI/Functions";
+
+
+const MyTeam=()=> {
+    const [teamInfo, setTeamInfo]=useState()
+    const location=useLocation()
+    const teamId=location.pathname.split('/')[2]
+    const navigate=useNavigate()
+    const getTeamInfo=async ()=>{
+        const headers=functions.getJWT()
+        await axios.get(GET_TEAM_INFO+'/'+teamId, {headers})
+            .then(res=>setTeamInfo(res.data))
+            .catch(err=>console.log(err))
+    }
+    const handleButtonClick=(detailPage)=>{
+        navigate(ENTER_TEAM+'/'+teamId+TEAM_DETAIL, {
+            state:{
+                detailPage:detailPage,
+                name:teamInfo.name,
+                desc:teamInfo.description}})
+    }
+    const handleQuitButtonClick=async ()=>{
+        const headers=functions.getJWT()
+        await axios.delete(QUIT_TEAM+'/'+teamId, {headers})
+            .then(()=>navigate(MATE))
+            .catch(err=>console.log(err))
+    }
+
+    useEffect(()=>{
+        getTeamInfo().then()
+    },[])
+
+    // console.log(teamInfo)
+    const plusButtonItem=[
+        ['공지 작성', 'ㅁㄴ'],
+        ['게시판 글쓰기', 'ㅁㄴ'],
+        ['채팅방 입장', 'ㅁㄴ']
+    ]
+    // console.log(teamInfo)
+    return (
+        <Container>
+            <h1>{teamInfo?.name}</h1>
+            <h3 style={{marginTop:'0px'}}>{teamInfo?.description}</h3>
+            <TeamInfoBox onClick={()=>handleButtonClick('TEAM_NOTICE')}>
+                <h2>공지</h2>
+                {teamInfo?.notice.length===0&&<p>공지가 없습니다</p>}
+                {teamInfo?.notice.map((notice, index)=>(
+                    <div className={'board'} key={index}>
+                    <span key={index}>{notice.noticeTitle}</span>
+                    <span key={index}>{notice.noticeContent}</span>
+                    </div>
+                ))}
+            </TeamInfoBox>
+            <TeamInfoBox onClick={()=>handleButtonClick('TEAM_BOARD')}>
+                <h2>게시글</h2>
+                <div className={'board'}>
+                    <span>자유게시판</span>
+                    {teamInfo?.freeBoard.length===0?<span>게시글이 없습니다</span>:
+                    <span className={'boardContent'}>{teamInfo?.freeBoard}</span>
+                    }
+                </div>
+                <div className={'board'}>
+                    <span>익명게시판</span>
+                    {teamInfo?.anonymousBoard.length===0?<span>게시글이 없습니다</span>:
+                    <span className={'boardContent'}>{teamInfo?.anonymousBoard}</span>
+                    }
+                </div>
+            </TeamInfoBox>
+            <TeamInfoBox onClick={()=>handleButtonClick('TEAM_EXERCISE')}>
+                <h2>운동</h2>
+                {teamInfo?.goal.length===0&&<p>운동 목표가 없습니다</p>}
+                {/*{teamInfo?.goal.map((goal, index)=>(*/}
+                {/*    <p key={index}>{goal.title}</p>*/}
+                {/*))}*/}
+            </TeamInfoBox>
+            <div style={{width:'330px',display:'flex', justifyContent:'space-between'}}>
+
+            <TeamInfoBox style={{width:'150px'}} onClick={()=>handleButtonClick('TEAM_CHAT')}>
+                <h2>채팅</h2>
+                {teamInfo?.chatCount===0?<p>새 채팅 0개</p>:
+                <p>새 채팅 {teamInfo?.chatCount}개</p>
+                }
+            </TeamInfoBox>
+            <TeamInfoBox style={{width:'150px'}} onClick={()=>handleButtonClick('TEAM_MEMBERS')}>
+                <h2>회원</h2>
+                <span>방장 {teamInfo?.host}님</span>
+                <span>외 {teamInfo?.memberCount-1}명 →</span>
+            </TeamInfoBox>
+            </div>
+            <br/>
+            <Button style={{width:'120px'}} onClick={handleQuitButtonClick}>탈퇴하기</Button>
+            <PlusButton item={plusButtonItem}/>
+
+        </Container>
+    );
+}
+
+export default MyTeam;

@@ -1,104 +1,54 @@
 import React, {useState} from 'react';
-import {Container, NavigationBar, ThemeColor} from "../UI/UIPackage";
+import {Container, NavigationBar, ThemeColor, PlusButton} from "../UI/UIPackage";
 import {useSelector} from "react-redux";
 import RecommendUser from "./RecommendUser";
-import {Link} from "react-router-dom";
 import {RECOMMEND_USER, UPLOAD_POST, MY_POSTS, GET_POSTS} from '../api';
 
 import styled from 'styled-components';
 import Posts from "./Posts";
 import MateTeam from "./MateTeam";
 
-const PlusButton = styled(Link)`
-  position: fixed;
-  width: 50px;
-  bottom: 75px;
-  left: calc(50% + 130px);
-  height: 50px;
-  border-radius: 50%;
-  background-color: black;
-  border: none;
-  color: white;
-  font-size: 30px;
-  text-decoration: none;
-  text-align: center;
-  justify-content: center;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${ThemeColor.importantColor};
-  }
-`
-const AnimatedButton = styled(Link)`
-  position: fixed;
-  width: 150px;
-  bottom: ${({ distance }) => distance}px;
-  left: calc(50% + 30px);
-  height: 35px;
-  border-radius: 12px;
-  background-color: ${ThemeColor.importantColor};
-  border: none;
-  color: black;
-  font-size: 20px;
-  text-align: center;
-  text-decoration: none;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  padding-top: 4px;
-  display:${({visible})=>visible?'block':'none'};
-  opacity: ${({ visible }) => (visible ? 1 : 0)};
-  transform: translateY(${({ visible }) => (visible ? '0' : '20px')});
-  transition: opacity 0.3s, transform 0.3s;
-
-  &:hover {
-    background-color: black;
-    color:white;
-  }
-`;
-
-const MateNav= styled.div`
+const MateNav = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //margin: 10px 0 10px 10px;
   width: 200px;
-  height:30px;
-  button{
+  height: 30px;
+  position:sticky;
+  top:10px;
+
+  button {
     border: none;
-    background-color: transparent;
+    background-color: ${ThemeColor.navColor};
+    border-radius: 10px;
+    padding: 5px 10px;
     font-size: 18px;
   }
 `
-const AllPosts=()=>{
+const AllPosts = () => {
     const [showButtons, setShowButtons] = useState(false);
     const following = useSelector((state) => state.following)
-    const handlePlusButtonClick = () => {
-        setShowButtons(!showButtons);
-    };
-    return(
+
+    const plusMenuItem = [
+        ['게시물 업로드', UPLOAD_POST],
+        ['내 게시물 보기', MY_POSTS],
+        ['추천 메이트', RECOMMEND_USER]
+    ]
+    return (
         <>
             {
                 following ?
                     <>
-                            <Posts API={GET_POSTS}/>
-                            <PlusButton onClick={handlePlusButtonClick}>+</PlusButton>
-                            <AnimatedButton visible={showButtons} distance={140} to={UPLOAD_POST}>
-                                게시물 업로드
-                            </AnimatedButton>
-                            <AnimatedButton visible={showButtons} distance={190} to={MY_POSTS}>
-                                내 게시물 보기
-                            </AnimatedButton>
-                            <AnimatedButton visible={showButtons} distance={240} to={RECOMMEND_USER}>
-                                추천 메이트
-                            </AnimatedButton>
-                        </>
+                        <Posts API={GET_POSTS}/>
+                        <PlusButton item={plusMenuItem}/>
+                    </>
                     :
                     <RecommendUser/>
             }
         </>
     )
 }
+
 function Community(props) {
     const [isPostsClicked, setIsPostsClicked] = useState(true);
     const [isMateTeamClicked, setIsMateTeamClicked] = useState(false);
@@ -112,10 +62,13 @@ function Community(props) {
         <Container>
             <h1>메이트</h1>
             <MateNav>
-            <button onClick={handleNavButtonClick} style={{fontWeight:isPostsClicked?'bold':'normal'}}>게시글</button>
-            <button onClick={handleNavButtonClick} style={{fontWeight:isMateTeamClicked?'bold':'normal'}}>메이트 팀</button>
+                <button onClick={handleNavButtonClick} style={{fontWeight: isPostsClicked ? 'bold' : 'normal'}}>게시글
+                </button>
+                <button onClick={handleNavButtonClick} style={{fontWeight: isMateTeamClicked ? 'bold' : 'normal'}}>메이트
+                    팀
+                </button>
             </MateNav>
-            {isPostsClicked? <AllPosts/> : <MateTeam/>}
+            {isPostsClicked ? <AllPosts/> : <MateTeam/>}
             <NavigationBar/>
         </Container>
     );

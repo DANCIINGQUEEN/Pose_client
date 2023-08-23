@@ -4,7 +4,8 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 import {REGISTER_DETAIL_USER} from '../api'
 import axios from "axios";
-import confetti from "canvas-confetti";
+// import confetti from "canvas-confetti";
+import {functions} from "../UI/Functions";
 
 export const ButtonGroup = ({buttons, onChange, selectedWishList}) => {
     const SWL= selectedWishList
@@ -56,12 +57,12 @@ export const UserDetail3=(props)=> {
     const handleOptionsChange = (selectedOptions) => {
         setSelectedOptions(selectedOptions);
     }
-    function particle() {   //폭죽
-        confetti({
-            particleCount: 50,
-            spread: 50
-        });
-    }
+    // function particle() {   //폭죽
+    //     confetti({
+    //         particleCount: 50,
+    //         spread: 50
+    //     });
+    // }
 
     const handleSubmit = async (e) => {
         try {
@@ -71,7 +72,7 @@ export const UserDetail3=(props)=> {
             }
             await axios.post(REGISTER_DETAIL_USER, formData
             )
-            particle()
+            functions.particle()
             alert("회원가입이 완료되었습니다");
             navigate('/')
         } catch (error) {

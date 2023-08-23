@@ -1,15 +1,10 @@
 import React from 'react';
 import {Link, useNavigate} from "react-router-dom";
 
-import {Container, NavigationBar, Scroll, ThemeColor, exerciseImage} from "../UI/UIPackage";
+import {Container, NavigationBar, Scroll, ThemeColor, exerciseImage, LinkBox} from "../UI/UIPackage";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {TRAINING, SELECTED_EXERCISE} from '../api'
-
-
-// import squat from '../public/exercise/lowerBody/squat.jpg'
 
 
 const Box = styled.div`
@@ -111,27 +106,8 @@ function Exercise(props) {
                 <h3 style={{marginLeft: '20px'}}>팔 운동</h3>
                 <Carousel componentToRender={<RecBox/>} data={exercises.armExercises}/>
             </Box>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: '20px',
-                }}>
-                <Link to={SELECTED_EXERCISE} style={{
-                    textDecoration: 'none',
-                    color: 'black',
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                    width: '190px'
-                }}>
-                    <p>내가 선택한 운동 보기</p>
-                    <FontAwesomeIcon icon={faArrowRight}/>
-                </Link>
-
-            </div>
+            <LinkBox url={SELECTED_EXERCISE} content='내가 선택한 운동 보기'/>
+            <br/>
 
             <NavigationBar/>
 

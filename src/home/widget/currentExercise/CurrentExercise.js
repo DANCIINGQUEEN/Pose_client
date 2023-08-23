@@ -1,11 +1,11 @@
 import React from 'react';
-import {Scroll, ThemeColor, exerciseName} from "../../../UI/UIPackage";
+import {Scroll, ThemeColor, exerciseName, LinkBox} from "../../../UI/UIPackage";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
 import {Doughnut} from "react-chartjs-2";
-import {CURRENT, WISH_EXERCISE} from "../../../api";
+import {CURRENT, MATE, WISH_EXERCISE} from "../../../api";
 
 
 const RecBox = ({data}) => {
@@ -111,34 +111,6 @@ const Carousel = ({componentToRender, data}) => {
         </Scroll>
     )
 }
-const NoGoal = () => {
-    return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '16px',
-                padding: '20px',
-                backgroundColor: ThemeColor.divColor
-            }}>
-            <h3 style={{marginTop: '0px'}}>선택된 운동이 없습니다!</h3>
-            <Link to={WISH_EXERCISE} style={{
-                textDecoration: 'none',
-                color: 'black',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                width: '160px'
-            }}>
-                <div>운동 선택하러 가기</div>
-                <FontAwesomeIcon icon={faArrowRight}/>
-            </Link>
-
-        </div>
-    )
-}
 const UserCurrentExercise = ({goals}) => {
     const name = useSelector((state) => state.name)
 
@@ -162,9 +134,10 @@ function CurrentExercise() {
     return (
         <>
             {goals ?
-                (<UserCurrentExercise goals={goals}/>)
+                <UserCurrentExercise goals={goals}/>
                 :
-                (<NoGoal/>)
+               <LinkBox url={WISH_EXERCISE} title={'선택된 운동이 없습니다!'} content={'운동 선택하러 가기'}/>
+
             }
         </>
     );
