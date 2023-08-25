@@ -41,9 +41,9 @@ const AnimatedButton = styled(Link)`
   align-items: center;
   cursor: pointer;
   padding-top: 4px;
-  display: ${({visible}) => visible ? 'block' : 'none'};
-  opacity: ${({visible}) => (visible ? 1 : 0)};
-  transform: translateY(${({visible}) => (visible ? '0' : '20px')});
+  display: ${props => props.show ? 'block' : 'none'};
+  opacity: ${props => props.show ? 1 : 0};
+  transform: translateY(${props => props.show ? '0' : '20px'});
   transition: opacity 0.3s, transform 0.3s;
 
   &:hover {
@@ -61,9 +61,8 @@ export const PlusButton=(item)=> {
         <>
         <PlusButtonContainer onClick={handlePlusButtonClick}>+</PlusButtonContainer>
         {
-            item.item.map((item, index) => (
-                <AnimatedButton visible={showButtons} distance={140+50*index} to={item[1]}>{item[0]}</AnimatedButton>
-                 )
+            item.item.map((item, index) =>
+                <AnimatedButton show={showButtons} distance={140+50*index} to={item[1]} key={index}>{item[0]}</AnimatedButton>
             )
         }
         </>

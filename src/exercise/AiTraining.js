@@ -93,7 +93,7 @@ const ProgressBar = ({goal, label}) => {
     );
 }
 
-function AiTraining({text}) {
+function AiTraining() {
     const location = useLocation()
     const label = location.state?.label || ''
     const goals = useSelector((state) => state.goals)
@@ -101,22 +101,17 @@ function AiTraining({text}) {
 
 
     return (
-        <Container>
-            <h1>{text}</h1>
+        <>
             <br/>
-            {goal ? (
-                    <ProgressBar goal={goal} label={label}/>
-                )
+            {goal ? <ProgressBar goal={goal} label={label}/>
                 :
-                (
                     <>
-                        <h1>{text}</h1>
                         <br/>
                         <h5>안녕?</h5>
                     </>
 
-                )}
-        </Container>
+                }
+        </>
     );
 }
 

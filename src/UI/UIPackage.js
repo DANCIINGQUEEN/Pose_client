@@ -17,6 +17,7 @@ import {Modal} from "./Modal";
 import {NavigationBar} from "./NavigationBar";
 import {PlusButton} from "./PlusButton";
 import {LinkBox} from "./LinkBox";
+import {TwoTabNav} from "./TwoTabNav";
 
 
 export const rainbowAnimation = keyframes`
@@ -193,10 +194,11 @@ export const TeamInfoBox=styled.button`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content:space-around;
+  align-content: space-around;
   margin-bottom: 20px;
   width: 330px;
   padding-bottom: 10px;
+
   :hover {
     background-color: ${ThemeColor.divColor};
   }
@@ -206,32 +208,248 @@ export const TeamInfoBox=styled.button`
     margin-left: 10px;
   }
 
-  p {
+  .chatCount, .goal{
     margin: 1px 0 15px 10px;
     font-size: 18px;
   }
 
-  span {
-    margin:-5px 0 5px 10px;
+  .members {
+    margin: -5px 0 5px 10px;
     font-size: 15px;
+  }
+
+  .boardProperty {
+    margin: -5px 0 5px 10px;
+    font-size: 15px;
+    font-weight: bold;
   }
 
   .board {
     margin: 1px 0 15px 0;
     display: flex;
     flex-direction: row;
-    >:first-child{
+  }
+
+  .title {
+    margin: -5px 0 5px 10px;
+    font-size: 15px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+  }
+
+  .content {
+    margin: -5px 0 5px 10px;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+  }
+  
+`
+export const ToggleButton = styled.span`
+  display: flex;
+  align-items: center;
+  width: 40px;
+  height: 20px;
+  border-radius: 15px;
+  background-color: ${props => props.isOn ? '#4CAF50' : '#ccc'};
+  position: relative;
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: 0.3s;
+    left: ${props => props.isOn ? 'calc(100% - 18px)' : '2px'};
+  }
+`;
+export const Img = styled.img`
+  width: 340px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 16px;
+`
+export const PostHeader = styled.div`
+  width: 330px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    font-size: 18px;
+    font-weight: bold;
+  }
+`
+export const PostFeedback = styled.div`
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0 10px 10px;
+
+  .heart, .comment {
+    font-size: 20px;
+  }
+
+  span {
+    font-size: 15px;
+  }
+
+`
+export const PostContent = styled.div`
+  > :first-child {
+    font-weight: bold;
+    font-size: 17px;
+  }
+`
+export const FeedbackButton = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: 70px;
+  display: flex;
+  justify-content: space-between;
+`
+export const FeedbackList = styled.div`
+  width: 300px;
+  margin: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 16px;
+  background-color: ${ThemeColor.divColor};
+
+  button:nth-of-type(1) {
+    border: none;
+    margin-left: 10px;
+    border-radius: 10px;
+    height: 40px;
+  }
+
+  button:nth-of-type(2) {
+    border: none;
+    background-color: transparent;
+  }
+`
+export const CommentsList = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 15px;
+
+  > :nth-child(1) {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-right: 10px;
+
+    > :nth-child(1) {
+      margin-right: 10px;
+    }
+
+    > :nth-child(2) {
+      font-size: 15px;
       font-weight: bold;
     }
-    >:nth-child(2){
+  }
+
+  > :nth-child(2) {
+    margin-left: 8px;
+  }
+`
+export const NoticeBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 330px;
+    padding: 5px;
+    background-color: ${ThemeColor.containerColor};
+    margin-bottom:10px;
+    border-radius: 16px;
+  main{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    height: 50px;
+    margin-top:10px;
+  }
+
+    .title {
+      font-weight: bold;
+      font-size: 17px;
+      margin-left: 20px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 220px;
-   }
+    }
+
+    .content {
+      font-size: 17px;
+      margin:-10px 20px 10px 20px;
+    }
+
+  .author {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 25px;
+    margin-right: 20px;
+
+    .profileCircle {
+      width: 30px;
+    }
+    .name{
+      font-size: 15px;
+      margin-left: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 70px;
+    }
+  }
+  .comments{
+    width: 60px;
+    margin-right: 12px;
+  }
+  .section{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .BoardContent{
+    margin: -5px 0 15px 15px;
+    font-size: 15px;
+    max-width:220px;
   }
 `
-
+// export const TwoTabNav = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 200px;
+//   height: 30px;
+//   position:sticky;
+//   top:10px;
+//
+//   button {
+//     border: none;
+//     background-color: ${ThemeColor.navColor};
+//     border-radius: 10px;
+//     padding: 5px 10px;
+//     font-size: 18px;
+//   }
+// `
 export const RecBox = ({componentToRender}) => {
     return (
         <div
@@ -332,6 +550,7 @@ export {
     NavigationBar,
     PlusButton,
     LinkBox,
+    TwoTabNav,
     ThemeColor,
     UserBoxSize
 

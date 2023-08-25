@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import React, {useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {ACCOUNT, MATE, SELECTED_EXERCISE, WISH_EXERCISE} from "../api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDumbbell, faHouse, faPeopleGroup, faUser} from "@fortawesome/free-solid-svg-icons";
-import {ThemeColor} from "./UIPackage";
+import {ThemeColor} from "./BasicUI";
+import {navClick} from "../state/userState";
 
 const Nav = styled.nav`
   z-index: 999;
@@ -14,13 +15,10 @@ const Nav = styled.nav`
   width: 100%;
   max-width: 390px;
   height: 60px;
-  //overflow: auto; /* 추가된 부분 */
   background-color: ${ThemeColor.navColor};
   display: flex;
   justify-content: space-around;
   align-items: center;
-  //overflow: hidden;
-  // box-shadow: 0px -1px 10px rgba(0, 0, 0, 0.2);
   border-radius: 16px 16px 0 0;
 `;
 const BodyPadding = styled.div`
@@ -33,70 +31,60 @@ const NavButton = styled.button`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //color: #9b9b9b;
   color: ${ThemeColor.navColor};
   font-size: 0.8rem;
   background-color: transparent;
   border: none;
   cursor: pointer;
+
+  .navLink {
+    text-decoration: none;
+      //color: ${props => props?.active ? 'black' : 'gray'};
+    color: gray;
+    display: flex;
+    flex-direction: column;
+
+    .icon {
+      font-size: 20px;
+    }
+  }
+
+  span {
+    font-size: 0.6rem;
+  }
+
+ 
 `;
 
-export const NavigationBar = ({onExerciseClick, onRankingClick, onCommunityClick, onMateClick, onAccountClick}) => {
-    const [activateLink, setActivateLink] = useState(null)
+export const NavigationBar = () => {
     const goals = useSelector((state) => state.goals)
+    const activeNav = useSelector((state) => state.activeNav);
+    const dispatch = useDispatch();
 
-    const style = {
-        textDecoration: 'none',
-        color:'black',
-        display: 'flex',
-        flexDirection: 'column',
-    }
-    const iconStyle = {
-        fontSize: '20px',
-    }
-    const fontStyle = {
-        fontSize: '0.6rem',
-    }
+    const handleNavClick = link => dispatch(navClick({ activeNav: link }));
 
-    const handleLinkClick = (link) => {
-        setActivateLink(link)
-    }
+    const navButtons = [
+        { link: goals ? SELECTED_EXERCISE : WISH_EXERCISE, icon: faDumbbell, text: '운동' },
+        { link: '/', icon: faHouse, text: '홈' },
+        { link: MATE, icon: faPeopleGroup, text: '메이트' },
+        { link: ACCOUNT, icon: faUser, text: '계정' },
+    ];
+
     return (
         <BodyPadding>
             <Nav>
-                <NavButton onClick={() => handleLinkClick('exercise')}>
-                    <Link to={goals ? SELECTED_EXERCISE : WISH_EXERCISE} style={style}>
-                        <FontAwesomeIcon icon={faDumbbell} style={iconStyle}/>
-                        <span style={fontStyle}>
-                        운동
-                    </span>
-                    </Link>
-                </NavButton>
-                <NavButton onClick={onMateClick}>
-                    <Link to={'/'} style={style}>
-                        <FontAwesomeIcon icon={faHouse} style={iconStyle}/>
-                        <span style={fontStyle}>
-                        홈
-                    </span>
-                    </Link>
-                </NavButton>
-                <NavButton onClick={onCommunityClick}>
-                    <Link to={MATE} style={style}>
-                        <FontAwesomeIcon icon={faPeopleGroup} style={iconStyle}/>
-                        <span style={fontStyle}>
-                        메이트
-                    </span>
-                    </Link>
-                </NavButton>
-
-                <NavButton onClick={onAccountClick}>
-                    <Link to={ACCOUNT} style={style}>
-                        <FontAwesomeIcon icon={faUser} style={iconStyle}/>
-                        <span style={fontStyle}>
-                        계정
-                    </span>
-                    </Link>
-                </NavButton>
+                {navButtons.map(button => (
+                    <NavButton key={button.link}>
+                        <Link onClick={() => handleNavClick(button.link)}
+                            style={{color: activeNav === button.link ? 'black' : 'gray'}}
+                            className={'navLink'}
+                            to={button.link}
+                        >
+                            <FontAwesomeIcon className={'icon'} icon={button.icon} />
+                            <span>{button.text}</span>
+                        </Link>
+                    </NavButton>
+                ))}
             </Nav>
         </BodyPadding>
     );

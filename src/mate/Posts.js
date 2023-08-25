@@ -2,107 +2,12 @@ import React, {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import styled from "styled-components";
 import {POST_USER_POST_COMMENT, POST_USER_POST_HEART, GET_IMAGE} from '../api'
-import {Container, Input, Loading, ThemeColor, UserBoxSize, UserProfile} from "../UI/UIPackage";
+import {Container, Input, Loading, ThemeColor, UserBoxSize, UserProfile, Img, PostHeader, PostFeedback, PostContent, FeedbackList, FeedbackButton, CommentsList} from "../UI/UIPackage";
 import {functions} from "../UI/Functions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faComment, faHeart} from '@fortawesome/free-solid-svg-icons';
 import {useSelector} from "react-redux";
 
-const Img = styled.img`
-  width: 340px;
-  height: 340px;
-  object-fit: cover;
-  border-radius: 16px;
-`
-const PostHeader = styled.div`
-  width: 330px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  p {
-    font-size: 18px;
-    font-weight: bold;
-  }
-`
-const PostFeedback = styled.div`
-  width: 150px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 0 10px 10px;
-
-  .heart, .comment {
-    font-size: 20px;
-  }
-
-  span {
-    font-size: 15px;
-  }
-
-`
-const PostContent = styled.div`
-  > :first-child {
-    font-weight: bold;
-    font-size: 17px;
-  }
-`
-const FeedbackButton = styled.button`
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  width: 70px;
-  display: flex;
-  justify-content: space-between;
-`
-const FeedbackList = styled.div`
-  width: 300px;
-  margin: 10px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 16px;
-  background-color: ${ThemeColor.divColor};
-
-  button:nth-of-type(1) {
-    border: none;
-    margin-left: 10px;
-    border-radius: 10px;
-    height: 40px;
-  }
-
-  button:nth-of-type(2) {
-    border: none;
-    background-color: transparent;
-  }
-`
-const CommentsList = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 15px;
-
-  > :nth-child(1) {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    margin-right: 10px;
-
-    > :nth-child(1) {
-      margin-right: 10px;
-    }
-
-    > :nth-child(2) {
-      font-size: 15px;
-      font-weight: bold;
-    }
-  }
-
-  > :nth-child(2) {
-    margin-left: 8px;
-  }
-`
 
 const CommentList = ({display, onChange, post, userName}) => {
     const comment=useRef("")

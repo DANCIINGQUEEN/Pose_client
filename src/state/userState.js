@@ -18,6 +18,7 @@ const initialState = {
     followingNames:null,
     dDay: null,
     goals: null,
+    activeNav:null,
 
 }
 
@@ -25,6 +26,9 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
+        navClick: (state, action) => {
+          state.activeNav = action.payload.activeNav;
+        },
         login: (state, action) => {
             state.token = action.payload.token
             // console.log('login success!')
@@ -162,6 +166,7 @@ export const authSlice = createSlice({
 })
 
 export const {
+    navClick,
     login,
     logout,
     getUser,

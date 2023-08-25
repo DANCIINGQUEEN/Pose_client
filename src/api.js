@@ -46,6 +46,10 @@ const API={
     POST_TEAM_NOTICE: `${API_BASE_URL}/team/postTeamNotice`,
     //팀 공지 가져오기
     GET_TEAM_NOTICE: `${API_BASE_URL}/team/getTeamNotice`,
+    //팀 게시판 등록
+    POST_TEAM_BOARD: `${API_BASE_URL}/team/postTeamBoard`,
+    //팀 게시판 가져오기
+    GET_TEAM_BOARD: `${API_BASE_URL}/team/getTeamBoard`,
 
     //유저 팔로우
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,

@@ -1,36 +1,23 @@
 import React from 'react';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import {Container, NavigationBar, exerciseName} from "../UI/UIPackage";
+import {useLocation} from "react-router-dom";
+import {Container, NavigationBar, TwoTabNav} from "../UI/UIPackage";
 import Examples from "./Examples";
 import AiTraining from "./AiTraining";
-import {useLocation} from "react-router-dom";
 
 function Training(props) {
     const location = useLocation()
     const exercise = location.state?.exercise || ''
-    const settings = {
-        arrows: false,
-        dots: true,
-        draggable: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
+
+    const tab={
+        'AI 트레이닝':<AiTraining/>,
+        '예시':<Examples/>
     }
     return (
-        <>
-            <Slider {...settings}>
-                <Container>
-                    <AiTraining text={exercise}/>
-                </Container>
-                <Container>
-                    <Examples/>
-                </Container>
-            </Slider>
+        <Container>
+            <h1>{exercise}</h1>
+            <TwoTabNav tab={tab}/>
             <NavigationBar/>
-        </>
+        </Container>
     );
 }
 

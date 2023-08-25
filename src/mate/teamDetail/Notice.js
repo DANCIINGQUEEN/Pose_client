@@ -1,50 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Button, Container, Input, ThemeColor, UserBox, UserBoxSize, UserProfile} from "../../UI/UIPackage";
+import {Button, Container, Input, Loading, NoticeBox, UserBox, UserBoxSize, UserProfile} from "../../UI/UIPackage";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import {functions} from "../../UI/Functions";
 import {POST_TEAM_NOTICE, GET_TEAM_NOTICE} from "../../api";
 import axios from "axios";
 
-
-const NoticeBox = styled.div`
-  .notice {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    padding: 5px;
-    background-color: ${ThemeColor.containerColor};
-    margin-bottom:10px;
-    border-radius: 16px;
-
-    > :first-child {
-      font-weight: bold;
-      font-size: 17px;
-      margin-left: 20px;
-    }
-
-    > :nth-child(2) {
-      font-size: 17px;
-      margin:0 20px 0 20px;
-    }
-  }
-
-  .author {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 25px;
-    margin:10px 0 10px 20px;
-
-    > :first-child {
-      width: 30px;
-    }
-    >:nth-child(2){
-      font-size: 15px;
-      margin-left: 10px;
-    }
-  }
-`
 
 const WriteNotice = ({display, onChange, teamId}) => {
     const title = useRef("")
@@ -92,7 +53,9 @@ const WriteNotice = ({display, onChange, teamId}) => {
             <Input type='text' placeholder='제목 입력' ref={title}/>
             <Input type='text' placeholder='내용 입력' ref={content}/>
             <div style={divStyle.div}>
-                <Button onClick={handlePostClick} style={divStyle.pButton}>등록</Button>
+                <Button onClick={handlePostClick} style={divStyle.pButton}>
+                    {isLoading ? <Loading/> : '등록'}
+                </Button>
                 <Button onClick={handleCloseButtonClick} style={divStyle.dButton}>취소</Button>
             </div>
         </div>
@@ -100,34 +63,35 @@ const WriteNotice = ({display, onChange, teamId}) => {
 }
 const NoticeList = ({teamId}) => {
     const [notices, setNotices] = useState()
-    const [isLoading, setIsLoading] = useState(false)
     const getTeamNotice = async () => {
-        setIsLoading(true)
         const headers = functions.getJWT()
         await axios.get(GET_TEAM_NOTICE + '/' + teamId, {headers})
             .then(res => setNotices(res.data))
             .catch(err => console.log(err))
-            .finally(() => setIsLoading(false))
     }
     useEffect(() => {
         getTeamNotice().then()
     }, [])
     console.log(notices)
     return (
-        <NoticeBox>
+        <>
             {notices?.map((notice, index) => {
                 return (
-                    <div className={'notice'} key={index}>
-                        <p>{notice.noticeTitle}</p>
-                        <p>{notice.noticeContent}</p>
+                    <NoticeBox key={notice._id}>
+                        <main>
+
+                        <span className={'title'}>{notice.noticeTitle}</span>
                         <div className={'author'}>
-                            <UserProfile text={notice.author} size={UserBoxSize.small}/>
-                            <span>{notice.author}</span>
+                            <UserProfile  className={'profileCircle'} text={notice.author} size={UserBoxSize.small}/>
+                            <span className={'name'} >{notice.author}</span>
                         </div>
-                    </div>
+                        </main>
+                        <p className={'content'}>{notice.noticeContent}</p>
+
+                    </NoticeBox>
                 )
             })}
-        </NoticeBox>
+        </>
     )
 
 }
@@ -152,7 +116,9 @@ function Notice(props) {
             <br/>
             <Button style={{width: '120px', ...buttonStyle}} onClick={handleButtonClick}>글 작성</Button>
             <WriteNotice onChange={setIsButtonClicked} display={isButtonClicked} teamId={teamId}/>
-        </>);
+            <br/>
+        </>
+    );
 }
 
 export default Notice;

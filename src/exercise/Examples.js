@@ -53,11 +53,11 @@ const VideoPlayer = () => {
 
 function Examples(props) {
     return (
-        <Container>
-            <h1>예시</h1>
-            <VideoPlayer/>
-
-        </Container>
+        <>
+            {/*<VideoPlayer/>*/}
+            <br/>
+            <div>hello</div>
+        </>
     );
 }
 
