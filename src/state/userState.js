@@ -18,7 +18,7 @@ const initialState = {
     followingNames:null,
     dDay: null,
     goals: null,
-    activeNav:null,
+    activeNav:'home',
 
 }
 

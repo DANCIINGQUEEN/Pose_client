@@ -1,7 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useLocation} from "react-router-dom";
 import Like, {SlidingComponent} from "./Like";
 import PoseNetprtc from "./PoseNetprtc";
+import {
+    CommentsList, FeedbackButton,
+    FeedbackList,
+    Input,
+    Loading,
+    NoticeBox,
+    ThemeColor,
+    UserBoxSize,
+    UserProfile
+} from "../UI/UIPackage";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faComment} from "@fortawesome/free-solid-svg-icons";
 
 function InputToss2(props) {
     const location = useLocation()
@@ -46,3 +58,5 @@ function InputToss2(props) {
 }
 
 export default InputToss2;
+
+

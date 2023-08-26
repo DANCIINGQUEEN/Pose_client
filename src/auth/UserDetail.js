@@ -11,43 +11,26 @@ const UserDetail = (props) => {
     const weightList = ['50 이하', 50, 60, 70, 80, 90, '90 이상']
     const ageList = ['10대', '20대', '30대', '40대', '50대', '60대 이상']
 
-    const [sex, setSex] = useState(null);
-    const [area, setArea] = useState(null);
-    const [height, setHeight] = useState(null);
-    const [weight, setWeight] = useState(null);
-    const [age, setAge] = useState(null);
-
     const location = useLocation()
     const name = location.state?.name || ''
 
-
-    const handleSexChange = (selectedSex) => {
-        setSex(selectedSex)
+    const [form, setForm] = useState({sex:'', area:'', height:'', weight:'', age:''});
+    const handleFormChange = e => setForm({...form, [item[e.item]]: e.option})
+    const item={
+        '성별':'sex',
+        '지역':'area',
+        '키':'height',
+        '몸무게':'weight',
+        '나이':'age'
     }
-    const handleAreaChange = (selectedArea) => {
-        setArea(selectedArea)
-    }
-    const handleHeightChange = (selectedHeight) => {
-        setHeight(selectedHeight)
-    }
-    const handleWeightChange = (selectedWeight) => {
-        setWeight(selectedWeight)
-    }
-    const handleAgeChange = (selectedAge) => {
-        setAge(selectedAge)
-    }
-
+    // console.log(form)
 
     const navigate = useNavigate();
     const handleButtonClick = () => {
         navigate(USER_DETAIL_2, {
             state: {
                 ...location.state,
-                sex: sex,
-                area: area,
-                height: height,
-                weight: weight,
-                age: age
+                ...form
             }
         });
     };
@@ -58,11 +41,11 @@ const UserDetail = (props) => {
             <h3 style={{margin: '-5px 0 -10px 0'}}>안녕하세요 {name}님!</h3>
             <h5>세부 정보를 입력해주세요</h5>
             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', width: '90%'}}>
-                <CustomSelect options={sexList} item='성별' onChange={handleSexChange}/>
-                <CustomSelect options={areaList} item='지역' onChange={handleAreaChange}/>
-                <CustomSelect options={heightList} item='키' onChange={handleHeightChange}/>
-                <CustomSelect options={weightList} item='몸무게' onChange={handleWeightChange}/>
-                <CustomSelect options={ageList} item='나이' onChange={handleAgeChange}/>
+                <CustomSelect options={sexList} item='성별' onChange={handleFormChange}/>
+                <CustomSelect options={areaList} item='지역' onChange={handleFormChange}/>
+                <CustomSelect options={heightList} item='키' onChange={handleFormChange}/>
+                <CustomSelect options={weightList} item='몸무게' onChange={handleFormChange}/>
+                <CustomSelect options={ageList} item='나이' onChange={handleFormChange}/>
                 <Button onClick={handleButtonClick}>등록</Button>
             </div>
 

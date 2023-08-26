@@ -61,7 +61,7 @@ const CustomSelect = ({item, options, onChange}) => {
     const handleOptionClick = (option) => {
         setSelectedOption(option);
         setIsOpen(false);
-        onChange(option)
+        onChange({option, item})
     };
 
     const handleClickOutside = (event) => {

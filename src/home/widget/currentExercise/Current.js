@@ -11,7 +11,7 @@ import {CURRENT, WISH_EXERCISE} from "../../../api";
 const DoughnutBox = styled.div`
   width: 205px;
   height: 205px;
-  background-color: ${ThemeColor.importantColor};
+  //background-color: ${ThemeColor.importantColor};
   margin: 15px 15px 15px 10px;
   display: flex;
   align-items: center;
@@ -20,11 +20,10 @@ const DoughnutBox = styled.div`
   border-radius: 20px;
 `
 
-
 const InfoBox = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: ${ThemeColor.divColor};
+  //background-color: ${ThemeColor.divColor};
   width: 130px;
   height: 60px;
   border-radius: 16px;

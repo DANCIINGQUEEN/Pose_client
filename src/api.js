@@ -50,6 +50,10 @@ const API={
     POST_TEAM_BOARD: `${API_BASE_URL}/team/postTeamBoard`,
     //팀 게시판 가져오기
     GET_TEAM_BOARD: `${API_BASE_URL}/team/getTeamBoard`,
+    //팀 자유게시판 댓글 등록
+    POST_TEAM_BOARD_COMMENT: `${API_BASE_URL}/team/postTeamBoardComment`,
+    //팀 회원 목록
+    GET_TEAM_MEMBERS: `${API_BASE_URL}/team/getTeamMembers`,
 
     //유저 팔로우
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,

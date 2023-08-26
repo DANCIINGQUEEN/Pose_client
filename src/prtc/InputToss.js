@@ -18,6 +18,8 @@ function InputToss(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [form, setForm] = useState({email:"", password   :""});
+
 
     const navigate = useNavigate();
     const handleContentChange = (event) => {
@@ -110,6 +112,11 @@ function InputToss(props) {
     };
 
     const squat=process.env.PUBLIC_URL + '/exercise2/lower/squat.jpg'
+    const handleFormChange=(e)=>{
+        // console.log(e.target.type)
+        setForm({...form, [e.target.type]:e.target.value})
+    }
+    console.log(form)
 
 
     return (
@@ -140,6 +147,8 @@ function InputToss(props) {
             </div>
             {/*<PoseNetprtc/>*/}
             <img src={squat} alt=""/>
+            <input type="email" onChange={handleFormChange}/>
+            <input type="password" onChange={handleFormChange}/>
         </Container>
     );
 }

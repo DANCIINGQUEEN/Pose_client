@@ -19,13 +19,14 @@ const UserInfoBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  .detail{
+    background-color: ${ThemeColor.importantColor};
+    border-radius: 10px;
+    margin-right: 5px;
+    padding: 5px;
+  }
 `
-const Detail = styled.p`
-  background-color: ${ThemeColor.importantColor};
-  border-radius: 10px;
-  margin-right: 5px;
-  padding: 5px;
-`
+
 
 const FollowButton = ({userId}) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -93,9 +94,9 @@ const RecommendUser = () => {
                     <div style={{display: 'flex', flexDirection: 'column'}}>
                         <UserBox name={user.name} email={user.email} size={UserBoxSize.small}/>
                         <div style={{display: 'flex'}}>
-                            <Detail>{user.sex}</Detail>
-                            <Detail>{user.area}</Detail>
-                            <Detail>{user.age}</Detail>
+                            {user.sex&&<span className={'detail'}>{user.sex}</span>}
+                            {user.area&&<span className={'detail'}>{user.area}</span>}
+                            {user.age&&<span className={'detail'}>{user.age}</span>}
                         </div>
                     </div>
                     <FollowButton userId={user._id}/>

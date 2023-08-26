@@ -1,42 +1,74 @@
 import React, {useState} from 'react';
-import {Container, CustomSelect, Input, Box, Button, exerciseName} from "../../../UI/UIPackage";
-import styled from "styled-components";
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {GOAL_SETTING} from "../../../api";
 import {useDispatch} from "react-redux";
-import {putGoals} from "../../../state/userState";
 
+import {Container, CustomSelect, Input, Box, Button, exerciseName} from "../../../UI/UIPackage";
+import {GOAL_SETTING, CURRENT} from "../../../api";
+import {putGoals} from "../../../state/userState";
+import styled from "styled-components";
+import {functions} from "../../../UI/Functions";
+
+const EachGoal=styled(Box)`
+  h4{
+    margin-left: 20px;
+  }
+  .setting{
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+  }
+  .amount{
+    margin-left: 20px;
+  }
+  input{
+    width: 100px;
+    height: 50px;
+    margin: 0 20px 20px 20px;
+  }
+  .numError{
+    margin-left: 20px;
+    color:red;
+  }
+`
 
 function GoalInput({label, onChange}) {
     const amount = ['매일', '주 5회', '주 3회', '주 2회', '주 1회']
-    const [cycle, setCycle] = useState()
     const [number, setNumber] = useState(0)
+    const [cycle, setCycle] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
+
 
     const handleCycleChange = (selectedCycle) => {
         setCycle(selectedCycle)
-        onChange(selectedCycle, number)
+        onChange(selectedCycle.option, number)
     }
 
+
     const handleAmountChange = (e) => {
-        setNumber(e.target.value)
-        onChange(cycle, e.target.value)
+        const value=e.target.value
+        const isNumber = !isNaN(value);
+        setNumber(isNumber ? value : 0);
+        setErrorMsg(isNumber ? '' : '숫자를 입력해주세요');
+        onChange(cycle.option, value)
     }
 
     return (
-        <Box>
-            <h4 style={{marginLeft: "20px"}}>{exerciseName[label]} 목표 설정</h4>
-            <div style={{width: '350px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                <div style={{marginLeft: '20px'}}>
+        <EachGoal>
+            <h4 >{exerciseName[label]} 목표 설정</h4>
+            <div className={'setting'}>
+                <div className={'amount'}>
                     <CustomSelect options={amount} item={'운동 주기'} onChange={handleCycleChange}/>
                 </div>
                 <div>
-                    <Input type="text" placeholder='횟수' onChange={handleAmountChange}
-                           style={{width: "100px", height: "50px", margin: "0 20px 20px 20px"}}/>
+                    <Input type="text" placeholder='횟수' onChange={handleAmountChange}/>
                     <span>회</span>
+                    {errorMsg && <span className={'numError'}>{errorMsg}</span>}
                 </div>
             </div>
-        </Box>
+        </EachGoal>
     );
 }
 
@@ -46,64 +78,37 @@ function GoalSetting(props) {
     const navigate = useNavigate();
     const selectedExercise = location.state?.selected || ''
 
-    const [isLoading, setIsLoading] = useState(false)
     const [dDay, setDDay] = useState(null)
     const [goals, setGoals] = useState([])
 
-    const handleDDayChange = (e) => {
-        setDDay(e.target.value)
-    }
+    const handleDDayChange = e => setDDay(e.target.value)
+
 
     const handleGoalInputChange = (selectedCycle, amount, label) => {
-        const index = goals.findIndex((goal) => goal.label === label);
-
-        if (index !== -1) {
-            const updatedGoal = {...goals[index], cycle: selectedCycle, number: amount};
-            const updatedGoals = [...goals];
-            updatedGoals[index] = updatedGoal;
+        const existingGoal = goals.find((goal) => goal.label === label);
+        if (existingGoal) {
+            const updatedGoal = { ...existingGoal, cycle: selectedCycle, number: amount };
+            const updatedGoals = goals.map((goal) => (goal.label === label ? updatedGoal : goal));
             setGoals(updatedGoals);
         } else {
-            setGoals([...goals, {label, cycle: selectedCycle, number: amount}]);
+            setGoals([...goals, { label, cycle: selectedCycle, number: amount }]);
         }
     };
     const handleSubmit = async () => {
-        const token = sessionStorage.getItem('jwt');
-        const headers = {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
+        const headers=functions.getJWT()
         const userGoal = {
             dDay: dDay,
             goals: goals
         }
-        setIsLoading(true)
-
         try {
-            const response = await axios.post(GOAL_SETTING,
-                {userGoal},
-                {headers: headers});
-
+            await axios.post(GOAL_SETTING, {userGoal}, {headers});
             dispatch(
-                putGoals({
-                    dDay: dDay,
-                    goals: goals
-                }),
-            )
-
-            setIsLoading(false)
+                putGoals({ dDay: dDay, goals: goals }),)
             alert('목표 설정이 완료되었습니다!');
-            navigate('/exercise/current', {
-                state: {
-                    dDay: dDay,
-                    goals: goals
-                }
-            })
-
+            navigate(CURRENT, { state: { dDay: dDay, goals: goals }})
         } catch (error) {
-            console.error('Error while submitting userGoal:', error);
+            console.error('에러 발생', error);
             alert('목표 설정에 실패했습니다. 다시 시도해주세요.');
-            setIsLoading(false)
-
         }
     }
     return (

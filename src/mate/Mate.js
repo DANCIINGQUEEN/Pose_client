@@ -9,7 +9,6 @@ import Posts from "./Posts";
 import MateTeam from "./MateTeam";
 
 const AllPosts = () => {
-    const [showButtons, setShowButtons] = useState(false);
     const following = useSelector((state) => state.following)
 
     const plusMenuItem = [

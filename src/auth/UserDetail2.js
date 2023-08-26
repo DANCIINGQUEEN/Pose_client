@@ -9,6 +9,7 @@ function UserDetail2(props) {
 
     const location = useLocation()
     const name = location.state?.name || ''
+    console.log(location.state)
 
     const handleButtonClick = (value) => {
         navigate(USER_DETAIL_3, {
