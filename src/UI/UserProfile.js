@@ -29,7 +29,7 @@ export const UserProfile = ({text, size}) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}>
-                    {text.length > 0 && text[0].toUpperCase()}
+                    {text && text[0].toUpperCase()}
                 </span>
         </div>
     )

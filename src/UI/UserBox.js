@@ -7,8 +7,8 @@ export const UserBox = ({name, email, size}) => {
         <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <UserProfile text={name} size={size}/>
             <div style={{textAlign: 'left', marginLeft: '10px'}}>
-                <div style={{fontSize: fontSize}}>{name}</div>
-                <div style={{fontSize: fontSize}}>{email}</div>
+                {name!==''&& <div style={{fontSize: fontSize}}>{name}</div>}
+                {email!==''&& <div style={{fontSize: fontSize}}>{email}</div>}
             </div>
         </div>
     )

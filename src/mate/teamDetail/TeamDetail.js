@@ -9,7 +9,7 @@ import Chat from "./Chat";
 
 function TeamDetail(props) {
     const location = useLocation()
-    const form = location.state?.detailPage
+    const page = location.state?.detailPage
     const name = location.state?.name
     const desc = location.state?.desc
     const detailSwitch = {
@@ -23,7 +23,7 @@ function TeamDetail(props) {
         <Container>
             <h1>{name}</h1>
             <h3 style={{marginTop: '0px'}}>{desc}</h3>
-            {detailSwitch[form]}
+            {detailSwitch[page]}
         </Container>
     );
 }

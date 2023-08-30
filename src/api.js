@@ -1,6 +1,6 @@
 const API_BASE_URL = process.env.NODE_ENV === 'production'
-    ? 'https://competitive-leticia-danciingqueen.koyeb.app' // 배포된 서버 주소
-    : 'http://localhost:3001' // 로컬 서버 주소
+    ? 'https://competitive-leticia-danciingqueen.koyeb.app/api' // 배포된 서버 주소
+    : 'http://localhost:3001/api' // 로컬 서버 주소
 
 const API={
     //서버통신
@@ -23,7 +23,7 @@ const API={
     //내 게시물 가져오기
     GET_MY_POSTS: `${API_BASE_URL}/user/getMyPosts`,
     //이미지 경로
-    GET_IMAGE: `https://competitive-leticia-danciingqueen.koyeb.app/`,
+    GET_IMAGE: `https://competitive-leticia-danciingqueen.koyeb.app/api`,
     //댓글 입력
     POST_USER_POST_COMMENT: `${API_BASE_URL}/user/postUserPostComment`,
     //좋아요 클릭
@@ -76,6 +76,9 @@ const API={
     UPDATE_INFORMATION:`${API_BASE_URL}/user/updateInformation`,
     IS_PASSWORD_CORRECT:`${API_BASE_URL}/user/isPasswordCorrect`,
     UPDATE_PASSWORD:`${API_BASE_URL}/user/updatePassword`,
+
+    //채팅
+    CHATTING:'http://localhost:3002',
 
 
 
