@@ -10,8 +10,10 @@ import styled from "styled-components";
 const MessageInput=styled.div`
   position: fixed;
   bottom: 0;
-  left: 100px;
+  //left: 100px;
   display:flex;
+  //justify-content: center;
+  align-items: center;
   flex-direction: row;
   //border:1px solid black;
   
@@ -22,7 +24,7 @@ const MessageInput=styled.div`
     border-radius: 10px;
     padding: 0 15px;
     margin-bottom:20px;
-    left:20px;
+    //left:20px;
     z-index: 1;
     
   }
@@ -33,8 +35,9 @@ const MessageInput=styled.div`
     width:40px;
     height:40px;
     border-radius:50%;
-    right:30px;
-    top:7px;
+    right:47px;
+    //top:17px;
+    bottom:10px;
     z-index: 2;
     &:hover{
       background-color: ${ThemeColor.buttonColor};
