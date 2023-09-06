@@ -140,7 +140,7 @@ const Chat = () => {
     const chatBoxRef = useRef(null);
 
     useEffect(() => {
-        socket.current = io.connect("localhost:3001", {path: '/chat'});
+        socket.current = io.connect(CHATTING, {path: '/chat'});
         if (room !== "") {
             socket.current.emit("join_room", room);
         }
