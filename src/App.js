@@ -2,38 +2,38 @@ import React, {useRef, useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useSelector} from "react-redux";
 //회원가입
-import Register from "./auth/Register";
-import UserDetail from "./auth/UserDetail";
-import UserDetail2 from "./auth/UserDetail2";
-import UserDetail3 from "./auth/UserDetail3";
+import Register from "./components/auth/Register";
+import UserDetail from "./components/auth/UserDetail";
+import UserDetail2 from "./components/auth/UserDetail2";
+import UserDetail3 from "./components/auth/UserDetail3";
 //홈
-import AuthHome from "./auth/AuthHome";
-import Account from "./account/Account";
+import AuthHome from "./pages/AuthHome";
+import Account from "./pages/Account";
 
 //실험
-import InputToss from "./prtc/InputToss";
-import InputToss2 from "./prtc/InputToss2";
+import InputToss from "./components/prtc/InputToss";
+import InputToss2 from "./components/prtc/InputToss2";
 
 //네비게이션
-import Exercise from "./exercise/Exercise";
-import Ranking from "./ranking/Ranking";
-import Training from "./exercise/Training";
-import UserSetting from "./account/UserSetting";
-import Mate from "./mate/Mate";
+import EveryExercises from "./components/exercise/EveryExercises";
+import Ranking from "./components/ranking/Ranking";
+import Training from "./components/exercise/Training";
+import UserSetting from "./components/account/UserSetting";
+import Mate from "./pages/Mate";
 
 //현재 운동
-import WishExercise from "./home/widget/currentExercise/WishExercise";
-import GoalSetting from "./home/widget/currentExercise/GoalSetting";
-import Current from "./home/widget/currentExercise/Current";
-import SelectedExercise from "./exercise/SelectedExercise";
+import WishExercise from "./components/Home/widget/currentExercise/WishExercise";
+import GoalSetting from "./components/Home/widget/currentExercise/GoalSetting";
+import Current from "./components/Home/widget/currentExercise/Current";
+import SelectedExercise from "./pages/SelectedExercise";
 
 //메이트
-import RecommendUser from "./mate/RecommendUser";
-import PostUpload from "./mate/PostUpload";
-import MyPosts from "./mate/MyPosts";
-import CreateTeam from "./mate/CreateTeam";
-import MateTeamList from "./mate/MateTeamList";
-import MyTeam from "./mate/MyTeam";
+import RecommendUser from "./components/mate/RecommendUser";
+import PostUpload from "./components/mate/PostUpload";
+import MyPosts from "./components/mate/MyPosts";
+import CreateTeam from "./components/mate/CreateTeam";
+import MateTeamList from "./components/mate/MateTeamList";
+import MyTeam from "./components/mate/MyTeam";
 
 //URL
 import {
@@ -58,8 +58,8 @@ import {
     MATE_TEAM_LIST,
     ENTER_TEAM,
     TEAM_DETAIL
-} from './api'
-import TeamDetail from "./mate/teamDetail/TeamDetail";
+} from './services/api'
+import TeamDetail from "./components/mate/teamDetail/TeamDetail";
 const App = () => {
     return (
         <div className="App">
@@ -76,7 +76,7 @@ const App = () => {
                     <Route path={USER_SETTING} element={<UserSetting/>}/>
 
                     //운동
-                    <Route path={EXERCISE} element={<Exercise/>}/>
+                    <Route path={EXERCISE} element={<EveryExercises/>}/>
                     <Route path={TRAINING} element={<Training/>}/>
 
                     //메이트

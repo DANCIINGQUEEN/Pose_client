@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import authReducer from './state/userState'
+import authReducer from './store/userState'
 
 
 import {configureStore} from "@reduxjs/toolkit";
