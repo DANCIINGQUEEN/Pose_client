@@ -26,7 +26,8 @@ import {
     ChangeHeight,
     ExerciseSetting,
     ChangeExercise,
-    ChangeWishList, WishListSettingButton
+    ChangeWishList,
+    WishListSettingButton
 } from "./DetailSetting";
 
 const RainbowDiv = styled.div`

@@ -116,7 +116,8 @@ const NewPassword = ({setIsPasswordCorrect}) => {
         try {
             const response = await axios.put(UPDATE_PASSWORD,
                 {newPassword: newPassword},
-                {headers: headers});
+                // {headers: headers});
+            )
             if (response.data.state) {
                 setIsLoading(false);
                 setIsSuccessMessage(true);
@@ -128,7 +129,10 @@ const NewPassword = ({setIsPasswordCorrect}) => {
             }
         } catch (error) {
             console.error('API 요청 에러:', error);
+        }finally {
+            setIsLoading(false);
         }
+        console.log(newPassword)
     }
     useEffect(() => {
         setIsNoChange(newPassword === "");
@@ -268,7 +272,7 @@ export const ShowFollowing = ({following}) => {
         }
     };
     useEffect(() => {
-        fetchData()
+        fetchData().then()
     }, [following])
     // console.log(following)
 
@@ -313,14 +317,13 @@ export const ShowFollowers = ({followers}) => {
             dispatch(
                 putFollowerNames({followerNames: data.followers})
             )
-            // console.log('get data complete!')
             setIsLoading(false)
         } catch (error) {
             console.error('API 요청 에러:', error);
         }
     };
     useEffect(() => {
-        fetchData()
+        fetchData().then()
     }, [followers])
 
     const {followerNames} = useSelector(state => state)
@@ -370,10 +373,10 @@ export const ChangeArea = ({area}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_INFORMATION, {area: newArea, item: 'area'},
+            UPDATE_INFORMATION, {area: newArea.option, item: 'area'},
             updateArea, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
-            (success) => {
+            () => {
             },
             (error) => {
                 console.error(error);
@@ -421,7 +424,7 @@ export const ChangeAge = ({age}) => {
     }
     const handleUpdate = () => {
         updateData(
-            UPDATE_INFORMATION, {age: newAge, item: 'age'},
+            UPDATE_INFORMATION, {age: newAge.option, item: 'age'},
             updateAge, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -491,7 +494,7 @@ export const ChangeWeight = ({weight}) => {
     const handleUpdate = () => {
         updateData(
             UPDATE_INFORMATION,
-            {weight: newWeight, item: 'weight'},
+            {weight: newWeight.option, item: 'weight'},
             updateWeight, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
@@ -575,7 +578,7 @@ export const ChangeHeight = ({height}) => {
     const handleUpdate = () => {
         updateData(
             UPDATE_INFORMATION,
-            {height: newHeight, item: 'height'},
+            {height: newHeight.option, item: 'height'},
             updateHeight, setIsLoading, setIsSuccessMessage, dispatch
         ).then(
             () => {
