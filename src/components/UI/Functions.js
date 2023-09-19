@@ -1,4 +1,5 @@
 import confetti from "canvas-confetti";
+import {logout} from "../../store/userState";
 
 export const functions = {
     getJWT: () => {
@@ -13,5 +14,15 @@ export const functions = {
             particleCount: 50,
             spread: 50
         });
+    },
+
+    handleJWTError :(error, dispatch, navigate) => {
+        if (error.response && error.response.status === 401) {
+            console.log('jwt 오류입니다');
+            dispatch(logout());
+            navigate('/');
+        } else {
+            console.log(error.response ? error.response.data : error.message);
+        }
     }
 }

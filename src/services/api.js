@@ -11,6 +11,7 @@ const API={
     //로그인
     LOGIN: `${API_BASE_URL}/user/login`,
     GET_USER_FULL_INFO: `${API_BASE_URL}/user/getUserFullInfo`,
+    GET_FOLLOWERS_EXERCISES_STATUS: `${API_BASE_URL}/user/getFollowersExercisesStatus`,
 
     //회원가입
     SEND_VERIFY_CODE: `${API_BASE_URL}/user/sendVerificationCode`,

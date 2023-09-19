@@ -1,35 +1,46 @@
-import React from 'react';
-import {ThemeColor, Scroll, LinkBox} from "../../UI/UIPackage";
+import React, {useEffect, useState} from 'react';
+import {ThemeColor, Scroll, LinkBox, Loading} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
-import {MATE} from "../../../services/api";
+import {MATE, GET_FOLLOWERS_EXERCISES_STATUS} from "../../../services/api";
+import {functions} from "../../UI/Functions";
+import axios from "axios";
 
 
-const SquareBox = ({componentToRender, data}) => {
-    const squatPercent = data.squat / 100
-    const pullUpPercent = data.pullUp / 100
-    const pushUpPercent = data.pushUp / 100
-    const chartData = {
-        labels: ['턱걸이', '스쿼트', '푸쉬업'],
-        datasets: [
-            {
-                data: [pullUpPercent, 1 - pullUpPercent],
-                backgroundColor: ['hotpink', 'rgba(0, 0, 0, 0)'],
-            },
-            {
-                data: [squatPercent, 1 - squatPercent],
-                backgroundColor: ['blue', 'rgba(0, 0, 0, 0)'],
-            },
-            {
-                data: [pushUpPercent, 1 - pushUpPercent],
-                backgroundColor: ['green', 'rgba(0, 0, 0, 0)'],
-            },
+const SquareBox = ({data}) => {
 
-        ],
-    };
+    const sliceData = data => data.length <= 4 ? data : data.slice(0, 4)
+    const isDataExist = data => data ? sliceData(data) : null
+    const makeChartData=data=>{
+        let label=[], datasets=[], backgroundDatasets=[]
+        isDataExist(data)?.map((data, index) => {
+            label.push(data.label)
+            const percent=data.attain/data.number*100
+            const dataset={
+                data:[percent, 100-percent],
+                backgroundColor: ['hotpink', 'rgba(0, 0, 0, 0)']
+            }
+            const backgroundDataset= {
+                data: [100, 0],
+                backgroundColor: ['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 0, 0)']
+            }
+            datasets.push(dataset)
+            backgroundDatasets.push(backgroundDataset)
+        })
+        const chartData = {
+            labels: label,
+            datasets: datasets
+        }
+        const backgroundData={
+            labels: label,
+            datasets: backgroundDatasets
+        }
+        return {chartData, backgroundData}
+    }
+
     const options = {
         cutoutPercentage: 30,
         plugins: {
@@ -48,24 +59,7 @@ const SquareBox = ({componentToRender, data}) => {
             },
         },
     };
-    const backgroundData = {
-        labels: [1, 2, 3],
-        datasets: [
-            {
-                data: [100, 0],
-                backgroundColor: ['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 0, 0)']
-            },
-            {
-                data: [100, 0],
-                backgroundColor: ['rgba(0, 0, 153, 0.2)', 'rgba(0, 0, 0, 0)']
-            },
-            {
-                data: [100, 0],
-                backgroundColor: ['rgba(0, 64, 0, 0.2)', 'rgba(0, 0, 0, 0)']
-            },
 
-        ]
-    }
     const backgroundOptions = {
         cutoutPercentage: 30,
         plugins: {
@@ -83,6 +77,7 @@ const SquareBox = ({componentToRender, data}) => {
             },
         },
     };
+    const op=[]
     return (
         <div style={{
             width: "123px",
@@ -97,10 +92,10 @@ const SquareBox = ({componentToRender, data}) => {
             borderRadius: '16px',
         }}>
             <span style={{position: 'relative', zIndex: '1', left: '150px'}}>
-                {<Doughnut data={backgroundData} options={backgroundOptions}/>}
+                {<Doughnut data={makeChartData(data).backgroundData} options={backgroundOptions}/>}
             </span>
             <span style={{position: 'relative', zIndex: '2', left: '-150px'}}>
-                {<Doughnut data={chartData} options={options}/>}
+                {<Doughnut data={makeChartData(data).chartData} options={options}/>}
             </span>
         </div>
     );
@@ -118,11 +113,10 @@ const Carousel = ({componentToRender, data}) => {
                             marginBottom: '-15px',
                             fontWeight: 'bold',
                             fontSize: '13px',
-
                         }}
                         >{data.name}
                         </span>
-                    {React.cloneElement(componentToRender, {data: data})}
+                    {React.cloneElement(componentToRender, {data: data?.goal?.goals})}
                 </div>
             ))}
         </Scroll>
@@ -130,56 +124,24 @@ const Carousel = ({componentToRender, data}) => {
 }
 
 const UserMate = () => {
-    const usersData = {
-        john: {
-            name: 'john',
-            squat: 30,
-            pushUp: 50,
-            pullUp: 70,
-        },
-        park: {
-            name: 'park',
-            squat: 70,
-            pushUp: 50,
-            pullUp: 50,
-        },
-        kim: {
-            name: 'kim',
-            squat: 50,
-            pushUp: 80,
-            pullUp: 20,
-        },
-        hong: {
-            name: 'hong',
-            squat: 100,
-            pushUp: 120,
-            pullUp: 10,
-        },
-        lee: {
-            name: 'lee',
-            squat: 50,
-            pushUp: 40,
-            pullUp: 15,
-        },
-        choi: {
-            name: 'choi',
-            squat: 30,
-            pushUp: 50,
-            pullUp: 70,
-        },
-        jang: {
-            name: 'jang',
-            squat: 70,
-            pushUp: 90,
-            pullUp: 40,
-        },
-        yoon: {
-            name: 'yoon',
-            squat: 50,
-            pushUp: 80,
-            pullUp: 20,
+    const [isLoading, setIsLoading] = useState(true);
+    const [userData, setUserData] = useState(null);
+
+    const getFollowersExercisesStatus = async () => {
+        try {
+            const headers = functions.getJWT()
+            const res = await axios.get(GET_FOLLOWERS_EXERCISES_STATUS, {headers: headers})
+            const {data} = res;
+            setUserData(data.followingUsersExerciseStatus)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
         }
     }
+    useEffect(() => {
+        getFollowersExercisesStatus().then()
+    }, [])
     return (
         <div style={{width: '390px'}}>
 
@@ -191,13 +153,19 @@ const UserMate = () => {
                     <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>
                 </Link>
             </div>
-            <Carousel data={usersData} componentToRender={<SquareBox/>}/>
+            {isLoading ?
+                <div style={{display: 'flex', justifyContent: 'center'}}>
+                    <Loading/>
+                </div> :
+                <Carousel data={userData} componentToRender={<SquareBox/>}/>
+            }
         </div>
     )
 }
 
 function StateOfMate(props) {
     const following = useSelector((state) => state.following)
+
 
     return (
         <div style={{maxWidth: '390px'}}>

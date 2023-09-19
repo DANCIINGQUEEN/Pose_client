@@ -77,6 +77,7 @@ const DecimalDay = () => {
 
 function Home(props) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {name, email} = useSelector((state) => state)
 
     const getUserInfo = async () => {
@@ -120,6 +121,7 @@ function Home(props) {
             )
         } catch (error) {
             console.error(error)
+            functions.handleJWTError(error, dispatch, navigate)
         }
     }
     useEffect(() => {
@@ -155,6 +157,7 @@ function Home(props) {
                     로그아웃
                 </Button>
             </Link>
+            <br/>
             <NavigationBar/>
         </Container>
     );
