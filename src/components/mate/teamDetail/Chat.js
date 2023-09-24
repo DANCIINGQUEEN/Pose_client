@@ -5,6 +5,8 @@ import {CHATTING} from "../../../services/api";
 import {useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
+import {faArrowUp} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 const MessageInput = styled.div`
@@ -31,7 +33,7 @@ const MessageInput = styled.div`
     background-color: ${ThemeColor.disabledButtonColor};
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 10px;
     right: 47px;
     //top:17px;
     bottom: 10px;
@@ -62,7 +64,7 @@ const SendMessage = ({socket, room, setMessages}) => {
                 type='text'
                 ref={message}
             />
-            <button onClick={sendMessage}>↑</button>
+            <button onClick={sendMessage}><FontAwesomeIcon icon={faArrowUp} /></button>
 
         </MessageInput>
     )

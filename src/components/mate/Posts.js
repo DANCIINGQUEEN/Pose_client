@@ -1,16 +1,32 @@
 import React, {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import styled from "styled-components";
-import {POST_USER_POST_COMMENT, POST_USER_POST_HEART, GET_IMAGE} from '../../services/api'
-import {Container, Input, Loading, ThemeColor, UserBoxSize, UserProfile, Img, PostHeader, PostFeedback, PostContent, FeedbackList, FeedbackButton, CommentsList} from "../UI/UIPackage";
+import {POST_USER_POST_COMMENT, POST_USER_POST_HEART,DELETE_MY_POST, GET_IMAGE, MY_POSTS} from '../../services/api'
+import {
+    Container,
+    Input,
+    Loading,
+    ThemeColor,
+    UserBoxSize,
+    UserProfile,
+    Img,
+    PostHeader,
+    PostFeedback,
+    PostContent,
+    FeedbackList,
+    FeedbackButton,
+    CommentsList,
+    Button, ModalWrapper
+} from "../UI/UIPackage";
 import {functions} from "../UI/Functions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faComment, faHeart} from '@fortawesome/free-solid-svg-icons';
+import {faComment, faHeart, faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
 import {useSelector} from "react-redux";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 const CommentList = ({display, onChange, post, userName}) => {
-    const comment=useRef("")
+    const comment = useRef("")
     const [isLoading, setIsLoading] = useState(false)
     const [comments, setComments] = useState(post.post.comments)
     const handleCommentSubmit = async () => {
@@ -22,13 +38,11 @@ const CommentList = ({display, onChange, post, userName}) => {
                 postId: post.post._id,
                 content: comment.current.value
             }, {headers: headers})
-            setComments(comments => [...comments, {user:userName, content: comment.current.value}])
+            setComments(comments => [...comments, {user: userName, content: comment.current.value}])
         } catch (e) {
             console.log(e)
         } finally {
             setIsLoading(false)
-            // comment.current.value=""
-
         }
     }
 
@@ -55,10 +69,13 @@ const CommentList = ({display, onChange, post, userName}) => {
             })
             }
             <Input type="text" placeholder={'댓글을 입력하세요'} style={{width: '250px'}}
-                ref={comment}
+                   ref={comment}
             />
             <button onClick={handleCommentSubmit}
-                    style={{backgroundColor: !comment ? ThemeColor.disabledButtonColor : ThemeColor.buttonColor, height:'48px'}}>
+                    style={{
+                        backgroundColor: !comment ? ThemeColor.disabledButtonColor : ThemeColor.buttonColor,
+                        height: '48px'
+                    }}>
                 {isLoading ? <Loading/> : '등록'}
             </button>
             <br/>
@@ -81,7 +98,6 @@ const Likes = ({post, userName}) => {
     const [isLikeButtonClick, setIsLikeButtonClick] = useState(false)
     const [isAlreadyLike, setIsAlreadyLike] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    // const name = useSelector((state) => state.name)
     const handleLikeButtonClick = async () => {
         const headers = functions.getJWT()
         setIsLikeButtonClick(isLikeButtonClick => !isLikeButtonClick)
@@ -117,13 +133,102 @@ const Likes = ({post, userName}) => {
         </>
     )
 }
+// const ModalWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//
+//   .ellipse {
+//     background-color: transparent;
+//     border: none;
+//   }
+//   .modal{
+//     position: fixed;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     width: 250px;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     background-color: #fff;
+//     padding: 20px;
+//     border-radius: 8px;
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//
+//     div {
+//       width: 100%;
+//       display: flex;
+//       flex-direction: row;
+//       justify-content: space-around;
+//       padding: 10px;
+//
+//       Button {
+//         width: 115px;
+//       }
+//   }
+//     #close {
+//       width: 80px;
+//       border-radius: 10px;
+//       background-color: #333;
+//       color: #fff;
+//       border: none;
+//       padding: 8px 16px;
+//       cursor: pointer;
+//       margin-top: 10px;
+//     }
+// `;
+
+
+
+const UpdateAndDelete = ({postId}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    const deletePost = async () => {
+        const headers = functions.getJWT()
+        console.log(postId)
+        setIsLoading(true)
+        try {
+            await axios.delete(`${DELETE_MY_POST}/${postId}`, {headers: headers})
+        } catch (e) {
+            console.log(e)
+        }finally {
+            setIsLoading(false)
+            closeModal()
+        }
+    }
+
+    return (
+        <>
+            <ModalWrapper>
+                <button onClick={openModal} className={'ellipse'}>
+                <FontAwesomeIcon icon={faEllipsisVertical} />
+                </button>
+                {isModalOpen && (
+                    <div className={'modal'}>
+                        <div>
+                            <Button>수정</Button>
+                            <Button onClick={deletePost}>
+                                {isLoading ? <Loading/> : '삭제'}
+                            </Button>
+                        </div>
+                        <button id={'close'} onClick={closeModal}>닫기</button>
+                    </div>
+                )}
+            </ModalWrapper>
+        </>
+    )
+}
 const Post = ({postTime, imagePath, post}) => {
     const [isCommentButtonClick, setIsCommentButtonClick] = useState(false)
     const name = useSelector((state) => state.name)
-
+    const id = useSelector((state) => state._id)
     const handleCommentButtonClick = () => {
         setIsCommentButtonClick(isCommentButtonClick => !isCommentButtonClick)
     }
+
     return (
         <>
             <div style={{marginTop: '30px'}}>
@@ -132,12 +237,15 @@ const Post = ({postTime, imagePath, post}) => {
                         <UserProfile text={post.name} size={UserBoxSize.medium}/>
                         <p>&nbsp;&nbsp;{post.name}</p>
                     </div>
-                    <span>{postTime}</span>
+                    {id === post._id && <UpdateAndDelete postId={post.post._id}/>}
                 </PostHeader>
                 <Img src={imagePath} alt=""/>
                 <PostFeedback>
-                    <Likes post={post} userName={name}/>
-                    <Comments comments={post.post.comments} handleCommentButtonClick={handleCommentButtonClick}/>
+                    <div id={'feedback'}>
+                        <Likes post={post} userName={name}/>
+                        <Comments comments={post.post.comments} handleCommentButtonClick={handleCommentButtonClick}/>
+                    </div>
+                    <span id={'time'}>{postTime}</span>
                 </PostFeedback>
                 <PostContent>
                     <span>{post.name}&nbsp;&nbsp;</span>
@@ -168,6 +276,7 @@ function Posts({API}) {
     useEffect(() => {
         getPosts().then()
     }, [])
+    // console.table(posts)
     const replaceImgUrl = (image) => {
         const replaceUrl = image.replace('public\\', '').replace('public\/', '').replace(/\\/g, '/');
         const basicPath = GET_IMAGE
@@ -192,9 +301,10 @@ function Posts({API}) {
     return (
         <Container>
             {loading && <Loading/>}
-            {posts.length===0&&<p>게시물이 없습니다</p>}
+            {posts.length === 0 && <p>게시물이 없습니다</p>}
             {posts?.map((post, index) =>
-                (<Post postTime={calcPostTime(post.post.date)} imagePath={replaceImgUrl(post.post.image)} post={post} key={index}/>)
+                (<Post postTime={calcPostTime(post.post.date)} imagePath={replaceImgUrl(post.post.image)} post={post}
+                       key={index}/>)
             )}
         </Container>
     );

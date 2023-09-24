@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {Button, Container, NavigationBar, rainbowAnimation, ThemeColor} from "../../../UI/UIPackage";
 import styled from "styled-components";
+import exerciseName from "../../../../config/exercise";
+import {GOAL} from "../../../../services/api";
 
 
 const Box = styled.div`
-  background-color: ${ThemeColor.containerColor};
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -19,7 +20,7 @@ const WishList = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${ThemeColor.importantColor};
+  background-color: ${ThemeColor.containerColor};
   border-radius: 16px;
   padding: 0 20px;
   margin-bottom: 20px;
@@ -95,7 +96,7 @@ function WishExercise(props) {
     });
     const trueExercises = Object.keys(selectedExercises).filter(exercise => selectedExercises[exercise]);
     const handleButtonClick = () => {
-        navigate('/exercise/goal', {
+        navigate(GOAL, {
             state:{
                 selected:[...trueExercises]
             }
@@ -107,18 +108,24 @@ function WishExercise(props) {
             [exercise]: !prevState[exercise]
         }));
     };
+
+    const is3Selected = trueExercises.length >= 3;
+    const buttonStyle={
+       backgroundColor:is3Selected?ThemeColor.buttonColor:ThemeColor.disabledButtonColor,
+    }
     return (
         <Container>
             <h1>하고 싶은 운동 선택</h1>
+            <h3>3개 이상 골라주세요!</h3>
             <Box>
                 <H4>복근 운동</H4>
-                <ExerciseItem exercise='스쿼트'
+                <ExerciseItem exercise={exerciseName.squat}
                               onClick={() => handleExerciseSelection('squat')}
                               selected={selectedExercises.squat}/>
-                <ExerciseItem exercise="런지"
+                <ExerciseItem exercise={exerciseName.lunge}
                               onClick={() => handleExerciseSelection('lunge')}
                               selected={selectedExercises.lunge}/>
-                <ExerciseItem exercise='데드리프트'
+                <ExerciseItem exercise={exerciseName.deadLift}
                               onClick={() => handleExerciseSelection('deadLift')}
                               selected={selectedExercises.deadLift}/>
 
@@ -126,39 +133,41 @@ function WishExercise(props) {
             <Box>
                 <H4>하체 운동</H4>
                 <ExerciseItem
-                    exercise='플랭크'
+                    exercise={exerciseName.plank}
                     onClick={() => handleExerciseSelection('plank')}
                     selected={selectedExercises.plank}/>
                 <ExerciseItem
-                    exercise='크런치'
+                    exercise={exerciseName.crunch}
                     onClick={() => handleExerciseSelection('crunch')}
                     selected={selectedExercises.crunch}/>
                 <ExerciseItem
-                    exercise='레그 레이즈'
+                    exercise={exerciseName.legRaise}
                     onClick={() => handleExerciseSelection('legRaise')}
                     selected={selectedExercises.legRaise}/>
             </Box>
             <Box>
                 <H4>팔 운동</H4>
                 <ExerciseItem
-                    exercise='푸쉬업'
+                    exercise={exerciseName.pushUp}
                     onClick={() => handleExerciseSelection('pushUp')}
                     selected={selectedExercises.pushUp}/>
                 <ExerciseItem
-                    exercise='숄더 프레스'
+                    exercise={exerciseName.shoulderPress}
                     onClick={() => handleExerciseSelection('shoulderPress')}
                     selected={selectedExercises.shoulderPress}/>
                 <ExerciseItem
-                    exercise='덤벨 로우'
+                    exercise={exerciseName.dumbbellRow}
                     onClick={() => handleExerciseSelection('dumbbellRow')}
                     selected={selectedExercises.dumbbellRow}/>
                 <ExerciseItem
-                    exercise='해머 컬'
+                    exercise={exerciseName.hammerCurl}
                     onClick={() => handleExerciseSelection('hammerCurl')}
                     selected={selectedExercises.hammerCurl}/>
 
             </Box>
-            <Button style={{width: '100px'}} onClick={handleButtonClick}>다음</Button>
+            <h4>선택한 운동 {trueExercises.length}개</h4>
+
+            <Button style={{width: '100px', ...buttonStyle}}   disabled={!is3Selected}   onClick={handleButtonClick}>다음</Button>
 
             <NavigationBar/>
 

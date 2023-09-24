@@ -16,16 +16,18 @@ const SquareBox = ({data}) => {
     const isDataExist = data => data ? sliceData(data) : null
     const makeChartData=data=>{
         let label=[], datasets=[], backgroundDatasets=[]
+        const chartColor=['hotpink', 'blue', 'green', 'yellow']
+        const backgroundColor=['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 153, 0.2)', 'rgba(0, 64, 0, 0.2)', 'rgba(255, 255, 0, 0.2)']
         isDataExist(data)?.map((data, index) => {
             label.push(data.label)
             const percent=data.attain/data.number*100
             const dataset={
                 data:[percent, 100-percent],
-                backgroundColor: ['hotpink', 'rgba(0, 0, 0, 0)']
+                backgroundColor: [chartColor[index], 'rgba(0, 0, 0, 0)']
             }
             const backgroundDataset= {
                 data: [100, 0],
-                backgroundColor: ['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 0, 0)']
+                backgroundColor: [backgroundColor[index], 'rgba(0, 0, 0, 0)']
             }
             datasets.push(dataset)
             backgroundDatasets.push(backgroundDataset)
@@ -40,6 +42,8 @@ const SquareBox = ({data}) => {
         }
         return {chartData, backgroundData}
     }
+    // console.log(makeChartData(data).chartData)
+
 
     const options = {
         cutoutPercentage: 30,
@@ -77,7 +81,6 @@ const SquareBox = ({data}) => {
             },
         },
     };
-    const op=[]
     return (
         <div style={{
             width: "123px",
@@ -124,14 +127,66 @@ const Carousel = ({componentToRender, data}) => {
 }
 
 const UserMate = () => {
+    const usersData = {
+        john: {
+            name: 'john',
+            squat: 30,
+            pushUp: 50,
+            pullUp: 70,
+        },
+        park: {
+            name: 'park',
+            squat: 70,
+            pushUp: 50,
+            pullUp: 50,
+        },
+        kim: {
+            name: 'kim',
+            squat: 50,
+            pushUp: 80,
+            pullUp: 20,
+        },
+        hong: {
+            name: 'hong',
+            squat: 100,
+            pushUp: 120,
+            pullUp: 10,
+        },
+        lee: {
+            name: 'lee',
+            squat: 50,
+            pushUp: 40,
+            pullUp: 15,
+        },
+        choi: {
+            name: 'choi',
+            squat: 30,
+            pushUp: 50,
+            pullUp: 70,
+        },
+        jang: {
+            name: 'jang',
+            squat: 70,
+            pushUp: 90,
+            pullUp: 40,
+        },
+        yoon: {
+            name: 'yoon',
+            squat: 50,
+            pushUp: 80,
+            pullUp: 20,
+        }
+    }
     const [isLoading, setIsLoading] = useState(true);
     const [userData, setUserData] = useState(null);
+
 
     const getFollowersExercisesStatus = async () => {
         try {
             const headers = functions.getJWT()
             const res = await axios.get(GET_FOLLOWERS_EXERCISES_STATUS, {headers: headers})
             const {data} = res;
+            // console.log(data)
             setUserData(data.followingUsersExerciseStatus)
         } catch (error) {
             console.error(error)
@@ -142,6 +197,7 @@ const UserMate = () => {
     useEffect(() => {
         getFollowersExercisesStatus().then()
     }, [])
+    // console.log(userData)
     return (
         <div style={{width: '390px'}}>
 

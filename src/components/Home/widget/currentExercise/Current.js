@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Container, ThemeColor, NavigationBar} from "../../../UI/UIPackage";
+import {Box, Container, ThemeColor, NavigationBar, LinkBox} from "../../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
 import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
@@ -12,7 +12,7 @@ import exerciseName from "../../../../config/exercise";
 const DoughnutBox = styled.div`
   width: 205px;
   height: 205px;
-  //background-color: ${ThemeColor.importantColor};
+    //background-color: ${ThemeColor.importantColor};
   margin: 15px 15px 15px 10px;
   display: flex;
   align-items: center;
@@ -24,13 +24,13 @@ const DoughnutBox = styled.div`
 const InfoBox = styled.div`
   display: flex;
   flex-direction: row;
-  //background-color: ${ThemeColor.divColor};
+    //background-color: ${ThemeColor.divColor};
   width: 130px;
   height: 60px;
   border-radius: 16px;
   margin: 15px 0 0 0;
 `
-const Label=styled.h4`
+const Label = styled.h4`
   margin-left: 20px;
   margin-bottom: 5px;
 `
@@ -155,7 +155,7 @@ const EachExercise = ({dDay, goal}) => {
                         </DivStyle>
                         <DivStyle>
                             <PTitle>달성량</PTitle>
-                            <PContent>{attain}회</PContent>
+                            <PContent>{attain??'0'}회</PContent>
                         </DivStyle>
                     </InfoBox>
                 </div>
@@ -168,8 +168,6 @@ function Current(props) {
     const name = useSelector((state) => state.name)
     const dDay = useSelector((state) => state.dDay)
     const goals = useSelector((state) => state.goals)
-    // console.log(dDay, goals)
-    // const attain = 2
     return (
         <Container>
             <h1>{name}님의 현재 운동</h1>
@@ -178,25 +176,8 @@ function Current(props) {
                     <EachExercise key={index} dDay={dDay} goal={goal}/>
                 ))
             }
-            <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    borderRadius: '16px',
-                    padding: '20px',
-                    backgroundColor: ThemeColor.divColor}}>
-                <Link to={WISH_EXERCISE} style={{
-                    textDecoration: 'none',
-                    color: 'black',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '160px'}}>
-                    <div>새로운 운동 선택</div>
-                    <FontAwesomeIcon icon={faArrowRight}/>
-                </Link>
-            </div>
+            <LinkBox url={WISH_EXERCISE} content={'새로운 운동 선택'}/>
+            <br/>
             <NavigationBar/>
         </Container>
     );

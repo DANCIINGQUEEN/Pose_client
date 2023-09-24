@@ -39,7 +39,6 @@ function GoalInput({label, onChange}) {
     const amount = ['매일', '주 5회', '주 3회', '주 2회', '주 1회']
     const [number, setNumber] = useState(0)
     const [cycle, setCycle] = useState('')
-    const [errorMsg, setErrorMsg] = useState('')
 
 
     const handleCycleChange = (selectedCycle) => {
@@ -52,7 +51,6 @@ function GoalInput({label, onChange}) {
         const value=e.target.value
         const isNumber = !isNaN(value);
         setNumber(isNumber ? value : 0);
-        setErrorMsg(isNumber ? '' : '숫자를 입력해주세요');
         onChange(cycle.option, value)
     }
 
@@ -64,9 +62,8 @@ function GoalInput({label, onChange}) {
                     <CustomSelect options={amount} item={'운동 주기'} onChange={handleCycleChange}/>
                 </div>
                 <div>
-                    <Input type="text" placeholder='횟수' onChange={handleAmountChange}/>
+                    <Input type="number" placeholder='횟수' onChange={handleAmountChange}/>
                     <span>회</span>
-                    {errorMsg && <span className={'numError'}>{errorMsg}</span>}
                 </div>
             </div>
         </EachGoal>

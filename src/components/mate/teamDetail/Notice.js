@@ -1,10 +1,23 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Button, Container, Input, Loading, NoticeBox, UserBox, UserBoxSize, UserProfile} from "../../UI/UIPackage";
+import {
+    Button,
+    Container,
+    Input,
+    Loading,
+    ModalWrapper,
+    NoticeBox,
+    UserBox,
+    UserBoxSize,
+    UserProfile
+} from "../../UI/UIPackage";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import {functions} from "../../UI/Functions";
-import {POST_TEAM_NOTICE, GET_TEAM_NOTICE} from "../../../services/api";
+import {POST_TEAM_NOTICE, GET_TEAM_NOTICE, DELETE_TEAM_NOTICE, UPDATE_TEAM_NOTICE} from "../../../services/api";
 import axios from "axios";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEllipsis, faEllipsisVertical} from "@fortawesome/free-solid-svg-icons";
+import {useSelector} from "react-redux";
 
 
 const WriteNotice = ({display, onChange, teamId}) => {
@@ -20,8 +33,6 @@ const WriteNotice = ({display, onChange, teamId}) => {
         },
         pButton: {
             width: '110px',
-            // backgroundColor:(title.current.length===0)?
-            // ThemeColor.disabledButtonColor:ThemeColor.buttonColor
         },
         div: {
             display: 'flex',
@@ -34,7 +45,7 @@ const WriteNotice = ({display, onChange, teamId}) => {
         setIsLoading(true)
         const headers = functions.getJWT()
         console.log(title.current.value, content.current.value)
-        await axios.post(POST_TEAM_NOTICE + '/' + teamId, {
+        await axios.post(`${POST_TEAM_NOTICE}/${teamId}`, {
             title: title.current.value,
             content: content.current.value
         }, {headers})
@@ -61,8 +72,95 @@ const WriteNotice = ({display, onChange, teamId}) => {
         </div>
     )
 }
+const StyledSpan = styled.span`margin: 5px 180px 5px 2px;`;
+
+const UpdateNotice = ({notice, teamId, setIsUpdateButtonClicked}) => {
+    const [newNotice, setNewNotice]=useState({title: "", content: ""})
+    const isUpdated=(notice.noticeTitle===newNotice.title||notice.noticeContent===newNotice.content)
+    console.log(isUpdated)
+    const handleNoticeChange=e=>setNewNotice({...newNotice, [e.target.name]: e.target.value})
+
+    const updateNotice=async()=>{
+        const headers = functions.getJWT()
+        const noticeId = notice._id
+        let {title, content} = newNotice
+        if(!title) title = notice.noticeTitle
+        if(!content) content = notice.noticeContent
+
+        await axios.put(`${UPDATE_TEAM_NOTICE}/${teamId}/${noticeId}`,{title, content}, {headers})
+            .then((e)=>console.log(e))
+            .finally(()=>setIsUpdateButtonClicked(false))
+    }
+    return (
+        <>
+            <h4>공지 수정</h4>
+            <StyledSpan>제목</StyledSpan>
+            <Input name='title' type='text' defaultValue={notice.noticeTitle} onChange={handleNoticeChange}/>
+            <StyledSpan>내용</StyledSpan>
+            <Input name='content' type='text' defaultValue={notice.noticeContent} onChange={handleNoticeChange}/>
+            <div>
+            <Button onClick={updateNotice}>저장</Button>
+            <Button onClick={()=>setIsUpdateButtonClicked(false)}>취소</Button>
+            </div>
+        </>
+    )
+}
+
+const UpdateAndDelete = ({notice, teamId}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isUpdateButtonClicked, setIsUpdateButtonClicked] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setIsUpdateButtonClicked(false)
+    }
+
+    const deletePost = async () => {
+        const headers = functions.getJWT()
+        const noticeId = notice._id
+        setIsLoading(true)
+        // try {
+        //     await axios.delete(`${DELETE_TEAM_NOTICE}/${teamId}/${noticeId}`, {headers: headers})
+        // } catch (e) {
+        //     console.log(e)
+        // } finally {
+        //     setIsLoading(false)
+        //     closeModal()
+        // }
+        await axios.delete(`${DELETE_TEAM_NOTICE}/${teamId}/${noticeId}`, {headers: headers})
+            .then((e)=>console.log(e))
+            .finally(()=>{
+                setIsLoading(false)
+                closeModal()
+            })
+    }
+    return (
+        <ModalWrapper>
+            <button onClick={openModal} className={'ellipse'}>
+                <FontAwesomeIcon icon={faEllipsisVertical}/>
+            </button>
+            {isModalOpen && (
+                <div className={'modal'}>
+                    <div>
+                        <Button style={{display: isUpdateButtonClicked ? 'none' : 'block'}}
+                                onClick={() => setIsUpdateButtonClicked(true)}>수정</Button>
+                        <Button style={{display: isUpdateButtonClicked ? 'none' : 'block'}} onClick={deletePost}>
+                            {isLoading ? <Loading/> : '삭제'}
+                        </Button>
+                    </div>
+                    {isUpdateButtonClicked && <UpdateNotice notice={notice} teamId={teamId} setIsUpdateButtonClicked={setIsUpdateButtonClicked}/>}
+                    <button id={'close'} onClick={closeModal}>닫기</button>
+                </div>
+            )}
+        </ModalWrapper>
+
+    )
+}
 const NoticeList = ({teamId}) => {
     const [notices, setNotices] = useState()
+
+    const id = useSelector(state => state._id)
     const getTeamNotice = async () => {
         const headers = functions.getJWT()
         await axios.get(GET_TEAM_NOTICE + '/' + teamId, {headers})
@@ -72,21 +170,21 @@ const NoticeList = ({teamId}) => {
     useEffect(() => {
         getTeamNotice().then()
     }, [])
-    console.log(notices)
+
     return (
         <>
             {notices?.map((notice, index) => {
                 return (
                     <NoticeBox key={notice._id}>
                         <main>
-
-                        <span className={'title'}>{notice.noticeTitle}</span>
-                        <div className={'author'}>
-                            <UserProfile  className={'profileCircle'} text={notice.author} size={UserBoxSize.small}/>
-                            <span className={'name'} >{notice.author}</span>
-                        </div>
+                            <section>
+                                <UserBox name={notice.author} size={UserBoxSize.small}/>
+                                {notice.authorId === id && <UpdateAndDelete notice={notice} teamId={teamId}/>}
+                                {/*<FontAwesomeIcon icon={faEllipsisVertical}/>*/}
+                            </section>
+                            <span className={'title'}>{notice.noticeTitle}</span>
+                            <p className={'content'}>{notice.noticeContent}</p>
                         </main>
-                        <p className={'content'}>{notice.noticeContent}</p>
 
                     </NoticeBox>
                 )
@@ -111,7 +209,7 @@ function Notice(props) {
 
     return (
         <>
-            <h2 style={{marginLeft:'-240px'}}>공지</h2>
+            <h2 style={{marginLeft: '-240px'}}>공지</h2>
             <NoticeList teamId={teamId}/>
             <br/>
             <Button style={{width: '120px', ...buttonStyle}} onClick={handleButtonClick}>글 작성</Button>

@@ -116,8 +116,8 @@ const NewPassword = ({setIsPasswordCorrect}) => {
         try {
             const response = await axios.put(UPDATE_PASSWORD,
                 {newPassword: newPassword},
-                // {headers: headers});
-            )
+                {headers: headers});
+
             if (response.data.state) {
                 setIsLoading(false);
                 setIsSuccessMessage(true);

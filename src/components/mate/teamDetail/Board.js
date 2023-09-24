@@ -14,11 +14,43 @@ import {
     UserBoxSize,
     FeedbackButton,
     NoticeBox,
-    FeedbackList, CommentsList, ThemeColor, Loading, Container, Box, TwoTabNav
+    FeedbackList, CommentsList, ThemeColor, Loading, Container, Box, TwoTabNav, UserBox
 } from "../../UI/UIPackage";
 import {POST_TEAM_BOARD, GET_TEAM_BOARD, POST_TEAM_BOARD_COMMENT} from "../../../services/api";
-import {faComment} from "@fortawesome/free-solid-svg-icons";
+import {faArrowUp, faComment, faEllipsisVertical} from "@fortawesome/free-solid-svg-icons";
 import {functions} from "../../UI/Functions";
+
+const CommentInput = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 345px;
+  
+  input {
+    position: relative;
+    height: 50px;
+    border-radius: 10px;
+    padding: 0 15px;
+    z-index: 1;
+  }
+
+
+  button {
+    position: relative;
+    border: none;
+    background-color: ${ThemeColor.disabledButtonColor};
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    right: 43px;
+    bottom: 5px;
+    z-index: 2;
+
+    &:hover {
+      background-color: ${ThemeColor.buttonColor};
+    }
+
+`
 
 const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
     const comment = useRef("")
@@ -66,7 +98,7 @@ const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
                                 <span>익명{index + 1}</span>
                                 <span style={{marginLeft: '10px'}}>{comment}</span>
                             </>
-                         :
+                            :
                             <>
                                 <div>
                                     <UserProfile text={comment.user} size={UserBoxSize.small}/>
@@ -79,59 +111,55 @@ const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
                 )
             })
             }
-            <Input type="text" placeholder={'댓글을 입력하세요'} style={{width: '250px'}} ref={comment}/>
-            <button onClick={handleCommentSubmit}
-                    style={{height: '48px'}}>
-                {isLoading ? <Loading/> : '등록'}
-            </button>
-            <br/>
-            <button onClick={handleCommentButtonClick}>댓글 창 닫기</button>
+            <CommentInput>
+
+                <Input type="text" placeholder={'댓글을 입력하세요'} ref={comment}/>
+                <button onClick={handleCommentSubmit}>
+                    {isLoading ? <Loading/> : <FontAwesomeIcon icon={faArrowUp} />}
+                </button>
+            </CommentInput>
+            <button className={'close'} onClick={handleCommentButtonClick}>닫기</button>
         </FeedbackList>
     )
 }
-const EachBoard=({board, name, isAnonymous})=>{
+const EachBoard = ({board, name, isAnonymous}) => {
     const [isCommentButtonClick, setIsCommentButtonClick] = useState(false)
     const handleCommentButtonClick = () => setIsCommentButtonClick(isCommentButtonClick => !isCommentButtonClick)
-    return(
+    return (
         <>
             <NoticeBox>
-                {isAnonymous?
+                {isAnonymous ?
                     <>
                         <span className={'title'} style={{marginTop: '10px'}}>{board.postTitle}</span>
-
-                        <div className={'section'} style={{marginTop: '20px'}}>
-
-                            <span className={'BoardContent'}>{board.postContent}</span>
-
+                        <article>
+                            <span className={'boardContent'}>{board.postContent}</span>
                             <FeedbackButton className={'comments'} onClick={handleCommentButtonClick}>
                                 <FontAwesomeIcon className={'comment'} icon={faComment}/>
                                 <span>{board.comments?.length}개</span>
                             </FeedbackButton>
-                        </div>
+                        </article>
                     </>
                     :
                     <>
                         <main>
+                            <section>
+                                <UserBox name={board.author} size={UserBoxSize.small}/>
+                                <FontAwesomeIcon icon={faEllipsisVertical}/>
+                            </section>
                             <span className={'title'}>{board.postTitle}</span>
-
-                            <div className={'author'}>
-
-                                <UserProfile className={'profileCircle'} text={board.author} size={UserBoxSize.small}/>
-                                <span className={'name'}>{board.author}</span>
-                            </div>
-
+                            <article>
+                                <span className={'boardContent'}>{board.postContent}</span>
+                                <FeedbackButton className={'comments'} onClick={handleCommentButtonClick}>
+                                    <FontAwesomeIcon className={'comment'} icon={faComment}/>
+                                    <span>{board.comments?.length}개</span>
+                                </FeedbackButton>
+                            </article>
                         </main>
-                        <div className={'section'}>
-                            <span className={'BoardContent'}>{board.postContent}</span>
-                            <FeedbackButton className={'comments'} onClick={handleCommentButtonClick}>
-                                <FontAwesomeIcon className={'comment'} icon={faComment}/>
-                                <span>{board.comments?.length}개</span>
-                            </FeedbackButton>
-                        </div>
                     </>}
 
             </NoticeBox>
-            <CommentList board={board} display={isCommentButtonClick} userName={name} isAnonymous={isAnonymous} onChange={handleCommentButtonClick}/>
+            <CommentList board={board} display={isCommentButtonClick} userName={name} isAnonymous={isAnonymous}
+                         onChange={handleCommentButtonClick}/>
 
         </>
     )
@@ -167,7 +195,7 @@ const WriteBoardContainer = styled.div`
 
 `
 const WriteBoard = ({display, onChange, teamId}) => {
-    const comment={title:useRef(""), content:useRef("")}
+    const comment = {title: useRef(""), content: useRef("")}
     const [isAnonymous, setIsAnonymous] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
@@ -235,8 +263,10 @@ function Board(props) {
     }, []);
 
     const tab = {
-        '자유게시판': board?.freeBoard.map(board => <EachBoard board={board} isAnonymous={false} name={name} key={board._id}/>),
-        '비밀게시판': board?.anonymousBoard.map(board => <EachBoard board={board} isAnonymous={true} name={name} key={board._id}/>)
+        '자유게시판': board?.freeBoard.map(board => <EachBoard board={board} isAnonymous={false} name={name}
+                                                          key={board._id}/>),
+        '비밀게시판': board?.anonymousBoard.map(board => <EachBoard board={board} isAnonymous={true} name={name}
+                                                               key={board._id}/>)
     }
 
     return (

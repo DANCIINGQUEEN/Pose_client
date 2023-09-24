@@ -33,6 +33,8 @@ const API={
     POST_USER_POST_COMMENT: `${API_BASE_URL}/user/postUserPostComment`,
     //좋아요 클릭
     POST_USER_POST_HEART: `${API_BASE_URL}/user/postUserPostHeart`,
+    //내 게시물 삭제
+    DELETE_MY_POST: `${API_BASE_URL}/user/deleteMyPost`,
 
     //메이트 팀
     //팀 생성
@@ -51,6 +53,10 @@ const API={
     POST_TEAM_NOTICE: `${API_BASE_URL}/team/postTeamNotice`,
     //팀 공지 가져오기
     GET_TEAM_NOTICE: `${API_BASE_URL}/team/getTeamNotice`,
+    //팀 공지 게시글 삭제
+    DELETE_TEAM_NOTICE: `${API_BASE_URL}/team/deleteTeamNotice`,
+    //팀 공지 게시글 수정
+    UPDATE_TEAM_NOTICE: `${API_BASE_URL}/team/updateTeamNotice`,
     //팀 게시판 등록
     POST_TEAM_BOARD: `${API_BASE_URL}/team/postTeamBoard`,
     //팀 게시판 가져오기

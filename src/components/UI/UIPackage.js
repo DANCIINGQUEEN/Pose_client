@@ -289,14 +289,22 @@ export const PostHeader = styled.div`
   }
 `
 export const PostFeedback = styled.div`
-  width: 150px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 10px 0 10px 10px;
 
+  #feedback{
+    width:120px;
+    display: flex;
+    flex-direction: row;
+  }
   .heart, .comment {
     font-size: 20px;
+  }
+  #time{
+    padding-right: 20px;
   }
 
   span {
@@ -328,17 +336,11 @@ export const FeedbackList = styled.div`
   border-radius: 16px;
   background-color: ${ThemeColor.divColor};
 
-  button:nth-of-type(1) {
-    border: none;
-    margin-left: 10px;
-    border-radius: 10px;
-    height: 40px;
-  }
-
-  button:nth-of-type(2) {
-    border: none;
+  .close{
+    border:none;
     background-color: transparent;
   }
+  
 `
 export const CommentsList = styled.div`
   display: flex;
@@ -377,26 +379,29 @@ export const NoticeBox = styled.div`
 
   main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-content: center;
     justify-content: space-between;
-    height: 50px;
+    //height: 50px;
     margin-top: 10px;
+  }
+  section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 20px 0 20px;
   }
 
   .title {
     font-weight: bold;
     font-size: 17px;
     margin-left: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 220px;
+    margin-top: 10px;
   }
 
   .content {
     font-size: 17px;
-    margin: -10px 20px 10px 20px;
+    margin: 10px 20px 10px 20px;
   }
 
   .author {
@@ -406,9 +411,7 @@ export const NoticeBox = styled.div`
     height: 25px;
     margin-right: 20px;
 
-    .profileCircle {
-      width: 30px;
-    }
+ 
 
     .name {
       font-size: 15px;
@@ -420,9 +423,19 @@ export const NoticeBox = styled.div`
     }
   }
 
+  article {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: center;
+    align-items: center;
+    width: 290px;
+  }
   .comments {
-    width: 60px;
-    margin-right: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 50px;
   }
 
   .section {
@@ -432,12 +445,56 @@ export const NoticeBox = styled.div`
     justify-content: space-between;
   }
 
-  .BoardContent {
-    margin: -5px 0 15px 15px;
+  .boardContent {
+    margin:10px 0 10px 0;
+    width:220px;
     font-size: 15px;
-    max-width: 220px;
   }
 `
+export const ModalWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  .ellipse {
+    background-color: transparent;
+    border: none;
+  }
+  .modal{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    div {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 10px;
+
+      Button {
+        width: 115px;
+      }
+  }
+    #close {
+      width: 80px;
+      border-radius: 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+`;
 
 export const RecBox = ({componentToRender}) => {
     return (
