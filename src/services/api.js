@@ -59,10 +59,16 @@ const API={
     UPDATE_TEAM_NOTICE: `${API_BASE_URL}/team/updateTeamNotice`,
     //팀 게시판 등록
     POST_TEAM_BOARD: `${API_BASE_URL}/team/postTeamBoard`,
+    //팀 게시판 게시글 삭제
+    DELETE_TEAM_BOARD: `${API_BASE_URL}/team/deleteTeamBoard`,
+    //팀 게시판 게시글 수정
+    UPDATE_TEAM_BOARD: `${API_BASE_URL}/team/updateTeamBoard`,
     //팀 게시판 가져오기
     GET_TEAM_BOARD: `${API_BASE_URL}/team/getTeamBoard`,
-    //팀 자유게시판 댓글 등록
+    //팀 게시판 댓글 등록
     POST_TEAM_BOARD_COMMENT: `${API_BASE_URL}/team/postTeamBoardComment`,
+    //팀 자유게시판 댓글 삭제
+    DELETE_TEAM_FREE_BOARD_COMMENT: `${API_BASE_URL}/team/deleteTeamBoardComment`,
     //팀 회원 목록
     GET_TEAM_MEMBERS: `${API_BASE_URL}/team/getTeamMembers`,
 

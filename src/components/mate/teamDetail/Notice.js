@@ -74,22 +74,25 @@ const WriteNotice = ({display, onChange, teamId}) => {
 }
 const StyledSpan = styled.span`margin: 5px 180px 5px 2px;`;
 
-const UpdateNotice = ({notice, teamId, setIsUpdateButtonClicked}) => {
-    const [newNotice, setNewNotice]=useState({title: "", content: ""})
-    const isUpdated=(notice.noticeTitle===newNotice.title||notice.noticeContent===newNotice.content)
-    console.log(isUpdated)
-    const handleNoticeChange=e=>setNewNotice({...newNotice, [e.target.name]: e.target.value})
+const UpdateNotice = ({notice, teamId, setIsUpdateButtonClicked, closeModal}) => {
+    const [newNotice, setNewNotice] = useState({title: "", content: ""})
+    const isUpdated = (notice.noticeTitle === newNotice.title || notice.noticeContent === newNotice.content)
+    // console.log(isUpdated)
+    const handleNoticeChange = e => setNewNotice({...newNotice, [e.target.name]: e.target.value})
 
-    const updateNotice=async()=>{
+    const updateNotice = async () => {
         const headers = functions.getJWT()
         const noticeId = notice._id
         let {title, content} = newNotice
-        if(!title) title = notice.noticeTitle
-        if(!content) content = notice.noticeContent
+        if (!title) title = notice.noticeTitle
+        if (!content) content = notice.noticeContent
 
-        await axios.put(`${UPDATE_TEAM_NOTICE}/${teamId}/${noticeId}`,{title, content}, {headers})
-            .then((e)=>console.log(e))
-            .finally(()=>setIsUpdateButtonClicked(false))
+        await axios.put(`${UPDATE_TEAM_NOTICE}/${teamId}/${noticeId}`, {title, content}, {headers})
+            .then((e) => console.log(e))
+            .finally(() => {
+                setIsUpdateButtonClicked(false)
+                closeModal()
+            })
     }
     return (
         <>
@@ -99,8 +102,8 @@ const UpdateNotice = ({notice, teamId, setIsUpdateButtonClicked}) => {
             <StyledSpan>내용</StyledSpan>
             <Input name='content' type='text' defaultValue={notice.noticeContent} onChange={handleNoticeChange}/>
             <div>
-            <Button onClick={updateNotice}>저장</Button>
-            <Button onClick={()=>setIsUpdateButtonClicked(false)}>취소</Button>
+                <Button onClick={updateNotice}>저장</Button>
+                <Button onClick={() => setIsUpdateButtonClicked(false)}>취소</Button>
             </div>
         </>
     )
@@ -120,21 +123,14 @@ const UpdateAndDelete = ({notice, teamId}) => {
         const headers = functions.getJWT()
         const noticeId = notice._id
         setIsLoading(true)
-        // try {
-        //     await axios.delete(`${DELETE_TEAM_NOTICE}/${teamId}/${noticeId}`, {headers: headers})
-        // } catch (e) {
-        //     console.log(e)
-        // } finally {
-        //     setIsLoading(false)
-        //     closeModal()
-        // }
         await axios.delete(`${DELETE_TEAM_NOTICE}/${teamId}/${noticeId}`, {headers: headers})
-            .then((e)=>console.log(e))
-            .finally(()=>{
+            .then((e) => console.log(e))
+            .finally(() => {
                 setIsLoading(false)
                 closeModal()
             })
     }
+    const buttonStyle={display: isUpdateButtonClicked ? 'none' : 'block'}
     return (
         <ModalWrapper>
             <button onClick={openModal} className={'ellipse'}>
@@ -143,13 +139,14 @@ const UpdateAndDelete = ({notice, teamId}) => {
             {isModalOpen && (
                 <div className={'modal'}>
                     <div>
-                        <Button style={{display: isUpdateButtonClicked ? 'none' : 'block'}}
+                        <Button style={buttonStyle}
                                 onClick={() => setIsUpdateButtonClicked(true)}>수정</Button>
-                        <Button style={{display: isUpdateButtonClicked ? 'none' : 'block'}} onClick={deletePost}>
+                        <Button style={buttonStyle} onClick={deletePost}>
                             {isLoading ? <Loading/> : '삭제'}
                         </Button>
                     </div>
-                    {isUpdateButtonClicked && <UpdateNotice notice={notice} teamId={teamId} setIsUpdateButtonClicked={setIsUpdateButtonClicked}/>}
+                    {isUpdateButtonClicked && <UpdateNotice notice={notice} teamId={teamId} closeModal={closeModal}
+                                                            setIsUpdateButtonClicked={setIsUpdateButtonClicked}/>}
                     <button id={'close'} onClick={closeModal}>닫기</button>
                 </div>
             )}

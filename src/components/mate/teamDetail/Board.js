@@ -14,9 +14,16 @@ import {
     UserBoxSize,
     FeedbackButton,
     NoticeBox,
-    FeedbackList, CommentsList, ThemeColor, Loading, Container, Box, TwoTabNav, UserBox
+    FeedbackList, CommentsList, ThemeColor, Loading, Container, Box, TwoTabNav, UserBox, ModalWrapper
 } from "../../UI/UIPackage";
-import {POST_TEAM_BOARD, GET_TEAM_BOARD, POST_TEAM_BOARD_COMMENT} from "../../../services/api";
+import {
+    POST_TEAM_BOARD,
+    GET_TEAM_BOARD,
+    POST_TEAM_BOARD_COMMENT,
+    DELETE_TEAM_BOARD,
+    UPDATE_TEAM_BOARD,
+    DELETE_TEAM_FREE_BOARD_COMMENT
+} from "../../../services/api";
 import {faArrowUp, faComment, faEllipsisVertical} from "@fortawesome/free-solid-svg-icons";
 import {functions} from "../../UI/Functions";
 
@@ -25,7 +32,7 @@ const CommentInput = styled.div`
   align-items: center;
   flex-direction: row;
   width: 345px;
-  
+
   input {
     position: relative;
     height: 50px;
@@ -52,6 +59,44 @@ const CommentInput = styled.div`
 
 `
 
+const CommentDelete = ({teamId, boardId, commentId}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isUpdateButtonClicked, setIsUpdateButtonClicked] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setIsUpdateButtonClicked(false)
+    }
+    const deletePost=async ()=>{
+        console.log(teamId, boardId, commentId)
+        const headers = functions.getJWT()
+        await axios.delete(`${DELETE_TEAM_FREE_BOARD_COMMENT}/${teamId}/${boardId}/${commentId}`, {headers: headers})
+            .then(e=>console.log(e))
+            .finally(()=> {
+                setIsLoading(false)
+                closeModal()
+            })
+    }
+    const buttonStyle={display: isUpdateButtonClicked ? 'none' : 'block'}
+    return (
+        <ModalWrapper>
+            <button className="ellipse" onClick={openModal}>
+                <FontAwesomeIcon icon={faEllipsisVertical}/>
+            </button>
+            {isModalOpen && (
+                <div className="modal">
+                    <div>
+                        <Button style={buttonStyle} onClick={deletePost}>{isLoading?<Loading/>:'댓글 삭제'}</Button>
+                    </div>
+                    <button id={'close'} onClick={closeModal}>닫기</button>
+
+                </div>
+            )}
+
+        </ModalWrapper>
+    )
+}
 const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
     const comment = useRef("")
     const [isLoading, setIsLoading] = useState(false)
@@ -59,6 +104,7 @@ const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
 
     const location = useLocation()
     const teamId = location.pathname.split('/')[2]
+    const id = useSelector(state => state._id)
 
     const handleCommentSubmit = async () => {
         setIsLoading(true)
@@ -94,18 +140,18 @@ const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
                 return (
                     <CommentsList key={index}>
                         {isAnonymous ?
-                            <>
-                                <span>익명{index + 1}</span>
-                                <span style={{marginLeft: '10px'}}>{comment}</span>
-                            </>
+                            <div className='annoy'>
+                                <span id='annoy'>익명{index + 1}</span>
+                                <span id='comment'>{comment}</span>
+                            </div>
                             :
-                            <>
+                            <div className='free'>
                                 <div>
-                                    <UserProfile text={comment.user} size={UserBoxSize.small}/>
-                                    <span>{comment.user}</span>
+                                    <UserBox name={comment.user} size={UserBoxSize.small}/>
+                                    <span id='comment'>{comment.content}</span>
                                 </div>
-                                <span style={{marginLeft: '10px'}}>{comment.content}</span>
-                            </>
+                                {comment.userId === id && <CommentDelete teamId={teamId} boardId={board._id} commentId={comment._id}/>}
+                            </div>
                         }
                     </CommentsList>
                 )
@@ -115,22 +161,109 @@ const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
 
                 <Input type="text" placeholder={'댓글을 입력하세요'} ref={comment}/>
                 <button onClick={handleCommentSubmit}>
-                    {isLoading ? <Loading/> : <FontAwesomeIcon icon={faArrowUp} />}
+                    {isLoading ? <Loading/> : <FontAwesomeIcon icon={faArrowUp}/>}
                 </button>
             </CommentInput>
             <button className={'close'} onClick={handleCommentButtonClick}>닫기</button>
         </FeedbackList>
     )
+
 }
-const EachBoard = ({board, name, isAnonymous}) => {
+const StyledSpan = styled.span`margin: 5px 180px 5px 2px;`;
+
+const UpdateBoard = ({board, teamId, setIsUpdateButtonClicked, closeModal}) => {
+    const [newBoard, setNewBoard] = useState({title: "", content: ""})
+    const isUpdated = (board.postTitle === newBoard.title) && (board.postContent === newBoard.content)
+
+    const handleBoardChange = e => setNewBoard({...newBoard, [e.target.name]: e.target.value})
+
+    const updateBoard = async () => {
+        const headers = functions.getJWT()
+        const boardId = board._id
+        let {title, content} = newBoard
+        if (!title) title = board.postTitle
+        if (!content) content = board.postContent
+        console.log(title, content)
+        await axios.put(`${UPDATE_TEAM_BOARD}/${teamId}/${boardId}`, {title, content}, {headers})
+            .then(e => console.log(e))
+            .finally(() => {
+                setIsUpdateButtonClicked(false)
+                closeModal()
+            })
+    }
+    return (
+
+        <>
+            <h4>게시글 수정</h4>
+            <StyledSpan>제목</StyledSpan>
+            <Input type='text' name='title' defaultValue={board.postTitle} onChange={handleBoardChange}/>
+            <StyledSpan>내용</StyledSpan>
+            <Input type='text' name='content' defaultValue={board.postContent} onChange={handleBoardChange}/>
+            <div>
+                <Button onClick={updateBoard}>저장</Button>
+                <Button onClick={() => setIsUpdateButtonClicked(false)}>취소</Button>
+            </div>
+        </>
+    )
+}
+const UpdateAndDelete = ({board, teamId, setIsCommentButtonClick}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isUpdateButtonClicked, setIsUpdateButtonClicked] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const openModal = () => {
+        setIsModalOpen(true);
+        setIsCommentButtonClick(false)
+    }
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setIsUpdateButtonClicked(false)
+    }
+    const deletePost = async () => {
+        const headers = functions.getJWT()
+        const boardId = board._id
+        setIsLoading(true)
+        await axios.delete(`${DELETE_TEAM_BOARD}/${teamId}/${boardId}`, {headers: headers})
+            .then(e => console.log(e))
+            .finally(() => {
+                setIsLoading(false)
+                closeModal()
+            })
+    }
+    return (
+        <ModalWrapper>
+            <button onClick={openModal} className={'ellipse'}>
+                <FontAwesomeIcon icon={faEllipsisVertical}/>
+            </button>
+            {isModalOpen && (
+                <div className={'modal'}>
+                    <div>
+                        <Button style={{display: isUpdateButtonClicked ? 'none' : 'block'}}
+                                onClick={() => setIsUpdateButtonClicked(true)}>수정</Button>
+                        <Button style={{display: isUpdateButtonClicked ? 'none' : 'block'}} onClick={deletePost}>
+                            {isLoading ? <Loading/> : '삭제'}
+                        </Button>
+                    </div>
+                    {isUpdateButtonClicked && <UpdateBoard board={board} teamId={teamId} closeModal={closeModal}
+                                                           setIsUpdateButtonClicked={setIsUpdateButtonClicked}/>}
+                    <button id={'close'} onClick={closeModal}>닫기</button>
+                </div>
+            )}
+
+        </ModalWrapper>
+    )
+
+}
+const EachBoard = ({board, name, isAnonymous, teamId}) => {
     const [isCommentButtonClick, setIsCommentButtonClick] = useState(false)
     const handleCommentButtonClick = () => setIsCommentButtonClick(isCommentButtonClick => !isCommentButtonClick)
+    // console.log(board)
+    const id = useSelector(state => state._id)
     return (
         <>
             <NoticeBox>
                 {isAnonymous ?
                     <>
-                        <span className={'title'} style={{marginTop: '10px'}}>{board.postTitle}</span>
+                        <span className={'title'}>{board.postTitle}</span>
                         <article>
                             <span className={'boardContent'}>{board.postContent}</span>
                             <FeedbackButton className={'comments'} onClick={handleCommentButtonClick}>
@@ -144,7 +277,8 @@ const EachBoard = ({board, name, isAnonymous}) => {
                         <main>
                             <section>
                                 <UserBox name={board.author} size={UserBoxSize.small}/>
-                                <FontAwesomeIcon icon={faEllipsisVertical}/>
+                                {board.authorId === id && <UpdateAndDelete board={board} teamId={teamId}
+                                                                           setIsCommentButtonClick={setIsCommentButtonClick}/>}
                             </section>
                             <span className={'title'}>{board.postTitle}</span>
                             <article>
@@ -263,10 +397,10 @@ function Board(props) {
     }, []);
 
     const tab = {
-        '자유게시판': board?.freeBoard.map(board => <EachBoard board={board} isAnonymous={false} name={name}
-                                                          key={board._id}/>),
-        '비밀게시판': board?.anonymousBoard.map(board => <EachBoard board={board} isAnonymous={true} name={name}
-                                                               key={board._id}/>)
+        '자유게시판': board?.freeBoard.map(board =>
+            <EachBoard board={board} isAnonymous={false} name={name} key={board._id} teamId={teamId}/>),
+        '비밀게시판': board?.anonymousBoard.map(board =>
+            <EachBoard board={board} isAnonymous={true} name={name} key={board._id} teamId={teamId}/>)
     }
 
     return (

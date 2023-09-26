@@ -347,25 +347,27 @@ export const CommentsList = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 15px;
-
-  > :nth-child(1) {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    margin-right: 10px;
-
-    > :nth-child(1) {
-      margin-right: 10px;
-    }
-
-    > :nth-child(2) {
+  .annoy {
+    #annoy {
       font-size: 15px;
       font-weight: bold;
     }
+    #comment {
+      margin-left: 8px;
+    }
   }
 
-  > :nth-child(2) {
-    margin-left: 8px;
+  .free {
+    width:290px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    div{
+        display: flex;
+    }
+    #comment {
+      margin-left: 8px;
+    }
   }
 `
 export const NoticeBox = styled.div`
@@ -454,7 +456,7 @@ export const NoticeBox = styled.div`
 export const ModalWrapper = styled.div`
   display: flex;
   align-items: center;
-
+  z-index: 100;
   .ellipse {
     background-color: transparent;
     border: none;
@@ -472,6 +474,7 @@ export const ModalWrapper = styled.div`
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
 
     div {
       width: 100%;
