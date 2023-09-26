@@ -35,6 +35,8 @@ const API={
     POST_USER_POST_HEART: `${API_BASE_URL}/user/postUserPostHeart`,
     //내 게시물 삭제
     DELETE_MY_POST: `${API_BASE_URL}/user/deleteMyPost`,
+    //내 게시물 내용 수정
+    UPDATE_MY_POST: `${API_BASE_URL}/user/updateMyPost`,
 
     //메이트 팀
     //팀 생성

@@ -1,7 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import axios from 'axios';
 import styled from "styled-components";
-import {POST_USER_POST_COMMENT, POST_USER_POST_HEART,DELETE_MY_POST, GET_IMAGE, MY_POSTS} from '../../services/api'
+import {POST_USER_POST_COMMENT,
+    POST_USER_POST_HEART,
+    DELETE_MY_POST,
+    GET_IMAGE,
+    UPDATE_MY_POST
+} from '../../services/api'
 import {
     Container,
     Input,
@@ -133,75 +138,65 @@ const Likes = ({post, userName}) => {
         </>
     )
 }
-// const ModalWrapper = styled.div`
-//   display: flex;
-//   align-items: center;
-//
-//   .ellipse {
-//     background-color: transparent;
-//     border: none;
-//   }
-//   .modal{
-//     position: fixed;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     width: 250px;
-//     top: 50%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//     background-color: #fff;
-//     padding: 20px;
-//     border-radius: 8px;
-//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//
-//     div {
-//       width: 100%;
-//       display: flex;
-//       flex-direction: row;
-//       justify-content: space-around;
-//       padding: 10px;
-//
-//       Button {
-//         width: 115px;
-//       }
-//   }
-//     #close {
-//       width: 80px;
-//       border-radius: 10px;
-//       background-color: #333;
-//       color: #fff;
-//       border: none;
-//       padding: 8px 16px;
-//       cursor: pointer;
-//       margin-top: 10px;
-//     }
-// `;
+const StyledSpan = styled.span`margin: 5px 180px 5px 2px;`;
 
+const UpdatePost=({post, closeModal, setIsUpdateButtonClicked})=>{
+    const [newContent, setNewContent] = useState("")
+    const handlePostChange = e => setNewContent(e.target.value)
+    console.log(post)
 
+    const updatePost=async()=>{
+        const headers = functions.getJWT()
+        const postId = post.post._id
+        let content = newContent
+        if (!content) content = post.post.content
 
-const UpdateAndDelete = ({postId}) => {
+        console.log()
+        await axios.put(`${UPDATE_MY_POST}/${postId}`,
+            {content},
+            {headers})
+            .catch(e => console.error(e))
+            .finally(() => {
+                setIsUpdateButtonClicked(false)
+                closeModal()
+            })
+    }
+    return(
+        <>
+            <h4>게시글 수정</h4>
+            <StyledSpan>글 수정</StyledSpan>
+            <Input type='text' name='text' defaultValue={post.post.content} onChange={handlePostChange}/>
+            <div>
+                <Button onClick={updatePost}>저장</Button>
+                <Button onClick={()=>setIsUpdateButtonClicked(false)}>취소</Button>
+            </div>
+        </>
+    )
+}
+const UpdateAndDelete = ({post}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isUpdateButtonClicked, setIsUpdateButtonClicked] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setIsUpdateButtonClicked(false)
+    }
 
     const deletePost = async () => {
         const headers = functions.getJWT()
-        console.log(postId)
         setIsLoading(true)
-        try {
-            await axios.delete(`${DELETE_MY_POST}/${postId}`, {headers: headers})
-        } catch (e) {
-            console.log(e)
-        }finally {
-            setIsLoading(false)
-            closeModal()
-        }
+
+        await axios.delete(`${DELETE_MY_POST}/${post.post._id}`, {headers: headers})
+            .catch(e=>console.error(e))
+            .finally(()=>{
+                setIsLoading(false)
+                closeModal()
+            })
     }
+    const buttonStyle={display: isUpdateButtonClicked ? 'none' : 'block'}
 
     return (
-        <>
             <ModalWrapper>
                 <button onClick={openModal} className={'ellipse'}>
                 <FontAwesomeIcon icon={faEllipsisVertical} />
@@ -209,16 +204,16 @@ const UpdateAndDelete = ({postId}) => {
                 {isModalOpen && (
                     <div className={'modal'}>
                         <div>
-                            <Button>수정</Button>
-                            <Button onClick={deletePost}>
+                            <Button onClick={()=>setIsUpdateButtonClicked(true)} style={buttonStyle}>수정</Button>
+                            <Button onClick={deletePost} style={buttonStyle}>
                                 {isLoading ? <Loading/> : '삭제'}
                             </Button>
                         </div>
+                        {isUpdateButtonClicked&& <UpdatePost post={post} closeModal={closeModal} setIsUpdateButtonClicked={setIsUpdateButtonClicked}/>}
                         <button id={'close'} onClick={closeModal}>닫기</button>
                     </div>
                 )}
             </ModalWrapper>
-        </>
     )
 }
 const Post = ({postTime, imagePath, post}) => {
@@ -237,7 +232,7 @@ const Post = ({postTime, imagePath, post}) => {
                         <UserProfile text={post.name} size={UserBoxSize.medium}/>
                         <p>&nbsp;&nbsp;{post.name}</p>
                     </div>
-                    {id === post._id && <UpdateAndDelete postId={post.post._id}/>}
+                    {id === post._id && <UpdateAndDelete post={post}/>}
                 </PostHeader>
                 <Img src={imagePath} alt=""/>
                 <PostFeedback>

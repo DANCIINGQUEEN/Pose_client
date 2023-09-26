@@ -68,11 +68,11 @@ const CommentDelete = ({teamId, boardId, commentId}) => {
         setIsModalOpen(false);
         setIsUpdateButtonClicked(false)
     }
-    const deletePost=async ()=>{
+    const deleteComment=async ()=>{
         console.log(teamId, boardId, commentId)
         const headers = functions.getJWT()
         await axios.delete(`${DELETE_TEAM_FREE_BOARD_COMMENT}/${teamId}/${boardId}/${commentId}`, {headers: headers})
-            .then(e=>console.log(e))
+            .catch(e=>console.log(e))
             .finally(()=> {
                 setIsLoading(false)
                 closeModal()
@@ -87,7 +87,7 @@ const CommentDelete = ({teamId, boardId, commentId}) => {
             {isModalOpen && (
                 <div className="modal">
                     <div>
-                        <Button style={buttonStyle} onClick={deletePost}>{isLoading?<Loading/>:'댓글 삭제'}</Button>
+                        <Button style={buttonStyle} onClick={deleteComment}>{isLoading?<Loading/>:'댓글 삭제'}</Button>
                     </div>
                     <button id={'close'} onClick={closeModal}>닫기</button>
 
@@ -185,7 +185,7 @@ const UpdateBoard = ({board, teamId, setIsUpdateButtonClicked, closeModal}) => {
         if (!content) content = board.postContent
         console.log(title, content)
         await axios.put(`${UPDATE_TEAM_BOARD}/${teamId}/${boardId}`, {title, content}, {headers})
-            .then(e => console.log(e))
+            .catch(e => console.log(e))
             .finally(() => {
                 setIsUpdateButtonClicked(false)
                 closeModal()
@@ -223,7 +223,7 @@ const UpdateAndDelete = ({board, teamId, setIsCommentButtonClick}) => {
         const boardId = board._id
         setIsLoading(true)
         await axios.delete(`${DELETE_TEAM_BOARD}/${teamId}/${boardId}`, {headers: headers})
-            .then(e => console.log(e))
+            .catch(e => console.log(e))
             .finally(() => {
                 setIsLoading(false)
                 closeModal()

@@ -88,7 +88,7 @@ const UpdateNotice = ({notice, teamId, setIsUpdateButtonClicked, closeModal}) =>
         if (!content) content = notice.noticeContent
 
         await axios.put(`${UPDATE_TEAM_NOTICE}/${teamId}/${noticeId}`, {title, content}, {headers})
-            .then((e) => console.log(e))
+            .catch(e => console.error(e))
             .finally(() => {
                 setIsUpdateButtonClicked(false)
                 closeModal()
@@ -124,7 +124,7 @@ const UpdateAndDelete = ({notice, teamId}) => {
         const noticeId = notice._id
         setIsLoading(true)
         await axios.delete(`${DELETE_TEAM_NOTICE}/${teamId}/${noticeId}`, {headers: headers})
-            .then((e) => console.log(e))
+            .catch((e) => console.error(e))
             .finally(() => {
                 setIsLoading(false)
                 closeModal()
