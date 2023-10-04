@@ -1,4 +1,7 @@
 import React from "react";
+import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {ThemeColor as themeColor} from "../../constants/Constants";
 
 
 export const UserProfile = ({text, size}) => {
@@ -16,22 +19,32 @@ export const UserProfile = ({text, size}) => {
     const textColor = (parseInt(color.replace('#', ''), 16) > 0xffffff / 2) ? 'black' : 'white';
     return (
         <div style={{
-            display: 'flex',
-            justifyContent: 'center'
+            borderRadius: '50%',
+            backgroundColor: `${themeColor.navColor}`
         }}>
-                <span style={{
-                    width: `${size}px`,
-                    height: `${size}px`,
-                    borderRadius: '50%',
-                    background: color,
-                    color: textColor,
-                    display: 'flex',
-                    fontSize: `${fontSize}px`,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                    {text && text[0].toUpperCase()}
-                </span>
+            {/*<span style={{*/}
+            {/*    width: `${size}px`,*/}
+            {/*    height: `${size}px`,*/}
+            {/*    borderRadius: '50%',*/}
+            {/*    background: color,*/}
+            {/*    color: textColor,*/}
+            {/*    display: 'flex',*/}
+            {/*    fontSize: `${fontSize}px`,*/}
+            {/*    justifyContent: 'center',*/}
+            {/*    alignItems: 'center',*/}
+            {/*}}>*/}
+            {/*    {text && text[0].toUpperCase()}*/}
+            {/*</span>*/}
+            <span style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: `${size}px`,
+                height: `${size}px`,
+            }}>
+
+                <FontAwesomeIcon icon={faUser}/>
+            </span>
         </div>
     )
 }

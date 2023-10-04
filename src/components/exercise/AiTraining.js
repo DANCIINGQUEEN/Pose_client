@@ -98,14 +98,14 @@ function AiTraining() {
     const label = location.state?.label || ''
     const goals = useSelector((state) => state.goals)
     const goal = goals.find(goal => goal.label === label)?.number
-    console.log(`https://00da-1-237-93-105.ngrok-free.app/video_feed/${label}`)
+    const flaskServer = 'https://76df-1-237-93-105.ngrok-free.app/video_feed'
 
     return (
         <>
             <br/>
             {goal ?
                 <>
-                    {/*<img src={`https://00da-1-237-93-105.ngrok-free.app/video_feed/${label}`} alt=""/>*/}
+                    <img src={`${flaskServer}/${label}`} alt={label}/>
                     <ProgressBar goal={goal} label={label}/>
                 </>
                 :
