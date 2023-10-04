@@ -10,7 +10,7 @@ import {GET_USER_FULL_INFO, ACCOUNT, INITIAL_GOAL, WISH_EXERCISE} from '../../se
 import {getUserFullInfo, logout} from "../../store/userState";
 
 import {Container, UserBox, NavigationBar, UserBoxSize, ThemeColor, Button, LinkBox} from '../UI/UIPackage';
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 
 import CurrentExercise from "./widget/currentExercise/CurrentExercise";
 import HomeRanking from "./widget/HomeRanking";

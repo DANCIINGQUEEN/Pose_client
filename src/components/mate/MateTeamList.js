@@ -1,18 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 import axios from "axios";
 import {GET_ALL_TEAMS, JOIN_TEAM} from "../../services/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHeart, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {Button, Loading, TeamSummaryBox, Hashtag, Container} from "../UI/UIPackage";
 
 function MateTeamList() {
     const [teams, setTeams] = useState()
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const getTeams = async () => {
-        setIsLoading(true)
-        axios.get(GET_ALL_TEAMS)
+        const headers = functions.getJWT()
+        axios.get(GET_ALL_TEAMS, {headers})
             .then(res => setTeams(res.data))
             .catch(err => console.log(err))
             .finally(() => setIsLoading(false))
@@ -21,7 +20,6 @@ function MateTeamList() {
         const headers = functions.getJWT()
         setIsLoading(true)
         axios.post(JOIN_TEAM, {teamId: teamId}, {headers: headers})
-            .then(res => console.log(res.data))
             .catch(err => console.log(err))
             .finally(() => {
                 setIsLoading(false)
@@ -43,8 +41,6 @@ function MateTeamList() {
                     <h3>{team.description}</h3>
                     <div>
                         <div className={'feedback'}>
-                            <FontAwesomeIcon icon={faHeart}/>
-                            <span>{team.likes}</span>
                             <FontAwesomeIcon icon={faUser}/>
                             <span>{team.members}</span>
                         </div>

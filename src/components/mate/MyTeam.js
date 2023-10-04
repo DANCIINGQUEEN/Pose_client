@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {Button, Container, PlusButton, TeamInfoBox} from "../UI/UIPackage";
 import axios from "axios";
 import {GET_TEAM_INFO, QUIT_TEAM, MATE, TEAM_DETAIL, ENTER_TEAM} from "../../services/api";
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 
 
 const MyTeam = () => {
@@ -37,20 +37,14 @@ const MyTeam = () => {
         getTeamInfo().then()
     }, [])
 
-    // console.log(teamInfo)
-    const plusButtonItem = [
-        ['공지 작성', 'ㅁㄴ'],
-        ['게시판 글쓰기', 'ㅁㄴ'],
-        ['채팅방 입장', 'ㅁㄴ']
-    ]
-    // console.log(teamInfo)
+
     return (
         <Container>
             <h1>{teamInfo?.name}</h1>
-            <h3 style={{marginTop: '0px'}}>{teamInfo?.description}</h3>
+            <h3 style={{marginTop: '0px', maxWidth:'300px'}}>{teamInfo?.description}</h3>
             <TeamInfoBox onClick={() => handleButtonClick('TEAM_NOTICE')}>
                 <h2>공지</h2>
-                {teamInfo?.notice.length === 0 && <p>공지가 없습니다</p>}
+                {teamInfo?.notice.length === 0 && <p id='empty'>공지가 없습니다</p>}
                 {teamInfo?.notice.map((notice, index) => (
                     <div className={'board'} key={index}>
                         <span className={'title'}>{notice.noticeTitle}</span>
@@ -62,13 +56,13 @@ const MyTeam = () => {
                 <h2>게시글</h2>
                 <div className={'board'}>
                     <span className={'boardProperty'}>자유게시판</span>
-                    {teamInfo?.freeBoard.length === 0 ? <span>게시글이 없습니다</span> :
+                    {teamInfo?.freeBoard.length === 0 ? <span id='empty'>게시글이 없습니다</span> :
                         <span className={'content'}>{teamInfo?.freeBoard[0].postTitle}</span>
                     }
                 </div>
                 <div className={'board'}>
                     <span className={'boardProperty'}>익명게시판</span>
-                    {teamInfo?.anonymousBoard.length === 0 ? <span>게시글이 없습니다</span> :
+                    {teamInfo?.anonymousBoard.length === 0 ? <span id='empty'>게시글이 없습니다</span> :
                         <span className={'content'}>{teamInfo?.anonymousBoard[0].postTitle}</span>
                     }
                 </div>
@@ -76,9 +70,6 @@ const MyTeam = () => {
             <TeamInfoBox onClick={() => handleButtonClick('TEAM_EXERCISE')}>
                 <h2>운동</h2>
                 {teamInfo?.goal.length === 0 && <p className={'goal'}>운동 목표가 없습니다</p>}
-                {/*{teamInfo?.goal.map((goal, index)=>(*/}
-                {/*    <p key={index}>{goal.title}</p>*/}
-                {/*))}*/}
             </TeamInfoBox>
             <div style={{width: '330px', display: 'flex', justifyContent: 'space-between'}}>
 
@@ -96,7 +87,6 @@ const MyTeam = () => {
             </div>
             <br/>
             <Button style={{width: '120px'}} onClick={handleQuitButtonClick}>탈퇴하기</Button>
-            <PlusButton item={plusButtonItem}/>
 
         </Container>
     );

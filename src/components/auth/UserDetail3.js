@@ -5,7 +5,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {REGISTER_DETAIL_USER} from '../../services/api'
 import axios from "axios";
 // import confetti from "canvas-confetti";
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 
 export const ButtonGroup = ({buttons, onChange, selectedWishList}) => {
     const SWL = selectedWishList

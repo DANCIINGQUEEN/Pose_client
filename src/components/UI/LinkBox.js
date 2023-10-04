@@ -15,17 +15,20 @@ const Box=styled(Link)`
   background-color: ${ThemeColor.divColor};
   text-decoration: none;
   color: black;
-  h3{
-    margin-bottom:2px;
+
+  h3 {
+    margin-bottom: 2px;
   }
-  div{
+
+  div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
-  p{
-    margin-right:15px;
+
+  p {
+    margin-right: 15px;
   }
 `
 export const LinkBox = ({url, title, content}) => {

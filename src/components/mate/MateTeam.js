@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Loading, PlusButton, TeamSummaryBox, Hashtag, LinkBox} from "../UI/UIPackage";
+import {Button, Loading, PlusButton, TeamSummaryBox, Hashtag, LinkBox, HorizonLine} from "../UI/UIPackage";
 import {CREATE_MATE_TEAM, ENTER_TEAM, MATE_TEAM_LIST, GET_JOINED_TEAMS} from "../../services/api";
 import axios from "axios";
 import {faHeart, faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 import {useNavigate} from "react-router-dom";
 
 const MyTeamList = () => {
@@ -15,7 +15,7 @@ const MyTeamList = () => {
     const getMyTeams = async () => {
         setIsLoading(true)
         const headers = functions.getJWT()
-        await axios.get(GET_JOINED_TEAMS+'/', {headers})
+        await axios.get(GET_JOINED_TEAMS + '/', {headers})
             .then(res => {
                 setJoinedTeams(res.data)
             })
@@ -23,7 +23,7 @@ const MyTeamList = () => {
             .finally(() => setIsLoading(false))
     }
     const handleTeamClick = (teamId) => {
-        navigate(ENTER_TEAM + '/'+teamId)
+        navigate(ENTER_TEAM + '/' + teamId)
     }
     useEffect(() => {
         getMyTeams().then()
@@ -42,8 +42,6 @@ const MyTeamList = () => {
                     <h3>{team.description}</h3>
                     <div>
                         <div className={'feedback'}>
-                            <FontAwesomeIcon icon={faHeart}/>
-                            <span>{team.likes}</span>
                             <FontAwesomeIcon icon={faUser}/>
                             <span>{team.members}</span>
                         </div>
@@ -51,6 +49,7 @@ const MyTeamList = () => {
                             입장
                         </Button>
                     </div>
+                    {/*<HorizonLine/>*/}
                 </TeamSummaryBox>
             ))}
         </>

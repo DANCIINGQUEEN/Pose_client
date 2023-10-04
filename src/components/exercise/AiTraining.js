@@ -5,7 +5,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 import {Button, Container, Loading, ThemeColor} from "../UI/UIPackage";
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 import {UPDATE_ATTAIN} from "../../services/api";
 import {updateAttain} from "../../store/userState";
 
@@ -98,12 +98,16 @@ function AiTraining() {
     const label = location.state?.label || ''
     const goals = useSelector((state) => state.goals)
     const goal = goals.find(goal => goal.label === label)?.number
-
+    console.log(`https://00da-1-237-93-105.ngrok-free.app/video_feed/${label}`)
 
     return (
         <>
             <br/>
-            {goal ? <ProgressBar goal={goal} label={label}/>
+            {goal ?
+                <>
+                    {/*<img src={`https://00da-1-237-93-105.ngrok-free.app/video_feed/${label}`} alt=""/>*/}
+                    <ProgressBar goal={goal} label={label}/>
+                </>
                 :
                     <>
                         <br/>

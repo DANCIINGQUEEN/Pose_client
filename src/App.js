@@ -34,6 +34,7 @@ import MyPosts from "./components/mate/MyPosts";
 import CreateTeam from "./components/mate/CreateTeam";
 import MateTeamList from "./components/mate/MateTeamList";
 import MyTeam from "./components/mate/MyTeam";
+import UserInformation from "./components/mate/UserInformation";
 
 //URL
 import {
@@ -57,7 +58,8 @@ import {
     CREATE_MATE_TEAM,
     MATE_TEAM_LIST,
     ENTER_TEAM,
-    TEAM_DETAIL
+    TEAM_DETAIL,
+    USER_INFORMATION
 } from './services/api'
 import TeamDetail from "./components/mate/teamDetail/TeamDetail";
 const App = () => {
@@ -88,6 +90,7 @@ const App = () => {
                     <Route path={MATE_TEAM_LIST} element={<MateTeamList/>}/>
                     <Route path={ENTER_TEAM+'/:teamId'} element={<MyTeam/>}/>
                     <Route path={ENTER_TEAM+'/:teamId'+TEAM_DETAIL} element={<TeamDetail/>}/>
+                    <Route path={USER_INFORMATION} element={<UserInformation/>}/>
 
 
                     //현재 유저 운동 상태

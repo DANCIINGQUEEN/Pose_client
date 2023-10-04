@@ -1,5 +1,6 @@
 import React from "react";
 
+
 export const UserProfile = ({text, size}) => {
     const fontSize = (3 * size) / 5
     const randomColor = () => {

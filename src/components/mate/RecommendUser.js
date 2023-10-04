@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import {GET_RECOMMEND_USER, GET_UNFOLLOW} from '../../services/api'
 import {Button, Container, Loading, ThemeColor, UserBox, UserBoxSize} from "../UI/UIPackage";
-import {functions} from '../UI/Functions'
+import {functions} from '../../utils/Functions'
 import styled from "styled-components";
 
 import {FOLLOW_USER} from "../../services/api";
@@ -12,7 +12,7 @@ import {putFollow, putFollowingNames} from "../../store/userState";
 
 const UserInfoBox = styled.div`
   width: 320px;
-  background-color: ${ThemeColor.divColor};
+  //background-color: ${ThemeColor.divColor};
   border-radius: 16px;
   padding: 10px 15px 0 15px;
   margin-bottom: 20px;
@@ -20,9 +20,10 @@ const UserInfoBox = styled.div`
   justify-content: space-between;
   align-items: center;
   .detail{
-    background-color: ${ThemeColor.importantColor};
+    background-color: ${ThemeColor.containerColor};
     border-radius: 10px;
-    margin-right: 5px;
+    margin-top: 5px;
+    margin-right: 10px;
     padding: 5px;
   }
 `

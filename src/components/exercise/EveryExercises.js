@@ -9,8 +9,8 @@ import exerciseImage from '../../config/exerciseImagePath.json'
 
 
 const Box = styled.div`
-  background-color: ${ThemeColor.containerColor};
-  border-radius: 16px 0 0 16px;
+  //background-color: ${ThemeColor.containerColor};
+  //border-radius: 16px 0 0 16px;
   margin: 0 0 30px 10px;
   width: 380px;
 `

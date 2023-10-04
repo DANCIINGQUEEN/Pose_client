@@ -18,6 +18,7 @@ const Member = styled.main`
     margin: 10px;
 
   }
+
 `
 
 function Members(props) {
@@ -35,7 +36,7 @@ function Members(props) {
     useEffect(() => {
         getTeamMembers().then()
     }, [])
-    // console.table(members?.members)
+    console.log(members?.members)
     return (
         <Container>
             <h2>방장</h2>
@@ -43,6 +44,7 @@ function Members(props) {
             <br/>
             <br/>
             <h2>회원</h2>
+                {members?.members.length===0&&<p id='empty'>회원이 없습니다</p>}
             <Member>
                 {members?.members?.map(member =>
                     <UserBox key={member._id} name={member.name} size={UserBoxSize.large}/>

@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 
 import {Container, ThemeColor, Button, Loading} from "../UI/UIPackage";
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 import {UPLOAD_USER_POST, MATE} from "../../services/api";
 
 const Label = styled.label`

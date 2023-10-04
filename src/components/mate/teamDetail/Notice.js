@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
     Button,
-    Container,
+    Container, HorizonLine,
     Input,
     Loading,
     ModalWrapper,
@@ -12,7 +12,7 @@ import {
 } from "../../UI/UIPackage";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
-import {functions} from "../../UI/Functions";
+import {functions} from "../../../utils/Functions";
 import {POST_TEAM_NOTICE, GET_TEAM_NOTICE, DELETE_TEAM_NOTICE, UPDATE_TEAM_NOTICE} from "../../../services/api";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -130,7 +130,7 @@ const UpdateAndDelete = ({notice, teamId}) => {
                 closeModal()
             })
     }
-    const buttonStyle={display: isUpdateButtonClicked ? 'none' : 'block'}
+    const buttonStyle = {display: isUpdateButtonClicked ? 'none' : 'block'}
     return (
         <ModalWrapper>
             <button onClick={openModal} className={'ellipse'}>
@@ -182,7 +182,7 @@ const NoticeList = ({teamId}) => {
                             <span className={'title'}>{notice.noticeTitle}</span>
                             <p className={'content'}>{notice.noticeContent}</p>
                         </main>
-
+                        <HorizonLine/>
                     </NoticeBox>
                 )
             })}

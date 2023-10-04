@@ -10,11 +10,15 @@ import {
     Button,
     ToggleButton,
     Input,
-    UserProfile,
     UserBoxSize,
     FeedbackButton,
     NoticeBox,
-    FeedbackList, CommentsList, ThemeColor, Loading, Container, Box, TwoTabNav, UserBox, ModalWrapper
+    FeedbackList, CommentsList,
+    Loading,
+    TwoTabNav,
+    UserBox,
+    ModalWrapper,
+    CommentInput, HorizonLine
 } from "../../UI/UIPackage";
 import {
     POST_TEAM_BOARD,
@@ -25,39 +29,8 @@ import {
     DELETE_TEAM_FREE_BOARD_COMMENT
 } from "../../../services/api";
 import {faArrowUp, faComment, faEllipsisVertical} from "@fortawesome/free-solid-svg-icons";
-import {functions} from "../../UI/Functions";
+import {functions} from "../../../utils/Functions";
 
-const CommentInput = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  width: 345px;
-
-  input {
-    position: relative;
-    height: 50px;
-    border-radius: 10px;
-    padding: 0 15px;
-    z-index: 1;
-  }
-
-
-  button {
-    position: relative;
-    border: none;
-    background-color: ${ThemeColor.disabledButtonColor};
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    right: 43px;
-    bottom: 5px;
-    z-index: 2;
-
-    &:hover {
-      background-color: ${ThemeColor.buttonColor};
-    }
-
-`
 
 const CommentDelete = ({teamId, boardId, commentId}) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -68,17 +41,17 @@ const CommentDelete = ({teamId, boardId, commentId}) => {
         setIsModalOpen(false);
         setIsUpdateButtonClicked(false)
     }
-    const deleteComment=async ()=>{
+    const deleteComment = async () => {
         console.log(teamId, boardId, commentId)
         const headers = functions.getJWT()
         await axios.delete(`${DELETE_TEAM_FREE_BOARD_COMMENT}/${teamId}/${boardId}/${commentId}`, {headers: headers})
-            .catch(e=>console.log(e))
-            .finally(()=> {
+            .catch(e => console.log(e))
+            .finally(() => {
                 setIsLoading(false)
                 closeModal()
             })
     }
-    const buttonStyle={display: isUpdateButtonClicked ? 'none' : 'block'}
+    const buttonStyle = {display: isUpdateButtonClicked ? 'none' : 'block'}
     return (
         <ModalWrapper>
             <button className="ellipse" onClick={openModal}>
@@ -87,7 +60,7 @@ const CommentDelete = ({teamId, boardId, commentId}) => {
             {isModalOpen && (
                 <div className="modal">
                     <div>
-                        <Button style={buttonStyle} onClick={deleteComment}>{isLoading?<Loading/>:'댓글 삭제'}</Button>
+                        <Button style={buttonStyle} onClick={deleteComment}>{isLoading ? <Loading/> : '댓글 삭제'}</Button>
                     </div>
                     <button id={'close'} onClick={closeModal}>닫기</button>
 
@@ -142,15 +115,16 @@ const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
                         {isAnonymous ?
                             <div className='annoy'>
                                 <span id='annoy'>익명{index + 1}</span>
-                                <span id='comment'>{comment}</span>
+                                <span id='annoyComment'>{comment}</span>
                             </div>
                             :
                             <div className='free'>
-                                <div>
+                                <div className='eachComment'>
                                     <UserBox name={comment.user} size={UserBoxSize.small}/>
                                     <span id='comment'>{comment.content}</span>
                                 </div>
-                                {comment.userId === id && <CommentDelete teamId={teamId} boardId={board._id} commentId={comment._id}/>}
+                                {comment.userId === id &&
+                                    <CommentDelete teamId={teamId} boardId={board._id} commentId={comment._id}/>}
                             </div>
                         }
                     </CommentsList>
@@ -164,7 +138,7 @@ const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
                     {isLoading ? <Loading/> : <FontAwesomeIcon icon={faArrowUp}/>}
                 </button>
             </CommentInput>
-            <button className={'close'} onClick={handleCommentButtonClick}>닫기</button>
+            <button className='close' onClick={handleCommentButtonClick}>닫기</button>
         </FeedbackList>
     )
 
@@ -291,6 +265,7 @@ const EachBoard = ({board, name, isAnonymous, teamId}) => {
                         </main>
                     </>}
 
+                <HorizonLine/>
             </NoticeBox>
             <CommentList board={board} display={isCommentButtonClick} userName={name} isAnonymous={isAnonymous}
                          onChange={handleCommentButtonClick}/>
@@ -395,11 +370,12 @@ function Board(props) {
     useEffect(() => {
         getTeamBoard().then()
     }, []);
+    // console.log(board)
 
     const tab = {
-        '자유게시판': board?.freeBoard.map(board =>
+        '자유게시판': board?.newFreeBoard.map(board =>
             <EachBoard board={board} isAnonymous={false} name={name} key={board._id} teamId={teamId}/>),
-        '비밀게시판': board?.anonymousBoard.map(board =>
+        '비밀게시판': board?.newAnonymousBoard.map(board =>
             <EachBoard board={board} isAnonymous={true} name={name} key={board._id} teamId={teamId}/>)
     }
 

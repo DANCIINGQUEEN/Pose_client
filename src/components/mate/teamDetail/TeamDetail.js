@@ -22,7 +22,7 @@ function TeamDetail(props) {
     return (
         <Container>
             <h1>{name}</h1>
-            <h3 style={{marginTop: '0px'}}>{desc}</h3>
+            <h3 style={{marginTop: '0px', maxWidth:'300px'}}>{desc}</h3>
             {detailSwitch[page]}
         </Container>
     );

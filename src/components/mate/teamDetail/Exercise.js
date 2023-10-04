@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {Button, Container, CustomSelect, Input, NavigationBar, rainbowAnimation, ThemeColor} from "../../UI/UIPackage";
 import styled from "styled-components";
 import {useDispatch} from "react-redux";
-import {functions} from "../../UI/Functions";
+import {functions} from "../../../utils/Functions";
 import axios from "axios";
 import {CURRENT, GOAL_SETTING} from "../../../services/api";
 import {putGoals} from "../../../store/userState";
@@ -90,7 +90,7 @@ function Exercise(props) {
 
     return (
         <Container>
-            <h4>후후후ㅛ</h4>
+            <h4>exercise</h4>
             <br/>
 
             <NavigationBar/>

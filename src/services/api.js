@@ -31,6 +31,8 @@ const API={
     GET_IMAGE: `https://competitive-leticia-danciingqueen.koyeb.app/api`,
     //댓글 입력
     POST_USER_POST_COMMENT: `${API_BASE_URL}/user/postUserPostComment`,
+    //댓글 삭제
+    DELETE_USER_POST_COMMENT: `${API_BASE_URL}/user/deleteUserPostComment`,
     //좋아요 클릭
     POST_USER_POST_HEART: `${API_BASE_URL}/user/postUserPostHeart`,
     //내 게시물 삭제
@@ -155,6 +157,9 @@ const API={
     //계정
     USER_SETTING:'/usersetting',
     ACCOUNT:'/account',
+
+    //유저 정보
+    USER_INFORMATION:'/userInformation',
 
 }
 

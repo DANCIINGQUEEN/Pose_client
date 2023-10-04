@@ -166,6 +166,10 @@ export const TeamSummaryBox = styled(Box)`
     margin-left: 20px;
   }
 
+  h3 {
+    max-width: 300px;
+  }
+
   div {
     width: 92%;
     display: flex;
@@ -174,7 +178,6 @@ export const TeamSummaryBox = styled(Box)`
     margin-left: 10px;
     margin-bottom: 10px;
     justify-content: space-between;
-
   }
 
   Button {
@@ -183,7 +186,7 @@ export const TeamSummaryBox = styled(Box)`
   }
 
   .feedback {
-    width: 110px;
+    width: 55px;
     justify-content: space-around;
   }
 `
@@ -223,11 +226,17 @@ export const TeamInfoBox=styled.button`
     font-size: 15px;
     font-weight: bold;
   }
+  #empty{
+    margin: -5px 0 5px 10px;
+    
+  }
 
   .board {
     margin: 1px 0 15px 0;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 
   .title {
@@ -347,44 +356,85 @@ export const CommentsList = styled.div`
   flex-direction: row;
   align-items: center;
   margin-bottom: 15px;
+
   .annoy {
+    display: flex;
+    flex-direction: column;
+
     #annoy {
       font-size: 15px;
       font-weight: bold;
     }
-    #comment {
+
+    #annoyComment {
       margin-left: 8px;
     }
+
   }
 
-  .free {
-    width:290px;
+  .free, .postComment {
+    width: 290px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    div{
-        display: flex;
-    }
-    #comment {
-      margin-left: 8px;
+
+    .eachComment {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
+
+  #comment {
+    margin-left: 35px;
+  }
+`
+export const CommentInput = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 345px;
+
+  input {
+    position: relative;
+    height: 50px;
+    border-radius: 10px;
+    padding: 0 15px;
+    z-index: 1;
+  }
+
+
+  button {
+    position: relative;
+    border: none;
+    background-color: ${ThemeColor.disabledButtonColor};
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    right: 43px;
+    bottom: 5px;
+    z-index: 2;
+
+    &:hover {
+      background-color: ${ThemeColor.buttonColor};
+    }
+
 `
 export const NoticeBox = styled.div`
   display: flex;
   flex-direction: column;
   width: 330px;
   padding: 5px;
-  background-color: ${ThemeColor.containerColor};
+  //background-color: ${ThemeColor.containerColor};
   margin-bottom: 10px;
   border-radius: 16px;
+
 
   main {
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: space-between;
-    //height: 50px;
     margin-top: 10px;
   }
   section{

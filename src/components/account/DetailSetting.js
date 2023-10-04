@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
 import {Button, CustomSelect, Input, Loading, ThemeColor, UserBox, UserBoxSize} from "../UI/UIPackage";
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 import {
     GET_FOLLOWERS,
     GET_FOLLOWING,

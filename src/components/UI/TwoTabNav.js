@@ -10,6 +10,7 @@ const TabContainer = styled.div`
   position:sticky;
   top:10px;
 
+
   button {
     border: none;
     background-color: ${ThemeColor.navColor};

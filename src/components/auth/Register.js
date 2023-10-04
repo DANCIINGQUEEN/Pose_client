@@ -7,7 +7,7 @@ import {SEND_VERIFY_CODE, VERIFY_CODE, USER_DETAIL, REGISTER_SIMPLE_USER} from '
 import {ThemeColor, Container, Input, Button, Loading} from '../UI/UIPackage';
 import styled from "styled-components";
 import confetti from "canvas-confetti";
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 
 
 const LoginForm = styled.form`

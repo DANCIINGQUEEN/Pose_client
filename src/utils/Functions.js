@@ -1,5 +1,5 @@
 import confetti from "canvas-confetti";
-import {logout} from "../../store/userState";
+import {logout} from "../store/userState";
 
 export const functions = {
     getJWT: () => {

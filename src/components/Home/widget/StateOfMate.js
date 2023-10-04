@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
 import {MATE, GET_FOLLOWERS_EXERCISES_STATUS} from "../../../services/api";
-import {functions} from "../../UI/Functions";
+import {functions} from "../../../utils/Functions";
 import axios from "axios";
 
 

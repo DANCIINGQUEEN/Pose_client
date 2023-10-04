@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Button, Container, Input, Loading, ThemeColor} from "../UI/UIPackage";
 import styled from "styled-components";
-import {functions} from "../UI/Functions";
+import {functions} from "../../utils/Functions";
 import axios from "axios";
 import {CREATE_TEAM, MATE} from "../../services/api";
 import {useNavigate} from "react-router-dom";

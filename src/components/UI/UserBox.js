@@ -1,15 +1,34 @@
 import {UserProfile} from "./UserProfile";
 import React from "react";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {USER_INFORMATION} from "../../services/api";
+import styled from "styled-components";
 
-export const UserBox = ({name, email, size}) => {
+const LinkUserBox = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  //text-decoration: none;
+  //color: black;
+  border:none;
+    background-color: transparent;
+    &:hover {
+        cursor: pointer;
+    }
+`
+export const UserBox = ({name, email, size, id = 'ggg'}) => {
+    const navigate = useNavigate()
+
+    const handleClick = () => navigate(USER_INFORMATION, {state: {id: id}})
     const fontSize = (3 * size) / 5
     return (
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <LinkUserBox onClick={handleClick}>
             <UserProfile text={name} size={size}/>
             <div style={{textAlign: 'left', marginLeft: '10px'}}>
-                {name!==''&& <div style={{fontSize: fontSize}}>{name}</div>}
-                {email!==''&& <div style={{fontSize: fontSize}}>{email}</div>}
+                {name !== '' && <div style={{fontSize: fontSize}}>{name}</div>}
+                {email !== '' && <div style={{fontSize: fontSize}}>{email}</div>}
             </div>
-        </div>
+        </LinkUserBox>
     )
 }

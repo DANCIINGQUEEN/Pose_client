@@ -7,7 +7,7 @@ import {Container, CustomSelect, Input, Box, Button} from "../../../UI/UIPackage
 import {GOAL_SETTING, CURRENT} from "../../../../services/api";
 import {putGoals} from "../../../../store/userState";
 import styled from "styled-components";
-import {functions} from "../../../UI/Functions";
+import {functions} from "../../../../utils/Functions";
 import exerciseName from "../../../../config/exercise";
 
 const EachGoal=styled(Box)`
