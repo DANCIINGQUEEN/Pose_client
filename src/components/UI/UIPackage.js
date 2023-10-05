@@ -128,6 +128,7 @@ export const Scroll = styled.div`
   display: flex;
   flex-direction: row;
   overflow-y: hidden;
+  
   &::-webkit-scrollbar {
     display:none;
   }

@@ -6,6 +6,8 @@ import {Doughnut} from "react-chartjs-2";
 
 import Gallery from "./Gallery";
 import StateOfMate from "../Home/widget/StateOfMate";
+import UploadFirebaseImg from "./UploadFirebaseImg";
+import GetFirebaseImg from "./GetFirebaseImg";
 // import PoseNetprtc from "./PoseNetprtc";
 
 
@@ -121,6 +123,8 @@ function InputToss(props) {
 
     return (
         <Container>
+            {/*<UploadFirebaseImg/>*/}
+            <GetFirebaseImg/>
             <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column'}}>
 
                 <input type="text" value={content} onChange={handleContentChange}/>

@@ -5,7 +5,6 @@ import {
     POST_USER_POST_COMMENT,
     POST_USER_POST_HEART,
     DELETE_MY_POST,
-    GET_IMAGE,
     UPDATE_MY_POST,
     DELETE_USER_POST_COMMENT
 } from '../../services/api'
@@ -13,9 +12,7 @@ import {
     Container,
     Input,
     Loading,
-    ThemeColor,
     UserBoxSize,
-    UserProfile,
     Img,
     PostHeader,
     PostFeedback,
@@ -29,7 +26,8 @@ import {functions} from "../../utils/Functions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faComment, faHeart, faEllipsisVertical, faArrowUp} from '@fortawesome/free-solid-svg-icons';
 import {useSelector} from "react-redux";
-import {useLocation, useNavigate} from "react-router-dom";
+import {getDownloadURL, ref} from "firebase/storage";
+import {storage} from "../../services/firebase";
 
 
 const DeleteComment = ({post, commentId}) => {
@@ -260,64 +258,21 @@ const UpdateAndDelete = ({post}) => {
         </ModalWrapper>
     )
 }
-const Post = ({postTime, imagePath, post}) => {
+const Post = ({postTime, post}) => {
+    const [image, setImage] = useState('')
     const [isCommentButtonClick, setIsCommentButtonClick] = useState(false)
     const name = useSelector((state) => state.name)
     const id = useSelector((state) => state._id)
+    const [isLoading, setIsLoading] = useState(true)
     const handleCommentButtonClick = () => {
         setIsCommentButtonClick(isCommentButtonClick => !isCommentButtonClick)
     }
-
-    return (
-        <>
-            <div style={{marginTop: '30px'}}>
-                <PostHeader>
-                    <UserBox name={post.name} size={UserBoxSize.medium}/>
-                    {id === post._id && <UpdateAndDelete post={post}/>}
-                </PostHeader>
-                <Img src={imagePath} alt=""/>
-                <PostFeedback>
-                    <div id={'feedback'}>
-                        <Likes post={post} userName={name}/>
-                        <Comments comments={post.post.comments} handleCommentButtonClick={handleCommentButtonClick}/>
-                    </div>
-                    <span id={'time'}>{postTime}</span>
-                </PostFeedback>
-                <PostContent>
-                    <span>{post.name}&nbsp;&nbsp;</span>
-                    <span>{post.post.content}</span>
-                </PostContent>
-            </div>
-            <CommentList post={post} display={isCommentButtonClick} userName={name}
-                         onChange={() => setIsCommentButtonClick((isCommentButtonClick) => !isCommentButtonClick)}/>
-        </>
-    )
-}
-
-function Posts({API}) {
-    const [posts, setPosts] = useState([])
-    const [loading, setLoading] = useState(false)
-    const getPosts = async () => {
-        try {
-            setLoading(true)
-            const headers = functions.getJWT()
-            const response = await axios.get(API, {headers: headers})
-            setPosts(response.data)
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setLoading(false)
-        }
-    }
+    // console.log(post.post.image)
+    const imageName = post?.post.image
     useEffect(() => {
-        getPosts().then()
-    }, [])
-    // console.table(posts)
-    const replaceImgUrl = (image) => {
-        const replaceUrl = image.replace('public\\', '').replace('public\/', '').replace(/\\/g, '/');
-        const basicPath = GET_IMAGE
-        return basicPath + replaceUrl;
-    }
+        const imageRef = ref(storage, imageName)
+        getDownloadURL(imageRef).then(url => setImage(url)).finally(() => setIsLoading(false))
+    }, [imageName])
     const calcPostTime = (postedTime) => {
         const targetDate = new Date(postedTime);
         const currentDate = new Date();
@@ -334,13 +289,70 @@ function Posts({API}) {
         }
         return postTime
     }
+
+    return (
+        <>
+            <div style={{marginTop: '30px'}}>
+                <PostHeader>
+                    <UserBox name={post.name} size={UserBoxSize.medium}/>
+                    {id === post._id && <UpdateAndDelete post={post}/>}
+                </PostHeader>
+                {isLoading ?
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '340px',
+                        height: '340px'
+                    }}>
+                        <Loading/>
+                    </div>
+                    :
+                    <Img src={image} alt={post.name+'의 사진'}/>
+                }
+                <PostFeedback>
+                    <div id={'feedback'}>
+                        <Likes post={post} userName={name}/>
+                        <Comments comments={post.post.comments} handleCommentButtonClick={handleCommentButtonClick}/>
+                    </div>
+                    <span id={'time'}>{calcPostTime(post.post.date)}</span>
+                </PostFeedback>
+                <PostContent>
+                    <span>{post.name}&nbsp;&nbsp;</span>
+                    <span>{post.post.content}</span>
+                </PostContent>
+            </div>
+            <CommentList post={post} display={isCommentButtonClick} userName={name}
+                         onChange={() => setIsCommentButtonClick((isCommentButtonClick) => !isCommentButtonClick)}/>
+        </>
+    )
+}
+
+function Posts({API}) {
+    const [posts, setPosts] = useState([])
+    const [loading, setLoading] = useState(true)
+    const getPosts = async () => {
+        try {
+            const headers = functions.getJWT()
+            const response = await axios.get(API, {headers: headers})
+            setPosts(response.data)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+    useEffect(() => {
+        getPosts()
+    }, [])
+
+
     return (
         <Container>
             {loading && <Loading/>}
             {posts.length === 0 && <p>게시물이 없습니다</p>}
             {posts?.map((post, index) =>
-                (<Post postTime={calcPostTime(post.post.date)} imagePath={replaceImgUrl(post.post.image)} post={post}
-                       key={index}/>)
+                <Post post={post} key={index}/>
             )}
         </Container>
     );

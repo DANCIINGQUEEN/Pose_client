@@ -3,11 +3,16 @@ import styled from "styled-components";
 import axios from "axios";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {storage} from '../../services/firebase'
+import {ref, uploadBytes} from 'firebase/storage'
+import {v4} from 'uuid'
 
 
 import {Container, ThemeColor, Button, Loading} from "../UI/UIPackage";
 import {functions} from "../../utils/Functions";
 import {UPLOAD_USER_POST, MATE} from "../../services/api";
+import {faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Label = styled.label`
   display: block;
@@ -36,9 +41,8 @@ const DeleteButton = styled.button`
   position: absolute;
   top: 5px;
   right: 5px;
-  background: ${ThemeColor.primaryColor};
+  background-color: transparent;
   border: none;
-  border-radius: 50%;
   cursor: pointer;
   font-size: 30px;
 `
@@ -62,7 +66,7 @@ const Textarea = styled.textarea`
   }
 `
 function PostUpload(props) {
-    const [file, setFile] = useState();
+    const [file, setFile] = useState(null);
     const [content, setContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -76,20 +80,24 @@ function PostUpload(props) {
     const handleContentChange = (e) => {
         setContent(e.target.value);
     }
-    const handleSubmit = async () => {
+
+    const uploadImgToFirebase= async (file, fileName) => {
+        if(file==null) return
+        const fileRef=ref(storage, fileName)
+        await uploadBytes(fileRef, file)
+    }
+    const handleSubmit= async () => {
         setIsLoading(true)
-        let headers=functions.getJWT()
-        headers={...headers, 'Content-Type': 'multipart/form-data'}
-        const formData = new FormData();
-        formData.append('content', content);
-        formData.append('email', strippedEmail);
-        formData.append('file', file);
-        // console.log(formData, file, content)
-        try {
-            const res = await axios.post(UPLOAD_USER_POST, formData, {headers: headers})
-            console.log(res)
-        } catch (error) {
-            console.log(error)
+        try{
+            const headers=functions.getJWT()
+            const fileName=`images/${file.name+v4()}`
+            await axios.post(UPLOAD_USER_POST, {
+                fileName: fileName,
+                content: content,
+            }, {headers: headers})
+            await uploadImgToFirebase(file, fileName)
+        }catch (e) {
+            console.log(e)
         }finally {
             setIsLoading(false)
             navigate(MATE)
@@ -105,7 +113,7 @@ function PostUpload(props) {
                         <>
                             <ImgInput src={URL.createObjectURL(file)} alt="Uploaded"/>
                             <DeleteButton onClick={handleRemove}>
-                                ⨉
+                                <FontAwesomeIcon icon={faTrashCan} />
                             </DeleteButton>
                         </>
                     ) : (
@@ -119,7 +127,7 @@ function PostUpload(props) {
                     id="fileInput"
                     accept="image/*"
                     style={{display: 'none'}}
-                    onChange={(e)=>setFile(e.target.files[0])}
+                    onChange={e=>setFile(e.target.files[0])}
                 />
             </div>
             <br/>

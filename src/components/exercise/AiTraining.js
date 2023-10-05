@@ -60,7 +60,7 @@ const ProgressBar = ({goal, label}) => {
                 }))
             })
             .catch((err) => console.log(err))
-            .finally(()=> setIsLoading(false))
+            .finally(() => setIsLoading(false))
     }
     return (
         <div style={{textAlign: 'center', padding: '20px'}}>
@@ -86,7 +86,8 @@ const ProgressBar = ({goal, label}) => {
             <Button onClick={handleUpdateAttain}
                     style={{
                         backgroundColor: isComplete ? ThemeColor.buttonColor : ThemeColor.disabledButtonColor,
-                        width: '120px', height: '35px',}}>
+                        width: '120px', height: '35px',
+                    }}>
                 {isLoading ? <Loading/> : '기록 저장'}
             </Button>
         </div>
@@ -109,12 +110,12 @@ function AiTraining() {
                     <ProgressBar goal={goal} label={label}/>
                 </>
                 :
-                    <>
-                        <br/>
-                        <h5>안녕?</h5>
-                    </>
+                <>
+                    <br/>
+                    <h5>안녕?</h5>
+                </>
 
-                }
+            }
         </>
     );
 }
