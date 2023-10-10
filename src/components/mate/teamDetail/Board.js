@@ -120,7 +120,7 @@ const CommentList = ({display, onChange, board, isAnonymous, userName}) => {
                             :
                             <div className='free'>
                                 <div className='eachComment'>
-                                    <UserBox name={comment.user} size={UserBoxSize.small}/>
+                                    <UserBox name={comment.user} size={UserBoxSize.small} id={comment.userId}/>
                                     <span id='comment'>{comment.content}</span>
                                 </div>
                                 {comment.userId === id &&
@@ -250,7 +250,7 @@ const EachBoard = ({board, name, isAnonymous, teamId}) => {
                     <>
                         <main>
                             <section>
-                                <UserBox name={board.author} size={UserBoxSize.small}/>
+                                <UserBox name={board.author} size={UserBoxSize.small} id={board.authorId}/>
                                 {board.authorId === id && <UpdateAndDelete board={board} teamId={teamId}
                                                                            setIsCommentButtonClick={setIsCommentButtonClick}/>}
                             </section>

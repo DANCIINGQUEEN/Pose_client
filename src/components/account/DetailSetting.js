@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {Button, CustomSelect, Input, Loading, ThemeColor, UserBox, UserBoxSize} from "../UI/UIPackage";
+import {Button, CustomSelect, Input, Loading, ThemeColor, ToggleButton, UserBox, UserBoxSize} from "../UI/UIPackage";
 import {functions} from "../../utils/Functions";
 import {
     GET_FOLLOWERS,
@@ -11,7 +11,9 @@ import {
     UPDATE_PASSWORD,
     UPDATE_PROFILE,
     UPDATE_INFORMATION,
-    GET_UNFOLLOW
+    GET_UNFOLLOW,
+    CHANGE_INFORMATION_PUBLIC,
+    UPDATE_INFORMATION_PUBLIC
 } from "../../services/api";
 import {
     putFollow,
@@ -23,7 +25,9 @@ import {
     updateHeight,
     updateProfile,
     updateWeight,
-    updateWishList
+    updateWishList,
+    updateInformationPublic,
+    updateItemPublic
 } from "../../store/userState";
 import {ButtonGroup} from "../auth/UserDetail3";
 
@@ -51,7 +55,7 @@ export const UserProfileSetting = ({name, email}) => {
         </>
     )
 }
-const StyledSpan = styled.span`margin: 5px 180px 5px 2px;`;
+const StyledSpan = styled.span`margin-left: 10px;`;
 const OldPassword = ({setIsPasswordCorrect}) => {
     //새 비밀번호
     const [oldPassword, setOldPassword] = useState("");
@@ -129,7 +133,7 @@ const NewPassword = ({setIsPasswordCorrect}) => {
             }
         } catch (error) {
             console.error('API 요청 에러:', error);
-        }finally {
+        } finally {
             setIsLoading(false);
         }
         console.log(newPassword)
@@ -188,7 +192,7 @@ export const ChangeUserProfile = ({name, email}) => {
 
 
     return (
-        <>
+        <div style={{width: '300px'}}>
             <StyledSpan>이름</StyledSpan>
             <Input type="name" defaultValue={name} onChange={handleNameChange}/>
             <StyledSpan>이메일</StyledSpan>
@@ -198,7 +202,7 @@ export const ChangeUserProfile = ({name, email}) => {
             <br/>
             {isPasswordCorrect ? (<NewPassword setIsPasswordCorrect={setIsPasswordCorrect}/>) : (
                 <OldPassword setIsPasswordCorrect={setIsPasswordCorrect}/>)}
-        </>
+        </div>
     )
 }
 export const FollowingSetting = ({following}) => {
@@ -256,7 +260,7 @@ export const ShowFollowing = ({following}) => {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
 
-    const fetchData = async () => {
+    const getFollowing = async () => {
         const headers = functions.getJWT()
         setIsLoading(true)
         try {
@@ -272,7 +276,7 @@ export const ShowFollowing = ({following}) => {
         }
     };
     useEffect(() => {
-        fetchData().then()
+        getFollowing().then()
     }, [following])
     // console.log(following)
 
@@ -307,7 +311,7 @@ export const FollowersSetting = ({followers}) => {
 export const ShowFollowers = ({followers}) => {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
-    const fetchData = async () => {
+    const getFollowers = async () => {
         try {
             const headers = functions.getJWT()
             setIsLoading(true)
@@ -323,7 +327,7 @@ export const ShowFollowers = ({followers}) => {
         }
     };
     useEffect(() => {
-        fetchData().then()
+        getFollowers().then()
     }, [followers])
 
     const {followerNames} = useSelector(state => state)
@@ -706,5 +710,67 @@ export const ChangeWishList = ({wishList}) => {
                 {isSuccessMessage && <p>수정 완료</p>}
             </div>
         </div>
+    )
+}
+
+const ChangePublic = ({item, onChange, isPublic}) => {
+    const [isItemPublic, setIsItemPublic] = useState(isPublic[0])
+    const [isLoading, setIsLoading] = useState(false)
+
+    const dispatch = useDispatch();
+
+
+    const publicStyle = {
+        display: 'flex',
+        width: '230px',
+        justifyContent: 'space-between',
+        margin: '10px 0'
+    }
+    const handleChange = () => {
+        setIsLoading(true)
+        const headers = functions.getJWT()
+        setIsItemPublic(prev => !prev)
+        axios.put(UPDATE_INFORMATION_PUBLIC, {isPublic: !isItemPublic, item: isPublic[1]}, {headers})
+            .then(() => {
+                dispatch(updateItemPublic({
+                    item: isPublic[1],
+                    isPublic: !isItemPublic
+                }))
+            })
+            .catch(err => console.log(err))
+            .finally(() => setIsLoading(false))
+
+    }
+    return (
+        <div style={publicStyle}>
+            <span>{item}</span>
+            <ToggleButton isOn={isItemPublic} onClick={handleChange}/>
+            {isLoading && <Loading/>}
+        </div>
+
+    )
+}
+export const PublicUserInformation = ({isPublic}) => {
+    const item = {
+        '팔로잉 팔로우': [isPublic.isFollowPublic, 'isFollowPublic'],
+        '나이': [isPublic.isAgePublic, 'isAgePublic'],
+        '지역': [isPublic.isAreaPublic, 'isAreaPublic'],
+        '몸무게': [isPublic.isWeightPublic, 'isWeightPublic'],
+        '키': [isPublic.isHeightPublic, 'isHeightPublic'],
+        '주로 하는 운동': [isPublic.isExercisePublic, 'isExercisePublic'],
+        '해결하고 싶은 고민': [isPublic.isWishListPublic, 'isWishListPublic'],
+        '게시글': [isPublic.isPostPublic, 'isPostPublic']
+    }
+
+    const renderItem = Object.keys(item)
+        .map(key => <ChangePublic item={key} isPublic={item[key]}/>)
+
+    return (
+        <>
+            <span>유저 정보 비공개</span>
+            <div>
+                {renderItem}
+            </div>
+        </>
     )
 }

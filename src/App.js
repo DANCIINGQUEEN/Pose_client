@@ -90,7 +90,7 @@ const App = () => {
                     <Route path={MATE_TEAM_LIST} element={<MateTeamList/>}/>
                     <Route path={ENTER_TEAM+'/:teamId'} element={<MyTeam/>}/>
                     <Route path={ENTER_TEAM+'/:teamId'+TEAM_DETAIL} element={<TeamDetail/>}/>
-                    <Route path={USER_INFORMATION} element={<UserInformation/>}/>
+                    <Route path={USER_INFORMATION+'/:userId'} element={<UserInformation/>}/>
 
 
                     //현재 유저 운동 상태

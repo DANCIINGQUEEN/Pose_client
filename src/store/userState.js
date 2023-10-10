@@ -19,6 +19,7 @@ const initialState = {
     dDay: null,
     goals: null,
     activeNav:'home',
+    setting: null,
 
 }
 
@@ -62,7 +63,8 @@ export const authSlice = createSlice({
                 followers,
                 following,
                 dDay,
-                goals
+                goals,
+                setting
             } = action.payload;
             Object.assign(state, {
                 _id,
@@ -78,7 +80,8 @@ export const authSlice = createSlice({
                 followers,
                 following,
                 dDay,
-                goals
+                goals,
+                setting
             });
         },
         putFollow: (state, action) => {
@@ -161,6 +164,10 @@ export const authSlice = createSlice({
         initialGoal: (state, action) => {
             state.dDay=null;
             state.goals=null;
+        },
+        updateItemPublic: (state, action) => {
+            const {item, isPublic}=action.payload
+            state.setting[item]=isPublic;
         }
     }
 })
@@ -169,11 +176,7 @@ export const {
     navClick,
     login,
     logout,
-    getUser,
-    fetchName,
     getUserFullInfo,
-    follow_user,
-    unfollow_user,
     putFollow,
     putGoals,
     updateAttain,
@@ -186,6 +189,6 @@ export const {
     updateHeight,
     updateExercise,
     updateWishList,
-    initialGoal
+    updateItemPublic
 } = authSlice.actions
 export default authSlice.reducer

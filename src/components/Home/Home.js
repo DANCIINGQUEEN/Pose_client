@@ -96,7 +96,8 @@ function Home(props) {
                 wishList,
                 followers,
                 following,
-                goal
+                goal,
+                setting
             } = res.data;
             const followersList = followers.length > 0 ? followers : null
             const followingList = following.length > 0 ? following : null
@@ -117,8 +118,10 @@ function Home(props) {
                     following: followingList,
                     dDay: dDay,
                     goals: goals,
+                    setting: setting,
                 })
             )
+            console.log(res.data)
         } catch (error) {
             console.error(error)
             functions.handleJWTError(error, dispatch, navigate)
@@ -143,10 +146,10 @@ function Home(props) {
             }
             <br/>
             <br/>
-            <StateOfMate/>
-            <br/>
-            <br/>
             <CurrentExercise name={name}/>
+            <br/>
+            <br/>
+            <StateOfMate/>
             <br/>
             <br/>
             <HomeRanking/>

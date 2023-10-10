@@ -191,18 +191,18 @@ const SubmitButton=({form})=>{
 
 
     const handleSignUpButtonClick = async () => {
-        console.log(form)
-        // setIsSignUpLoading(true)
-        // try {
-        //     await axios.post(REGISTER_SIMPLE_USER, form)
-        //     functions.particle()
-        //     alert('회원가입이 완료되었습니다')
-        //     navigate('/')
-        // } catch (e) {
-        //     alert('회원가입에 실패하였습니다')
-        // } finally {
-        //     setIsSignUpLoading(false)
-        // }
+        // console.log(form)
+        setIsSignUpLoading(true)
+        try {
+            await axios.post(REGISTER_SIMPLE_USER, form)
+            functions.particle()
+            alert('회원가입이 완료되었습니다')
+            navigate('/')
+        } catch (e) {
+            alert('회원가입에 실패하였습니다')
+        } finally {
+            setIsSignUpLoading(false)
+        }
     }
 
     return(

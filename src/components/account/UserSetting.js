@@ -27,10 +27,10 @@ import {
     ExerciseSetting,
     ChangeExercise,
     ChangeWishList,
-    WishListSettingButton
+    WishListSettingButton, PublicUserInformation
 } from "./DetailSetting";
 
-const RainbowDiv = styled.div`
+export const RainbowDiv = styled.div`
   border: 2px solid;
   width: 280px;
   border-radius: 16px;
@@ -67,6 +67,7 @@ function UserSetting(props) {
         wishList,
         followers,
         following,
+        setting
     } = useSelector((state) => state);
 
     return (
@@ -124,6 +125,11 @@ function UserSetting(props) {
                        render={<ChangeWishList wishList={wishList}/>}/>
                 <br/>
             </div>
+
+            <PublicUserInformation
+                isPublic={setting}
+                // isPublic={true}
+            />
             <NavigationBar/>
         </Container>
     );

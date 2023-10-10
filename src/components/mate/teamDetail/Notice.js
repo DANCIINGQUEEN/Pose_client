@@ -175,7 +175,7 @@ const NoticeList = ({teamId}) => {
                     <NoticeBox key={notice._id}>
                         <main>
                             <section>
-                                <UserBox name={notice.author} size={UserBoxSize.small}/>
+                                <UserBox name={notice.author} size={UserBoxSize.small} id={notice.authorId}/>
                                 {notice.authorId === id && <UpdateAndDelete notice={notice} teamId={teamId}/>}
                                 {/*<FontAwesomeIcon icon={faEllipsisVertical}/>*/}
                             </section>

@@ -79,6 +79,11 @@ const API={
     //유저 팔로우
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,
 
+    //특정 유저 정보 페이지
+    GET_OTHER_USER_INFO: `${API_BASE_URL}/user/getOtherUserInfo`,
+    //특정 유저 팔로워, 팔로잉 목록
+    GET_OTHER_USER_FOLLOWERS_FOLLOWING: `${API_BASE_URL}/user/getOtherUserFollowersFollowing`,
+
     //유저의 운동 목표 설정
     GOAL_SETTING: `${API_BASE_URL}/user/goalSetting`,
     //운동 목표 초기화
@@ -97,9 +102,13 @@ const API={
     UPDATE_INFORMATION:`${API_BASE_URL}/user/updateInformation`,
     IS_PASSWORD_CORRECT:`${API_BASE_URL}/user/isPasswordCorrect`,
     UPDATE_PASSWORD:`${API_BASE_URL}/user/updatePassword`,
+    CHANGE_INFORMATION_PUBLIC:`${API_BASE_URL}/user/changeInformationPublic`,
+    UPDATE_INFORMATION_PUBLIC:`${API_BASE_URL}/user/updateInformationPublic`,
 
     //채팅
     CHATTING:`${SOCKET_API_URL}`,
+
+
 
 
 

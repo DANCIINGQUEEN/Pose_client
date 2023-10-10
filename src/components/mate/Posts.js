@@ -111,7 +111,7 @@ const CommentList = ({display, onChange, post, userName}) => {
                     <CommentsList key={index}>
                         <div className='postComment'>
                             <div className='eachComment'>
-                                <UserBox name={comment.user} size={UserBoxSize.small}/>
+                                <UserBox name={comment.user} size={UserBoxSize.small} id={comment.userId}/>
                                 <span id='comment'>{comment.content}</span>
                             </div>
                             {comment.userId === id && <DeleteComment post={post} commentId={comment._id}/>}
@@ -192,7 +192,6 @@ const UpdatePost = ({post, closeModal, setIsUpdateButtonClicked}) => {
         let content = newContent
         if (!content) content = post.post.content
 
-        console.log()
         await axios.put(`${UPDATE_MY_POST}/${postId}`,
             {content},
             {headers})
@@ -294,7 +293,7 @@ const Post = ({postTime, post}) => {
         <>
             <div style={{marginTop: '30px'}}>
                 <PostHeader>
-                    <UserBox name={post.name} size={UserBoxSize.medium}/>
+                    <UserBox name={post.name} size={UserBoxSize.medium} id={post._id}/>
                     {id === post._id && <UpdateAndDelete post={post}/>}
                 </PostHeader>
                 {isLoading ?
@@ -332,15 +331,11 @@ function Posts({API}) {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
     const getPosts = async () => {
-        try {
-            const headers = functions.getJWT()
-            const response = await axios.get(API, {headers: headers})
-            setPosts(response.data)
-        } catch (error) {
-            console.error(error)
-        } finally {
-            setLoading(false)
-        }
+        const headers=functions.getJWT()
+        await axios.get(API,{headers})
+            .then(res=>setPosts(res.data))
+            .catch(err=>console.log(err))
+            .finally(()=>setLoading(false))
     }
     useEffect(() => {
         getPosts()

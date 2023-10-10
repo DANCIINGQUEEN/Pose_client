@@ -16,14 +16,12 @@ const MyTeamList = () => {
         setIsLoading(true)
         const headers = functions.getJWT()
         await axios.get(GET_JOINED_TEAMS + '/', {headers})
-            .then(res => {
-                setJoinedTeams(res.data)
-            })
+            .then(res => setJoinedTeams(res.data))
             .catch(err => console.log(err))
             .finally(() => setIsLoading(false))
     }
     const handleTeamClick = (teamId) => {
-        navigate(ENTER_TEAM + '/' + teamId)
+        navigate(`${ENTER_TEAM}/${teamId}`)
     }
     useEffect(() => {
         getMyTeams().then()

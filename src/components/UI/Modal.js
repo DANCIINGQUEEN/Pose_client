@@ -37,7 +37,7 @@ const ModalContent = styled.div`
   align-items: center;
   //border:1px solid black;
 `;
-const ModalButton = styled.button`
+export const ModalButton = styled.button`
   border: none;
   width: 130px;
   background-color: ${ThemeColor.divColor};
@@ -66,9 +66,7 @@ const ModalButton = styled.button`
 export const Modal = ({render, button, width}) => {
     const [showModal, setShowModal] = useState(false);
 
-    const handleButtonClick = () => {
-        setShowModal(true);
-    };
+    const handleButtonClick = () => setShowModal(prev=>!prev);
 
     const closeModal = () => {
         setShowModal(false);

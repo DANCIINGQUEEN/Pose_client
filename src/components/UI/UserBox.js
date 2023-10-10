@@ -17,10 +17,13 @@ const LinkUserBox = styled.button`
         cursor: pointer;
     }
 `
-export const UserBox = ({name, email, size, id = 'ggg'}) => {
+export const UserBox = ({name, email, size, id}) => {
     const navigate = useNavigate()
 
-    const handleClick = () => navigate(USER_INFORMATION, {state: {id: id}})
+    const handleClick = () => {
+        if(id === undefined) return
+        navigate(`${USER_INFORMATION}/${id}`, {state: {id: id}})
+    }
     const fontSize = (3 * size) / 5
     return (
         <LinkUserBox onClick={handleClick}>

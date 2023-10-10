@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {ThemeColor, Scroll, LinkBox, Loading} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
-import {MATE, GET_FOLLOWERS_EXERCISES_STATUS} from "../../../services/api";
+import {MATE, GET_FOLLOWERS_EXERCISES_STATUS, USER_INFORMATION} from "../../../services/api";
 import {functions} from "../../../utils/Functions";
 import axios from "axios";
 
@@ -127,56 +127,6 @@ const Carousel = ({componentToRender, data}) => {
 }
 
 const UserMate = () => {
-    const usersData = {
-        john: {
-            name: 'john',
-            squat: 30,
-            pushUp: 50,
-            pullUp: 70,
-        },
-        park: {
-            name: 'park',
-            squat: 70,
-            pushUp: 50,
-            pullUp: 50,
-        },
-        kim: {
-            name: 'kim',
-            squat: 50,
-            pushUp: 80,
-            pullUp: 20,
-        },
-        hong: {
-            name: 'hong',
-            squat: 100,
-            pushUp: 120,
-            pullUp: 10,
-        },
-        lee: {
-            name: 'lee',
-            squat: 50,
-            pushUp: 40,
-            pullUp: 15,
-        },
-        choi: {
-            name: 'choi',
-            squat: 30,
-            pushUp: 50,
-            pullUp: 70,
-        },
-        jang: {
-            name: 'jang',
-            squat: 70,
-            pushUp: 90,
-            pullUp: 40,
-        },
-        yoon: {
-            name: 'yoon',
-            squat: 50,
-            pushUp: 80,
-            pullUp: 20,
-        }
-    }
     const [isLoading, setIsLoading] = useState(true);
     const [userData, setUserData] = useState(null);
 
@@ -186,7 +136,6 @@ const UserMate = () => {
             const headers = functions.getJWT()
             const res = await axios.get(GET_FOLLOWERS_EXERCISES_STATUS, {headers: headers})
             const {data} = res;
-            // console.log(data)
             setUserData(data.followingUsersExerciseStatus)
         } catch (error) {
             console.error(error)
@@ -197,13 +146,12 @@ const UserMate = () => {
     useEffect(() => {
         getFollowersExercisesStatus().then()
     }, [])
-    // console.log(userData)
     return (
         <div style={{width: '390px'}}>
 
             <div style={{marginLeft: '30px', display: 'flex', justifyContent: 'space-between'}}>
                 <p>
-                    메이트들의 운동 현황
+                    메이트 팀원들의 운동 현황
                 </p>
                 <Link to={'/mate'} style={{textDecoration: 'none', color: 'black'}}>
                     <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>
