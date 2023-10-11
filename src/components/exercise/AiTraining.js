@@ -80,7 +80,7 @@ const ProgressBar = ({goal, label}) => {
                     </p>
                 </Progressbar>
             </MeterBar>
-            <button onClick={handleButtonClick}>+</button>
+            <button onClick={handleButtonClick} style={{border:'none', borderRadius:'50%', width:'30px', height:'30px'}}>+</button>
             <br/>
             <br/>
             <Button onClick={handleUpdateAttain}
@@ -106,7 +106,8 @@ function AiTraining() {
             <br/>
             {goal ?
                 <>
-                    <img src={`${flaskServer}/${label}`} alt={label}/>
+                    {/*<img src={`${flaskServer}/${label}`} alt={label}/>*/}
+                    <img src={process.env.PUBLIC_URL+'/squatPose.jpg'} alt={label} width={'300px'}/>
                     <ProgressBar goal={goal} label={label}/>
                 </>
                 :
