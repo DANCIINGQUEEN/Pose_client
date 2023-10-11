@@ -13,6 +13,7 @@ const Box=styled(Link)`
   border-radius: 16px;
   padding: 0 20px;
   background-color: ${ThemeColor.divColor};
+  //background-color: transparent;
   text-decoration: none;
   color: black;
 

@@ -152,7 +152,7 @@ function Home(props) {
             <StateOfMate/>
             <br/>
             <br/>
-            <HomeRanking/>
+            {/*<HomeRanking/>*/}
             <br/>
             <br/>
             <Link to={'/'}>
