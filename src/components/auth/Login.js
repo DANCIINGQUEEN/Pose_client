@@ -51,16 +51,23 @@ function Login(props) {
                 sessionStorage.setItem('jwt', response.data.token);
                 dispatch(login({token: response.data.token}));
             }
+        } catch (error) {
+            error.response && setErrorMessage(errorMsg[error.response.status] || "An error occurred")
+        } finally {
+            setIsLoading(false);
         }
-        catch (error) {
-            error.response&&setErrorMessage(errorMsg[error.response.status] || "An error occurred")
-        }
-        finally {setIsLoading(false);}
     };
 
     return (
         <Container>
             <h1>로그인</h1>
+            <div style={{border:'1px solid black', padding:'10px', borderRadius:'10px'}}>
+
+                <p>프로젝트 방문자를 위한 임시 계정</p>
+                <p>Email : 111@111.com</p>
+                <p>password : qwer</p>
+            </div>
+            <br/>
             <LoginForm>
                 <form onSubmit={setLogin}>
                     <Input type="email" placeholder='Email' onChange={handleFormChange}/>

@@ -12,7 +12,6 @@ import exerciseName from "../../../../config/exercise";
 const DoughnutBox = styled.div`
   width: 205px;
   height: 205px;
-    //background-color: ${ThemeColor.importantColor};
   margin: 15px 15px 15px 10px;
   display: flex;
   align-items: center;
@@ -24,7 +23,6 @@ const DoughnutBox = styled.div`
 const InfoBox = styled.div`
   display: flex;
   flex-direction: row;
-    //background-color: ${ThemeColor.divColor};
   width: 130px;
   height: 60px;
   border-radius: 16px;
@@ -130,7 +128,7 @@ const EachExercise = ({dDay, goal}) => {
         <Box>
             <Label>{exerciseName[label]}</Label>
             <div style={{display: 'flex', flexDirection: 'row'}}>
-                <ExerciseData data={percent} exercise='운동 1'/>
+                <ExerciseData data={percent} exercise={exerciseName[label]}/>
                 <div>
                     <InfoBox>
                         <DivStyle>
@@ -141,7 +139,9 @@ const EachExercise = ({dDay, goal}) => {
                     <InfoBox>
                         <DivStyle>
                             <PTitle>달성률</PTitle>
-                            <PContent>{Math.round(percent)}%</PContent>
+                            <PContent>
+                                {isNaN(percent) ? '0' : Math.round(percent)}%
+                            </PContent>
                         </DivStyle>
                         <DivStyle>
                             <PTitle>주기</PTitle>
