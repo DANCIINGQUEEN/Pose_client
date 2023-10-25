@@ -214,14 +214,14 @@ export const FollowingSetting = ({following}) => {
     )
 }
 const FFDiv = styled.div`
-  width: 270px;
+  width: 300px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: ${ThemeColor.containerColor};
   margin: 7px 0;
   border-radius: 16px;
-  padding: 0 20px;
+  padding: 0 10px;
   height: 60px;
 `
 const FFButton = styled.button`
