@@ -32,9 +32,9 @@ const AllPosts = () => {
 }
 
 function Community(props) {
-    const tab={
-        '게시글':<AllPosts/>,
-        '메이트 팀':<MateTeam/>
+    const tab = {
+        '게시글': <AllPosts/>,
+        '메이트 팀': <MateTeam/>
     }
     return (
         <Container>

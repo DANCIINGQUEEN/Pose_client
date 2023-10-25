@@ -7,7 +7,7 @@ import Exercise from "./Exercise";
 import Members from "./Members";
 import Chat from "./Chat";
 
-function TeamDetail(props) {
+function TeamDetail() {
     const location = useLocation()
     const page = location.state?.detailPage
     const name = location.state?.name

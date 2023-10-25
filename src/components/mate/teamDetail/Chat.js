@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Container, ThemeColor, UserBox, UserProfile} from "../../UI/UIPackage";
+import {Container, ThemeColor, UserBox, UserBoxSize, UserProfile} from "../../UI/UIPackage";
 import io from 'socket.io-client';
 import {CHATTING} from "../../../services/api";
 import {useSelector} from "react-redux";
@@ -64,7 +64,7 @@ const SendMessage = ({socket, room, setMessages}) => {
                 type='text'
                 ref={message}
             />
-            <button onClick={sendMessage}><FontAwesomeIcon icon={faArrowUp} /></button>
+            <button onClick={sendMessage}><FontAwesomeIcon icon={faArrowUp}/></button>
 
         </MessageInput>
     )
@@ -75,22 +75,17 @@ const OtherMessage = styled.div`
   flex-direction: column;
   margin-left: 20px;
   height: 70px;
+  
 
-  div {
-    display: flex;
-    flex-direction: row;
-
-    > :first-child {
-      margin-right: 5px;
-    }
-  }
-
-  .msg {
+  #otherMsg {
     background-color: ${ThemeColor.containerColor};
-    max-width: 200px;
     align-self: flex-start;
+    max-width: 200px;
+    //overflow-wrap: break-word;
+    word-wrap: normal;
     padding: 10px;
     margin-left: 20px;
+    margin-bottom: 10px;
     border-radius: 16px;
   }
 `
@@ -98,6 +93,7 @@ const MyMessage = styled.span`
   align-self: flex-end;
   background-color: ${ThemeColor.containerColor};
   max-width: 200px;
+  word-wrap: break-word;
   list-style-type: none;
   padding: 10px;
   margin-bottom: 10px;
@@ -123,11 +119,8 @@ const Messages = ({messages}) => {
                         <MyMessage>{msg.messageContent}</MyMessage>
                     ) : (
                         <OtherMessage>
-                            <div>
-                                <UserProfile text={msg.name} size={25}/>
-                                <span>{msg.name}</span>
-                            </div>
-                            <span className={'msg'}>{msg.messageContent}</span>
+                            <UserBox name={msg.name} size={UserBoxSize.small}/>
+                            <span id={'otherMsg'}>{msg.messageContent}</span>
                         </OtherMessage>
                     )}
                 </>

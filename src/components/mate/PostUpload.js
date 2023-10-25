@@ -94,11 +94,15 @@ function PostUpload(props) {
             await axios.post(UPLOAD_USER_POST, {
                 fileName: fileName,
                 content: content,
-            }, {headers: headers})
+            }, {
+                headers: headers
+            })
             await uploadImgToFirebase(file, fileName)
-        }catch (e) {
+        }
+        catch (e) {
             console.log(e)
-        }finally {
+        }
+        finally {
             setIsLoading(false)
             navigate(MATE)
         }

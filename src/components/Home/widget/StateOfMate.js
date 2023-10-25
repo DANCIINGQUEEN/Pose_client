@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ThemeColor, Scroll, LinkBox, Loading} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";

@@ -18,6 +18,7 @@ import {NavigationBar} from "./NavigationBar";
 import {PlusButton} from "./PlusButton";
 import {LinkBox} from "./LinkBox";
 import {TwoTabNav} from "./TwoTabNav";
+import {LogoutButton} from "./LogoutButton";
 
 
 export const rainbowAnimation = keyframes`
@@ -622,6 +623,7 @@ export {
     PlusButton,
     LinkBox,
     TwoTabNav,
+    LogoutButton,
     ThemeColor,
     UserBoxSize
 

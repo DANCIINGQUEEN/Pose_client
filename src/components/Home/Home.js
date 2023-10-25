@@ -9,7 +9,16 @@ import {GET_USER_FULL_INFO, ACCOUNT, INITIAL_GOAL, WISH_EXERCISE} from '../../se
 
 import {getUserFullInfo, logout} from "../../store/userState";
 
-import {Container, UserBox, NavigationBar, UserBoxSize, ThemeColor, Button, LinkBox} from '../UI/UIPackage';
+import {
+    Container,
+    UserBox,
+    NavigationBar,
+    UserBoxSize,
+    ThemeColor,
+    Button,
+    LinkBox,
+    LogoutButton
+} from '../UI/UIPackage';
 import {functions} from "../../utils/Functions";
 
 import CurrentExercise from "./widget/currentExercise/CurrentExercise";
@@ -152,14 +161,10 @@ function Home(props) {
             <StateOfMate/>
             <br/>
             <br/>
-            {/*<HomeRanking/>*/}
             <br/>
             <br/>
-            <Link to={'/'}>
-                <Button onClick={()=>dispatch(logout())}>
-                    로그아웃
-                </Button>
-            </Link>
+
+            <LogoutButton/>
             <br/>
             <NavigationBar/>
         </Container>

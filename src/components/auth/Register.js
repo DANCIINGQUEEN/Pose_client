@@ -191,7 +191,6 @@ const SubmitButton=({form})=>{
 
 
     const handleSignUpButtonClick = async () => {
-        // console.log(form)
         setIsSignUpLoading(true)
         try {
             await axios.post(REGISTER_SIMPLE_USER, form)
@@ -234,7 +233,6 @@ const SubmitButton=({form})=>{
 function Register(props) {
     const [form, setForm] = useState({name: "", email: "", password: ""});
 
-    const handleFormChange = e => setForm({...form, [e.target.name]: e.target.value})
 
     return (
         <Container>

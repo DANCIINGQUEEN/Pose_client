@@ -12,7 +12,7 @@ import {
     ThemeColor,
     UserBoxSize,
     AccountInfoBox,
-    rainbowAnimation, Modal
+    rainbowAnimation, Modal, LogoutButton
 } from "../components/UI/UIPackage";
 import {USER_SETTING} from '../services/api'
 import {getUserFullInfo, logout} from "../store/userState";
@@ -56,7 +56,6 @@ const RainbowDiv = styled.div`
 `;
 
 function Account(props) {
-    const dispatch = useDispatch();
     const {
         name,
         email,
@@ -70,11 +69,6 @@ function Account(props) {
         following,
     } = useSelector((state) => state);
 
-    async function setLogout() {
-        dispatch(
-            logout()
-        )
-    }
 
     return (
         <Container>
@@ -91,15 +85,13 @@ function Account(props) {
                 padding: '20px'
 
             }}>
-                <div style={{width: '70%', display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{width: '330px', display: 'flex', flexDirection:'column',alignItems: 'center'}}>
 
+
+                    <br/>
                     {name &&
                         <UserBox name={name} email={email} size={UserBoxSize.large}/>
                     }
-                    <Link to={USER_SETTING} style={{textDecoration: 'none', color: 'black'}}>
-
-                        <FontAwesomeIcon icon={faGear} spin style={{fontSize: '25px', marginTop: '10px'}}/>
-                    </Link>
                 </div>
 
                 <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
@@ -127,7 +119,7 @@ function Account(props) {
                 </RainbowDiv>
                 <RainbowDiv>
                     <p>해결하고싶은 고민</p>
-                    {wishList.length===0 &&<p style={{fontSize: '15px'}}>등록되지 않음</p>}
+                    {wishList.length === 0 && <p style={{fontSize: '15px'}}>등록되지 않음</p>}
                     {
                         wishList.map((item, index) => {
                                 return (
@@ -141,11 +133,17 @@ function Account(props) {
 
 
             </div>
-            <Link to={'/'}>
-                <Button onClick={setLogout}>
-                    로그아웃
-                </Button>
+            <div style={{display:'flex',width:'110px', flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
+
+            <p>계정 설정</p>
+            <Link to={USER_SETTING} style={{textDecoration: 'none', color: 'black'}}>
+
+                <FontAwesomeIcon icon={faGear} spin style={{fontSize: '25px', marginTop: '10px'}}/>
             </Link>
+            </div>
+            <br/>
+
+            <LogoutButton/>
 
             <NavigationBar/>
 

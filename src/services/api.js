@@ -2,10 +2,6 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
     ? 'https://competitive-leticia-danciingqueen.koyeb.app' // 배포된 서버 주소
     : 'http://localhost:3001' // 로컬 서버 주소
 
-const SOCKET_API_URL= process.env.NODE_ENV === 'production'?
-    'https://competitive-leticia-danciingqueen.koyeb.app' // 배포된 서버 주소
-    : 'http://localhost:3001' // 로컬 서버 주소
-
 const API={
     //서버통신
     //로그인
@@ -106,7 +102,7 @@ const API={
     UPDATE_INFORMATION_PUBLIC:`${API_BASE_URL}/user/updateInformationPublic`,
 
     //채팅
-    CHATTING:`${SOCKET_API_URL}`,
+    CHATTING:`${API_BASE_URL}`,
 
 
 
