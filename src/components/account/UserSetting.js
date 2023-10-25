@@ -86,7 +86,7 @@ function UserSetting(props) {
                 padding: '20px',
             }}>
 
-                <Modal width={'280px'}
+                <Modal width={'300px'}
                        button={<UserProfileSetting email={email} name={name}/>}
                        render={<ChangeUserProfile email={email} name={name}/>}/>
                 <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>

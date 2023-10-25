@@ -47,11 +47,22 @@ export const rainbowAnimation = keyframes`
     border-color: red;
   }
 `;
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  
 `
 export const Box = styled.div`
   background-color: ${ThemeColor.containerColor};
@@ -62,6 +73,8 @@ export const Box = styled.div`
   align-content: center;
   margin-bottom: 37px;
   width: 370px;
+  animation: ${fadeIn} 0.7s ease;
+  
 `
 export const Input = styled.input`
   width: 100%;
@@ -93,6 +106,8 @@ export const Button = styled.button`
   box-sizing: border-box;
   margin-bottom: 10px;
   font-size: 16px;
+  animation: ${fadeIn} 0.7s ease;
+  
 
   &:focus {
     outline: none;
@@ -109,6 +124,8 @@ export const AccountInfoBox = styled.div`
   align-content: center;
   justify-content: center;
   margin: 10px;
+  animation: ${fadeIn} 0.7s ease;
+  
 
   > :nth-child(1) {
     margin: 0;
@@ -163,6 +180,8 @@ export const Hashtag = styled.span`
 `
 export const TeamSummaryBox = styled(Box)`
   width: 330px;
+  animation: ${fadeIn} 0.7s ease;
+  
 
   h2, h3 {
     margin-left: 20px;
@@ -324,6 +343,8 @@ export const PostFeedback = styled.div`
 
 `
 export const PostContent = styled.div`
+  animation: ${fadeIn} 0.7s ease;
+  
   > :first-child {
     font-weight: bold;
     font-size: 17px;
@@ -430,6 +451,8 @@ export const NoticeBox = styled.div`
   //background-color: ${ThemeColor.containerColor};
   margin-bottom: 10px;
   border-radius: 16px;
+  animation: ${fadeIn} 0.7s ease;
+  
 
 
   main {

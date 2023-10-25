@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
-import {MATE, GET_FOLLOWERS_EXERCISES_STATUS, USER_INFORMATION} from "../../../services/api";
+import {MATE, GET_FOLLOWERS_EXERCISES_STATUS} from "../../../services/api";
 import {functions} from "../../../utils/Functions";
 import axios from "axios";
 
@@ -14,18 +14,23 @@ const SquareBox = ({data}) => {
 
     const sliceData = data => data.length <= 4 ? data : data.slice(0, 4)
     const isDataExist = data => data ? sliceData(data) : null
-    const makeChartData=data=>{
-        let label=[], datasets=[], backgroundDatasets=[]
-        const chartColor=['hotpink', 'blue', 'green', 'yellow']
-        const backgroundColor=['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 153, 0.2)', 'rgba(0, 64, 0, 0.2)', 'rgba(255, 255, 0, 0.2)']
+    const makeChartData = data => {
+        let label = [], datasets = [], backgroundDatasets = []
+        const chartColor = ['hotpink', 'blue', 'green', 'yellow']
+        const backgroundColor = [
+            'rgba(204, 51, 128, 0.2)',
+            'rgba(0, 0, 153, 0.2)',
+            'rgba(0, 64, 0, 0.2)',
+            'rgba(255, 255, 0, 0.2)'
+        ]
         isDataExist(data)?.map((data, index) => {
             label.push(data.label)
-            const percent=data.attain/data.number*100
-            const dataset={
-                data:[percent, 100-percent],
+            const percent = data.attain / data.number * 100
+            const dataset = {
+                data: [percent, 100 - percent],
                 backgroundColor: [chartColor[index], 'rgba(0, 0, 0, 0)']
             }
-            const backgroundDataset= {
+            const backgroundDataset = {
                 data: [100, 0],
                 backgroundColor: [backgroundColor[index], 'rgba(0, 0, 0, 0)']
             }
@@ -36,13 +41,12 @@ const SquareBox = ({data}) => {
             labels: label,
             datasets: datasets
         }
-        const backgroundData={
+        const backgroundData = {
             labels: label,
             datasets: backgroundDatasets
         }
         return {chartData, backgroundData}
     }
-    // console.log(makeChartData(data).chartData)
 
 
     const options = {

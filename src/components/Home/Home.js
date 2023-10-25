@@ -86,59 +86,35 @@ const DecimalDay = () => {
 
 function Home(props) {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const {name, email} = useSelector((state) => state)
 
-    const getUserInfo = async () => {
-        try {
-            const headers = functions.getJWT()
-            const res = await axios.get(GET_USER_FULL_INFO, {headers: headers})
-            const {
-                _id,
-                name,
-                email,
-                age,
-                area,
-                weight,
-                height,
-                exercise,
-                wishList,
-                followers,
-                following,
-                goal,
-                setting
-            } = res.data;
-            const followersList = followers.length > 0 ? followers : null
-            const followingList = following.length > 0 ? following : null
-            const dDay = goal ? goal.dDay : null;
-            const goals = goal ? goal.goals : null;
-            dispatch(
-                getUserFullInfo({
-                    _id: _id,
-                    name: name,
-                    email: email,
-                    age: age,
-                    area: area,
-                    weight: weight,
-                    height: height,
-                    exercise: exercise,
-                    wishList: wishList,
-                    followers: followersList,
-                    following: followingList,
-                    dDay: dDay,
-                    goals: goals,
-                    setting: setting,
-                })
-            )
-            console.log(res.data)
-        } catch (error) {
-            console.error(error)
-            functions.handleJWTError(error, dispatch, navigate)
-        }
-    }
-    useEffect(() => {
-        getUserInfo().then()
-    }, [name])
+    // const getUserInfo = async () => {
+    //     try {
+    //         const headers = functions.getJWT()
+    //         const res = await axios.get(GET_USER_FULL_INFO, {headers: headers})
+    //
+    //         const {followers, following, goal, setting, ...userData} = res.data;
+    //         const followersList = followers.length > 0 ? followers : null;
+    //         const followingList = following.length > 0 ? following : null;
+    //         const {dDay, goals} = goal || {};
+    //
+    //         dispatch(getUserFullInfo({
+    //             ...userData,
+    //             followers: followersList,
+    //             following: followingList,
+    //             dDay,
+    //             goals,
+    //             setting
+    //         }));
+    //         // console.log(res.data)
+    //     } catch (error) {
+    //         console.error(error)
+    //         functions.handleJWTError(error, dispatch, navigate)
+    //     }
+    // }
+    // useEffect(() => {
+    //     getUserInfo()
+    // }, [])
 
     return (
         <Container>

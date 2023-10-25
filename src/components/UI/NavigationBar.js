@@ -53,7 +53,7 @@ const NavButton = styled.button`
     font-size: 0.6rem;
   }
 
- 
+
 `;
 
 export const NavigationBar = () => {
@@ -61,13 +61,13 @@ export const NavigationBar = () => {
     const activeNav = useSelector((state) => state.activeNav);
     const dispatch = useDispatch();
 
-    const handleNavClick = link => dispatch(navClick({ activeNav: link }));
+    const handleNavClick = link => dispatch(navClick({activeNav: link}));
 
     const navButtons = [
-        { link: goals ? SELECTED_EXERCISE : WISH_EXERCISE, icon: faDumbbell, text: '운동' },
-        { link: '/', icon: faHouse, text: '홈' },
-        { link: MATE, icon: faPeopleGroup, text: '메이트' },
-        { link: ACCOUNT, icon: faUser, text: '계정' },
+        {link: goals ? SELECTED_EXERCISE : WISH_EXERCISE, icon: faDumbbell, text: '운동'},
+        {link: '/', icon: faHouse, text: '홈'},
+        {link: MATE, icon: faPeopleGroup, text: '메이트'},
+        {link: ACCOUNT, icon: faUser, text: '계정'},
     ];
 
     return (
@@ -76,11 +76,10 @@ export const NavigationBar = () => {
                 {navButtons.map(button => (
                     <NavButton key={button.link}>
                         <Link onClick={() => handleNavClick(button.link)}
-                            style={{color: activeNav === button.link ? 'black' : 'gray'}}
-                            className={'navLink'}
-                            to={button.link}
-                        >
-                            <FontAwesomeIcon className={'icon'} icon={button.icon} />
+                              style={{color: activeNav === button.link ? 'black' : 'gray'}}
+                              className={'navLink'}
+                              to={button.link}>
+                            <FontAwesomeIcon className={'icon'} icon={button.icon}/>
                             <span>{button.text}</span>
                         </Link>
                     </NavButton>
