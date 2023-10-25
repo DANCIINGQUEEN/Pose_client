@@ -121,7 +121,7 @@ function UserSetting(props) {
                         )
                     }
                 </RainbowDiv>
-                <Modal width={'75px'} button={<WishListSettingButton/>}
+                <Modal width={'102px'} button={<WishListSettingButton/>}
                        render={<ChangeWishList wishList={wishList}/>}/>
                 <br/>
             </div>

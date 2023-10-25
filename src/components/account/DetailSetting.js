@@ -663,7 +663,9 @@ export const ChangeExercise = () => {
 }
 
 export const WishListSettingButton = () => {
-    return (<span style={{fontWeight: 'bold'}}>고민 수정</span>)
+    return (
+        <span id={'wishList'}>고민 수정</span>
+    )
 }
 
 export const ChangeWishList = ({wishList}) => {

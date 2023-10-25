@@ -48,6 +48,15 @@ export const ModalButton = styled.button`
   :hover{
     background-color: ${ThemeColor.primaryColor};
   }
+  #wishList{
+    font-size: 20px;
+    font-weight: bold;
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
+    padding:2px;
+    
+  }
 
   p:first-child {
     font-weight: bold;
