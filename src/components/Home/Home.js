@@ -1,31 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
-import axios from "axios";
+import {Link,} from "react-router-dom";
 
 
-import {GET_USER_FULL_INFO, ACCOUNT, INITIAL_GOAL, WISH_EXERCISE} from '../../services/api'
+import {ACCOUNT, WISH_EXERCISE} from '../../services/api'
 
-
-import {getUserFullInfo, logout} from "../../store/userState";
 
 import {
     Container,
     UserBox,
     NavigationBar,
     UserBoxSize,
-    ThemeColor,
-    Button,
     LinkBox,
     LogoutButton
 } from '../UI/UIPackage';
-import {functions} from "../../utils/Functions";
 
 import CurrentExercise from "./widget/currentExercise/CurrentExercise";
-import HomeRanking from "./widget/HomeRanking";
 import StateOfMate from "./widget/StateOfMate";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import MateTeamExerciseState from "./widget/MateTeamExerciseState";
 
 
 const DecimalDay = () => {
@@ -61,18 +53,17 @@ const DecimalDay = () => {
     };
 
     useEffect(() => {
-        const remainTime=calculateRemainingTime();
         const intervalId = setInterval(calculateRemainingTime, 1000);
         return () => clearInterval(intervalId);
     }, [dDay]);
     return (
-        <>  
+        <>
             {dDay ? (
                 <>
                     {goalMonth && goalDay && <h3>{`${goalMonth}월 ${goalDay}일 까지`}</h3>}
                     {dDay && <div>{remainingTime}</div>}
                     <br/>
-                    {initGoalExecuted&& <LinkBox url={WISH_EXERCISE} content={'운동 선택하러 가기'}/>}
+                    {initGoalExecuted && <LinkBox url={WISH_EXERCISE} content={'운동 선택하러 가기'}/>}
                 </>
             ) : (
                 <>
@@ -85,36 +76,8 @@ const DecimalDay = () => {
 }
 
 function Home(props) {
-    const dispatch = useDispatch();
     const {name, email} = useSelector((state) => state)
 
-    // const getUserInfo = async () => {
-    //     try {
-    //         const headers = functions.getJWT()
-    //         const res = await axios.get(GET_USER_FULL_INFO, {headers: headers})
-    //
-    //         const {followers, following, goal, setting, ...userData} = res.data;
-    //         const followersList = followers.length > 0 ? followers : null;
-    //         const followingList = following.length > 0 ? following : null;
-    //         const {dDay, goals} = goal || {};
-    //
-    //         dispatch(getUserFullInfo({
-    //             ...userData,
-    //             followers: followersList,
-    //             following: followingList,
-    //             dDay,
-    //             goals,
-    //             setting
-    //         }));
-    //         // console.log(res.data)
-    //     } catch (error) {
-    //         console.error(error)
-    //         functions.handleJWTError(error, dispatch, navigate)
-    //     }
-    // }
-    // useEffect(() => {
-    //     getUserInfo()
-    // }, [])
 
     return (
         <Container>
@@ -122,21 +85,18 @@ function Home(props) {
             <DecimalDay/>
             <br/>
             <br/>
-            {name &&
-                <Link to={ACCOUNT} style={{textDecoration: 'none', color: 'black'}}>
-                    <div>
-                        <UserBox name={name} email={email} size={UserBoxSize.large}/>
-                       </div>
-                </Link>
-            }
+            <Link to={ACCOUNT} style={{textDecoration: 'none', color: 'black'}}>
+                    <UserBox name={name} email={email} size={UserBoxSize.large}/>
+            </Link>
             <br/>
             <br/>
-            <CurrentExercise name={name}/>
+            <CurrentExercise/>
             <br/>
             <br/>
             <StateOfMate/>
             <br/>
             <br/>
+            <MateTeamExerciseState/>
             <br/>
             <br/>
 

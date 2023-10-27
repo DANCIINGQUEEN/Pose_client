@@ -1,13 +1,11 @@
 import React from 'react';
-import {Box, Container, ThemeColor, NavigationBar, LinkBox} from "../../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import styled from "styled-components";
-import {Link, useLocation} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
-import {CURRENT, WISH_EXERCISE} from "../../../../services/api";
+
+import {Box, Container, NavigationBar, LinkBox} from "../../../UI/UIPackage";
 import exerciseName from "../../../../config/exercise";
+import {WISH_EXERCISE} from "../../../../services/api";
 
 const DoughnutBox = styled.div`
   width: 205px;

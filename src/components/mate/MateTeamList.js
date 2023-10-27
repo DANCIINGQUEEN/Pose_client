@@ -1,30 +1,50 @@
 import React, {useEffect, useState} from 'react';
 import {functions} from "../../utils/Functions";
 import axios from "axios";
-import {GET_ALL_TEAMS, JOIN_TEAM} from "../../services/api";
+import {ENTER_TEAM, GET_ALL_TEAMS, JOIN_TEAM} from "../../services/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {Button, Loading, TeamSummaryBox, Hashtag, Container} from "../UI/UIPackage";
+import {useNavigate} from "react-router-dom";
 
-function MateTeamList() {
-    const [teams, setTeams] = useState()
-    const [isLoading, setIsLoading] = useState(true)
-    const getTeams = async () => {
-        const headers = functions.getJWT()
-        axios.get(GET_ALL_TEAMS, {headers})
-            .then(res => setTeams(res.data))
-            .catch(err => console.log(err))
-            .finally(() => setIsLoading(false))
-    }
+const JoinButton=(teamId)=>{
+    const [isLoading, setIsLoading] = useState(false)
+    const [joinedMsg, setJoinedMsg] = useState()
+
+    const navigate = useNavigate()
+
     const joinTeam = async (teamId) => {
         const headers = functions.getJWT()
         setIsLoading(true)
-        axios.post(JOIN_TEAM, {teamId: teamId}, {headers: headers})
+        axios.post(JOIN_TEAM, {teamId}, {headers: headers})
+            .then(res => setJoinedMsg(res.data))
             .catch(err => console.log(err))
             .finally(() => {
                 setIsLoading(false)
             })
     }
+    const handleTeamClick = (teamId) => {
+        navigate(`${ENTER_TEAM}/${teamId.teamId}`)
+    }
+    return(
+        <>
+        <Button onClick={() => joinTeam(teamId)} style={{display:joinedMsg?'none':'block'}}>
+            {isLoading ? <Loading/> : <span>가입하기</span>}
+        </Button>
+        <Button onClick={() => handleTeamClick(teamId)} style={{display:joinedMsg?'block':'none'}}>입장</Button>
+        </>
+    )
+}
+
+function MateTeamList() {
+    const [teams, setTeams] = useState()
+    const getTeams = async () => {
+        const headers = functions.getJWT()
+        axios.get(GET_ALL_TEAMS, {headers})
+            .then(res => setTeams(res.data))
+            .catch(err => console.log(err))
+    }
+
     useEffect(() => {
         getTeams().then()
     }, [])
@@ -44,9 +64,10 @@ function MateTeamList() {
                             <FontAwesomeIcon icon={faUser}/>
                             <span>{team.members}</span>
                         </div>
-                        <Button onClick={() => joinTeam(team._id)}>
-                            {isLoading ? <Loading/> : '가입하기'}
-                        </Button>
+                        {/*<Button onClick={() => joinTeam(team._id)}>*/}
+                        {/*    {isLoading ? <Loading/> : '가입하기'}*/}
+                        {/*</Button>*/}
+                        <JoinButton teamId={team._id}/>
                     </div>
                 </TeamSummaryBox>
             ))}

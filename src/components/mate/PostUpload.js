@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import axios from "axios";
-import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {storage} from '../../services/firebase'
 import {ref, uploadBytes} from 'firebase/storage'
@@ -70,9 +69,7 @@ function PostUpload(props) {
     const [content, setContent] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const email=useSelector(state=>state.email)
     const navigate = useNavigate();
-    const strippedEmail = email.substring(0, email.length - 4);
 
     const handleRemove = () => {
         setFile(null);

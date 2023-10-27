@@ -89,7 +89,7 @@ const SquareBox = ({data}) => {
         <div style={{
             width: "123px",
             height: "123px",
-            backgroundColor: `${ThemeColor.importantColor}`,
+            backgroundColor: `${ThemeColor.containerColor}`,
             margin: "15px",
             marginLeft: '10px',
             display: "flex",
@@ -98,12 +98,18 @@ const SquareBox = ({data}) => {
             fontSize: "30px",
             borderRadius: '16px',
         }}>
-            <span style={{position: 'relative', zIndex: '1', left: '150px'}}>
-                {<Doughnut data={makeChartData(data).backgroundData} options={backgroundOptions}/>}
-            </span>
-            <span style={{position: 'relative', zIndex: '2', left: '-150px'}}>
-                {<Doughnut data={makeChartData(data).chartData} options={options}/>}
-            </span>
+            {data ?
+                <>
+                    <span style={{position: 'relative', zIndex: '1', left: '150px'}}>
+                        {<Doughnut data={makeChartData(data).backgroundData} options={backgroundOptions}/>}
+                    </span>
+                            <span style={{position: 'relative', zIndex: '2', left: '-150px'}}>
+                        {<Doughnut data={makeChartData(data).chartData} options={options}/>}
+                    </span>
+                </>
+                :
+                <p style={{fontSize:'15px'}}>정보가 없습니다</p>
+            }
         </div>
     );
 };
@@ -132,15 +138,14 @@ const Carousel = ({componentToRender, data}) => {
 
 const UserMate = () => {
     const [isLoading, setIsLoading] = useState(true);
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState();
 
 
     const getFollowersExercisesStatus = async () => {
         try {
             const headers = functions.getJWT()
             const res = await axios.get(GET_FOLLOWERS_EXERCISES_STATUS, {headers: headers})
-            const {data} = res;
-            setUserData(data.followingUsersExerciseStatus)
+            setUserData(res.data.followingUsersExerciseStatus)
         } catch (error) {
             console.error(error)
         } finally {
@@ -150,12 +155,13 @@ const UserMate = () => {
     useEffect(() => {
         getFollowersExercisesStatus().then()
     }, [])
+    // console.log(userData)
     return (
         <div style={{width: '390px'}}>
 
             <div style={{marginLeft: '30px', display: 'flex', justifyContent: 'space-between'}}>
                 <p>
-                    메이트 팀원들의 운동 현황
+                    팔로잉한 유저들의 운동 현황
                 </p>
                 <Link to={'/mate'} style={{textDecoration: 'none', color: 'black'}}>
                     <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>

@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import styled, {keyframes} from "styled-components";
+import React from 'react';
+import {useSelector} from "react-redux";
+import styled from "styled-components";
 import {Link} from "react-router-dom";
 
 
 import {
-    Button,
     Container,
     NavigationBar,
     UserBox,
@@ -15,13 +14,10 @@ import {
     rainbowAnimation, Modal, LogoutButton
 } from "../components/UI/UIPackage";
 import {USER_SETTING} from '../services/api'
-import {getUserFullInfo, logout} from "../store/userState";
 
 //아이콘
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGear} from '@fortawesome/free-solid-svg-icons';
-import axios from "axios";
-import {API, GET_USER_FULL_INFO} from "../services/api";
 import {
     AgeSetting,
     AreaSetting, ExerciseSetting,

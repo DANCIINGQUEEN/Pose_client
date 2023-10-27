@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Container, NavigationBar, TwoTabNav, PlusButton} from "../components/UI/UIPackage";
 import {useSelector} from "react-redux";
 import RecommendUser from "../components/mate/RecommendUser";
 import {RECOMMEND_USER, UPLOAD_POST, MY_POSTS, GET_POSTS} from '../services/api';
 
-import styled from 'styled-components';
 import Posts from "../components/mate/Posts";
 import MateTeam from "../components/mate/MateTeam";
 

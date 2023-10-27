@@ -146,7 +146,9 @@ export const Scroll = styled.div`
   display: flex;
   flex-direction: row;
   overflow-y: hidden;
-  
+  animation: ${fadeIn} 0.7s ease;
+
+
   &::-webkit-scrollbar {
     display:none;
   }
@@ -222,6 +224,8 @@ export const TeamInfoBox=styled.button`
   margin-bottom: 20px;
   width: 330px;
   padding-bottom: 10px;
+  animation: ${fadeIn} 0.7s ease;
+
 
   :hover {
     background-color: ${ThemeColor.divColor};
@@ -306,6 +310,8 @@ export const Img = styled.img`
   height: 340px;
   object-fit: cover;
   border-radius: 16px;
+  animation: ${fadeIn} 0.7s ease;
+  
 `
 export const PostHeader = styled.div`
   width: 330px;
@@ -367,6 +373,8 @@ export const FeedbackList = styled.div`
   align-items: center;
   border-radius: 16px;
   background-color: ${ThemeColor.divColor};
+  animation: ${fadeIn} 0.7s ease;
+  
 
   .close{
     border:none;

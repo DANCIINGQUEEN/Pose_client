@@ -8,6 +8,7 @@ const API={
     LOGIN: `${API_BASE_URL}/user/login`,
     GET_USER_FULL_INFO: `${API_BASE_URL}/user/getUserFullInfo`,
     GET_FOLLOWERS_EXERCISES_STATUS: `${API_BASE_URL}/user/getFollowersExercisesStatus`,
+    GET_JOINED_TEAM_INFO: `${API_BASE_URL}/team/getJoinedTeamInfo`,
 
     //회원가입
     SEND_VERIFY_CODE: `${API_BASE_URL}/user/sendVerificationCode`,
@@ -71,6 +72,8 @@ const API={
     DELETE_TEAM_FREE_BOARD_COMMENT: `${API_BASE_URL}/team/deleteTeamBoardComment`,
     //팀 회원 목록
     GET_TEAM_MEMBERS: `${API_BASE_URL}/team/getTeamMembers`,
+    //팀 회원 운동상태
+    GET_TEAM_MEMBERS_EXERCISE_STATUS: `${API_BASE_URL}/team/getTeamMembersExerciseStatus`,
 
     //유저 팔로우
     FOLLOW_USER: `${API_BASE_URL}/user/followUser`,

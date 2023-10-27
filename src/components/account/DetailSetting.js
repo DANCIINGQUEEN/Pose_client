@@ -12,7 +12,6 @@ import {
     UPDATE_PROFILE,
     UPDATE_INFORMATION,
     GET_UNFOLLOW,
-    CHANGE_INFORMATION_PUBLIC,
     UPDATE_INFORMATION_PUBLIC
 } from "../../services/api";
 import {
@@ -26,7 +25,6 @@ import {
     updateProfile,
     updateWeight,
     updateWishList,
-    updateInformationPublic,
     updateItemPublic
 } from "../../store/userState";
 import {ButtonGroup} from "../auth/UserDetail3";

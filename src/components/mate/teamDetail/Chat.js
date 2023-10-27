@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Container, ThemeColor, UserBox, UserBoxSize, UserProfile} from "../../UI/UIPackage";
+import {Container, fadeIn, ThemeColor, UserBox, UserBoxSize, UserProfile} from "../../UI/UIPackage";
 import io from 'socket.io-client';
 import {CHATTING} from "../../../services/api";
 import {useSelector} from "react-redux";
@@ -75,6 +75,8 @@ const OtherMessage = styled.div`
   flex-direction: column;
   margin-left: 20px;
   height: 70px;
+  animation: ${fadeIn} 0.7s ease;
+  
   
 
   #otherMsg {
@@ -99,6 +101,8 @@ const MyMessage = styled.span`
   margin-bottom: 10px;
   margin-right: 20px;
   border-radius: 16px;
+  animation: ${fadeIn} 0.7s ease;
+  
 
 `
 

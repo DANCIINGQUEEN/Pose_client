@@ -8,10 +8,12 @@ import Members from "./Members";
 import Chat from "./Chat";
 
 function TeamDetail() {
-    const location = useLocation()
-    const page = location.state?.detailPage
-    const name = location.state?.name
-    const desc = location.state?.desc
+    // const page = location.state?.detailPage
+    // const name = location.state?.name
+    // const desc = location.state?.desc
+    const { state } = useLocation();
+    const { detailPage, name, desc } = state || {};
+    // const {page, name, desc} = location?.state
     const detailSwitch = {
         TEAM_NOTICE: <Notice/>,
         TEAM_BOARD: <Board/>,
@@ -23,7 +25,7 @@ function TeamDetail() {
         <Container>
             <h1>{name}</h1>
             <h3 style={{marginTop: '0px', maxWidth:'300px'}}>{desc}</h3>
-            {detailSwitch[page]}
+            {detailSwitch[detailPage]}
         </Container>
     );
 }

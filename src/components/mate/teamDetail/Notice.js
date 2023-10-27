@@ -1,14 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
     Button,
-    Container, HorizonLine,
+    HorizonLine,
     Input,
     Loading,
     ModalWrapper,
     NoticeBox,
     UserBox,
     UserBoxSize,
-    UserProfile
 } from "../../UI/UIPackage";
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
@@ -16,7 +15,7 @@ import {functions} from "../../../utils/Functions";
 import {POST_TEAM_NOTICE, GET_TEAM_NOTICE, DELETE_TEAM_NOTICE, UPDATE_TEAM_NOTICE} from "../../../services/api";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEllipsis, faEllipsisVertical} from "@fortawesome/free-solid-svg-icons";
+import {faEllipsisVertical} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
 
 
@@ -76,8 +75,6 @@ const StyledSpan = styled.span`margin: 5px 180px 5px 2px;`;
 
 const UpdateNotice = ({notice, teamId, setIsUpdateButtonClicked, closeModal}) => {
     const [newNotice, setNewNotice] = useState({title: "", content: ""})
-    const isUpdated = (notice.noticeTitle === newNotice.title || notice.noticeContent === newNotice.content)
-    // console.log(isUpdated)
     const handleNoticeChange = e => setNewNotice({...newNotice, [e.target.name]: e.target.value})
 
     const updateNotice = async () => {
@@ -166,7 +163,7 @@ const NoticeList = ({teamId}) => {
     }
     useEffect(() => {
         getTeamNotice().then()
-    }, [])
+    }, [notices])
 
     return (
         <>

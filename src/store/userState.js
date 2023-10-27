@@ -18,9 +18,8 @@ const initialState = {
     followingNames:null,
     dDay: null,
     goals: null,
-    activeNav:'home',
+    activeNav:'/',
     setting: null,
-
 }
 
 export const authSlice = createSlice({
@@ -32,12 +31,10 @@ export const authSlice = createSlice({
         },
         login: (state, action) => {
             state.token = action.payload.token
-            // console.log('login success!')
         },
         logout: (state) => {
             sessionStorage.removeItem('jwt');
             Object.assign(state, initialState);
-            // console.log('logout success!')
 
         },
         getUser: (state, action) => {
@@ -91,7 +88,6 @@ export const authSlice = createSlice({
             const {dDay, goals} = action.payload;
             state.dDay = dDay;
             state.goals = goals;
-            // console.log('putGoals success!')
         },
         updateAttain: (state, action) => {
             const {label, attain} = action.payload;
@@ -105,19 +101,15 @@ export const authSlice = createSlice({
                 return goal;
             });
 
-            // 새로운 goals 배열로 상태를 업데이트
             state.goals = goals;
-            // console.log(state.goals)
         },
         putFollowerNames: (state, action) => {
             const {followerNames} = action.payload;
             state.followerNames = followerNames;
-            // console.log('hello',followerNames,state.followerNames)
         },
         putFollowingNames: (state, action) => {
             const {followingNames} = action.payload;
             state.followingNames = followingNames;
-            // console.log('putFollowingNames success!', state.followingNames)
         },
         follow_user: (state, action) => {
             const {userIdToFollow} = action.payload;

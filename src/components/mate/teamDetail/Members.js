@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Container, Loading, UserBox, UserBoxSize} from "../../UI/UIPackage";
+import {Container, fadeIn, UserBox, UserBoxSize} from "../../UI/UIPackage";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 
@@ -12,6 +12,8 @@ const Member = styled.main`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  animation: ${fadeIn} 0.7s ease;
+
 
   > :nth-child(n) {
     min-width: 150px;
@@ -23,7 +25,6 @@ const Member = styled.main`
 
 function Members(props) {
     const [members, setMembers] = useState()
-    const [isLoading, setIsLoading] = useState(true)
     const location = useLocation()
     const teamId = location.pathname.split('/')[2]
 
@@ -31,12 +32,11 @@ function Members(props) {
         await axios.get(`${GET_TEAM_MEMBERS}/${teamId}`)
             .then(res => setMembers(res.data))
             .catch(err => console.log(err))
-            .finally(() => setIsLoading(false))
     }
     useEffect(() => {
         getTeamMembers().then()
     }, [])
-    console.log(members?.members)
+
     return (
         <Container>
             <h2>방장</h2>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Scroll, ThemeColor, LinkBox} from "../../../UI/UIPackage";
+import {Scroll, ThemeColor, LinkBox, fadeIn} from "../../../UI/UIPackage";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import {Doughnut} from "react-chartjs-2";
 import {CURRENT, MATE, WISH_EXERCISE} from "../../../../services/api";
 import exerciseName from "../../../../config/exercise";
+import styled from "styled-components";
 
 
 const RecBox = ({data}) => {
@@ -72,7 +73,7 @@ const RecBox = ({data}) => {
         <div style={{
             width: "123px",
             height: "123px",
-            backgroundColor: `${ThemeColor.importantColor}`,
+            backgroundColor: `${ThemeColor.containerColor}`,
             margin: "15px",
             marginLeft: '10px',
             display: "flex",
@@ -90,24 +91,28 @@ const RecBox = ({data}) => {
         </div>
     );
 };
+const CarouselBox=styled.div`
+  animation: ${fadeIn} 0.7s ease;
+  .exerciseLabel {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //border: 1px solid black;
+    margin-bottom: -10px;
+    font-weight:bold;
+    font-size: 13px;
+  }
+`
 
 const Carousel = ({componentToRender, data}) => {
     return (
         <Scroll>
             {Object.values(data).map((data, index) => (
-                <div key={index}>
-                    <span style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: '-15px',
-                        fontWeight: 'bold',
-                        fontSize: '13px',
-                    }}
-                    >{exerciseName[data.label]}
-                        </span>
+                <CarouselBox key={index}>
+                    <span className={'exerciseLabel'}>{exerciseName[data.label]}</span>
                     {React.cloneElement(componentToRender, {data: data})}
-                </div>
+                </CarouselBox>
             ))}
         </Scroll>
     )

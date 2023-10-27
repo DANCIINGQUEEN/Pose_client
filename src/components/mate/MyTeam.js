@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
-import {Button, Container, PlusButton, TeamInfoBox} from "../UI/UIPackage";
+import {Button, Container, TeamInfoBox} from "../UI/UIPackage";
 import axios from "axios";
 import {GET_TEAM_INFO, QUIT_TEAM, MATE, TEAM_DETAIL, ENTER_TEAM} from "../../services/api";
 import {functions} from "../../utils/Functions";
@@ -41,7 +41,7 @@ const MyTeam = () => {
     return (
         <Container>
             <h1>{teamInfo?.name}</h1>
-            <h3 style={{marginTop: '0px', maxWidth:'300px'}}>{teamInfo?.description}</h3>
+            <h3 style={{marginTop: '0px', maxWidth: '300px'}}>{teamInfo?.description}</h3>
             <TeamInfoBox onClick={() => handleButtonClick('TEAM_NOTICE')}>
                 <h2>공지</h2>
                 {teamInfo?.notice.length === 0 && <p id='empty'>공지가 없습니다</p>}
@@ -69,15 +69,13 @@ const MyTeam = () => {
             </TeamInfoBox>
             <TeamInfoBox onClick={() => handleButtonClick('TEAM_EXERCISE')}>
                 <h2>운동</h2>
-                {teamInfo?.goal.length === 0 && <p className={'goal'}>운동 목표가 없습니다</p>}
+                 <p className={'goal'}>팀원들의 운동 상태 확인</p>
             </TeamInfoBox>
             <div style={{width: '330px', display: 'flex', justifyContent: 'space-between'}}>
 
                 <TeamInfoBox style={{width: '150px'}} onClick={() => handleButtonClick('TEAM_CHAT')}>
                     <h2>채팅</h2>
-                    {teamInfo?.chatCount === 0 ? <p className={'chatCount'}>새 채팅 0개</p> :
-                        <p className={'chatCount'}>새 채팅 {teamInfo?.chatCount}개</p>
-                    }
+                        <p className={'chatCount'}>채팅방 입장</p>
                 </TeamInfoBox>
                 <TeamInfoBox style={{width: '150px'}} onClick={() => handleButtonClick('TEAM_MEMBERS')}>
                     <h2>회원</h2>
