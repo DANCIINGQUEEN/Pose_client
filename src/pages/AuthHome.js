@@ -5,12 +5,12 @@ import Login from "../components/auth/Login";
 import Home from "../components/Home/Home";
 
 function AuthHome(props) {
-    const isAuth=Boolean(useSelector((state)=>state.token))
+    const isAuth = Boolean(useSelector((state) => state.token))
 
     return (
         <>
             {
-                isAuth?
+                isAuth ?
                     <Home/>
                     :
                     <Login/>

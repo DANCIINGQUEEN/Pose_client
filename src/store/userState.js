@@ -34,7 +34,8 @@ export const authSlice = createSlice({
         },
         logout: (state) => {
             sessionStorage.removeItem('jwt');
-            Object.assign(state, initialState);
+            // Object.assign(state, initialState);
+            return initialState;
 
         },
         getUser: (state, action) => {

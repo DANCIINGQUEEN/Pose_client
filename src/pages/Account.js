@@ -11,7 +11,10 @@ import {
     ThemeColor,
     UserBoxSize,
     AccountInfoBox,
-    rainbowAnimation, Modal, LogoutButton
+    rainbowAnimation,
+    Modal,
+    LogoutButton,
+    SettingWrapper
 } from "../components/UI/UIPackage";
 import {USER_SETTING} from '../services/api'
 
@@ -20,11 +23,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGear} from '@fortawesome/free-solid-svg-icons';
 import {
     AgeSetting,
-    AreaSetting, ExerciseSetting,
-    FollowersSetting,
-    FollowingSetting, HeightSetting,
+    AreaSetting,
+    ExerciseSetting,
+    FollowerFollowingSetting,
+    HeightSetting,
     ShowFollowers,
-    ShowFollowing, WeightSetting
+    ShowFollowing,
+    WeightSetting, WishListSetting
 } from "../components/account/DetailSetting";
 
 const RainbowDiv = styled.div`
@@ -51,7 +56,26 @@ const RainbowDiv = styled.div`
   }
 `;
 
-function Account(props) {
+const AccountSettingButton=()=>{
+    const style={
+        display: 'flex',
+        width: '110px',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    }
+    return(
+        <div style={style}>
+            <span>계정 설정</span>
+            <Link to={USER_SETTING} style={{textDecoration: 'none', color: 'black'}}>
+                <FontAwesomeIcon icon={faGear} spin style={{fontSize: '25px'}}/>
+            </Link>
+        </div>
+    )
+
+}
+
+function Account() {
     const {
         name,
         email,
@@ -69,34 +93,15 @@ function Account(props) {
     return (
         <Container>
             <h1>유저 정보</h1>
-            <div style={{
-                borderRadius: '20px',
-                backgroundColor: `${ThemeColor.containerColor}`,
-                width: '80%',
-                margin: '10px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: '20px'
+            <SettingWrapper>
+                <UserBox name={name} email={email} size={UserBoxSize.large}/>
 
-            }}>
-                <div style={{width: '330px', display: 'flex', flexDirection:'column',alignItems: 'center'}}>
+                <div className={'detailSetting'}>
 
+                    <Modal button={<FollowerFollowingSetting follow={followers} type={'followers'}/>} render={<ShowFollowers followers={followers}/>}/>
 
-                    <br/>
-                    {name &&
-                        <UserBox name={name} email={email} size={UserBoxSize.large}/>
-                    }
-                </div>
+                    <Modal button={<FollowerFollowingSetting follow={following} type={'following'}/>} render={<ShowFollowing following={following}/>}/>
 
-                <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
-
-                    <Modal button={<FollowersSetting followers={followers}/>}
-                           render={<ShowFollowers followers={followers}/>}/>
-
-                    <Modal button={<FollowingSetting following={following}/>}
-                           render={<ShowFollowing following={following}/>}/>
                     <AccountInfoBox>
                         <AgeSetting age={age}/>
                     </AccountInfoBox>
@@ -110,39 +115,23 @@ function Account(props) {
                         <HeightSetting height={height}/>
                     </AccountInfoBox>
                 </div>
+
                 <RainbowDiv>
                     <ExerciseSetting exercise={exercise}/>
                 </RainbowDiv>
                 <RainbowDiv>
-                    <p>해결하고싶은 고민</p>
-                    {wishList.length === 0 && <p style={{fontSize: '15px'}}>등록되지 않음</p>}
-                    {
-                        wishList.map((item, index) => {
-                                return (
-                                    <p key={index}>{index + 1}.&nbsp;{item}</p>
-                                )
-                            }
-                        )
-                    }
-
+                    <WishListSetting wishList={wishList}/>
                 </RainbowDiv>
 
 
-            </div>
-            <div style={{display:'flex',width:'110px', flexDirection:'row', alignItems:'center',justifyContent:'space-between'}}>
+            </SettingWrapper>
+            <AccountSettingButton/>
 
-            <p>계정 설정</p>
-            <Link to={USER_SETTING} style={{textDecoration: 'none', color: 'black'}}>
-
-                <FontAwesomeIcon icon={faGear} spin style={{fontSize: '25px', marginTop: '10px'}}/>
-            </Link>
-            </div>
             <br/>
 
             <LogoutButton/>
 
             <NavigationBar/>
-
 
         </Container>
     );

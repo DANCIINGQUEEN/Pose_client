@@ -14,7 +14,7 @@ const TeamInfoBox=styled.div`
   margin: 20px 0;
   width: 339px;
   animation: ${fadeIn} 0.7s ease;
-  
+
 
   .teamName {
     font-size: 1.3rem;
@@ -27,7 +27,7 @@ const TeamInfoBox=styled.div`
     flex-direction: row;
     align-items: center;
     cursor: pointer;
-    
+
   }
 
   .title {
@@ -38,21 +38,17 @@ const TeamInfoBox=styled.div`
 
   .content {
     display: inline-block;
-    width:230px;
+    width: 230px;
     overflow: hidden;
     white-space: nowrap;
-
     text-overflow: ellipsis;
 
   }
 `
 
 const TeamInfo=({team})=>{
-    // console.log(team)
     const navigate=useNavigate()
-    const teamName=team.name
-    const teamDesc=team.description
-    const teamId=team._id
+    const {name:teamName, description:teamDesc, _id:teamId}=team
 
     const handleButtonClick=(detailPage)=>{
         navigate(ENTER_TEAM + '/' + teamId + TEAM_DETAIL, {
@@ -90,11 +86,12 @@ function MateTeamExerciseState(props) {
 
 
     useEffect(() => {
-        axios.get(GET_JOINED_TEAM_INFO, {headers:functions.getJWT()})
+        const headers=functions.getJWT()
+        axios.get(GET_JOINED_TEAM_INFO, {headers:headers})
             .then(res => setTeamInfo(res.data))
             .catch(err => console.log(err))
     }, []);
-    console.log(teamInfo)
+    // console.log(teamInfo)
 
     return (
         <div>

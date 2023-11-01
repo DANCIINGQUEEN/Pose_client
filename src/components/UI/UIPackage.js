@@ -582,6 +582,77 @@ export const ModalWrapper = styled.div`
     }
 `;
 
+export const SettingWrapper = styled.div`
+  border-radius: 20px;
+  background-color: ${ThemeColor.containerColor};
+  width: 80%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  .detailSetting{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+`
+
+export const ExerciseButton = styled.button`
+  width:123px;
+  height: 161px;
+  margin: 10px;
+    //margin-left: 20px;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border-radius: 16px;
+    border: none;
+  .exerciseImg{
+    border-radius: 16px;
+  }
+`
+
+export const ExerciseBoxWrapper = styled.div`
+  margin: 0 0 30px 10px;
+  width: 380px;
+  .part{
+    margin-left:20px;
+  }
+  .exerciseLabel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -10px;
+    font-weight: bold;
+  }
+`
+
+export const DoughnutBox = styled.div`
+  width: ${(props)=> props.size?props.size:123}px;
+  height: ${(props) => props.size?props.size:123}px;
+  //border:1px solid black;
+  margin: 15px 15px 15px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  border-radius: 20px;
+  
+  .front{
+    position: relative;
+    z-index: 2;
+    left: -150px;
+  }
+  .back{
+    position: relative;
+    z-index: 1;
+    left: 150px;
+  }
+`
 export const RecBox = ({componentToRender}) => {
     return (
         <div

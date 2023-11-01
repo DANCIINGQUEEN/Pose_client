@@ -8,7 +8,7 @@ import {GOAL_SETTING, CURRENT} from "../../../../services/api";
 import {putGoals} from "../../../../store/userState";
 import styled from "styled-components";
 import {functions} from "../../../../utils/Functions";
-import exerciseName from "../../../../config/exercise";
+import exerciseName from "../../../../config/exercise.json";
 
 const EachGoal=styled(Box)`
   h4{

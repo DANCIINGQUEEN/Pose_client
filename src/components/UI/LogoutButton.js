@@ -14,7 +14,7 @@ export const LogoutButton=()=> {
     }
     return (
         <Link to={'/'}>
-            <Button onClick={setLogout}>
+            <Button onClick={()=>setLogout()}>
                 로그아웃
             </Button>
         </Link>

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import axios from "axios";
 import {LOGIN, NEW_USER} from '../../services/api'
-import {getUserFullInfo, login} from "../../store/userState";
+import {login} from "../../store/userState";
 
 
 import {Container, Input, Button, Loading} from '../UI/UIPackage';
@@ -30,7 +30,7 @@ const LoginForm = styled.div`
 `
 
 
-function Login(props) {
+function Login({onChange}) {
     const [form, setForm] = useState({email: "", password: ""});
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -42,6 +42,7 @@ function Login(props) {
         401: "이메일이 일치하지 않습니다",
         402: "비밀번호가 일치하지 않습니다",
     };
+
     const setLogin = async (e) => {
         e.preventDefault()
         setIsLoading(true);
@@ -51,19 +52,6 @@ function Login(props) {
                 sessionStorage.setItem('jwt', response.data.token);
                 dispatch(login({token: response.data.token}));
             }
-            const {followers, following, goal, setting, ...userData} = response.data.user;
-            const followersList = followers.length > 0 ? followers : null;
-            const followingList = following.length > 0 ? following : null;
-            const {dDay, goals} = goal || {};
-
-            dispatch(getUserFullInfo({
-                ...userData,
-                followers: followersList,
-                following: followingList,
-                dDay,
-                goals,
-                setting
-            }));
         } catch (error) {
             error.response && setErrorMessage(errorMsg[error.response.status] || "An error occurred")
         } finally {

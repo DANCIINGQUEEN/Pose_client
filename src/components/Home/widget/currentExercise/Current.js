@@ -3,111 +3,53 @@ import {Doughnut} from "react-chartjs-2";
 import {useSelector} from "react-redux";
 import styled from "styled-components";
 
-import {Box, Container, NavigationBar, LinkBox} from "../../../UI/UIPackage";
-import exerciseName from "../../../../config/exercise";
+import {Box, Container, NavigationBar, LinkBox, DoughnutBox} from "../../../UI/UIPackage";
+import exerciseName from "../../../../config/exercise.json";
 import {WISH_EXERCISE} from "../../../../services/api";
+import {chartData, frontOption, backgroundOptions, backgroundData} from "../../../../config/doughnutChart";
 
-const DoughnutBox = styled.div`
-  width: 205px;
-  height: 205px;
-  margin: 15px 15px 15px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
-  border-radius: 20px;
-`
 
-const InfoBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 130px;
-  height: 60px;
-  border-radius: 16px;
-  margin: 15px 0 0 0;
-`
 const Label = styled.h4`
   margin-left: 20px;
   margin-bottom: 5px;
 `
 
-const DivStyle = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-const PTitle = styled.p`
-  font-weight: bold;
-  margin-left: 12px;
-`
-const PContent = styled.p`
-  margin-left: 10px;
-  margin-top: -10px;
+
+const InfoWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+  .infoBox{
+    display: flex;
+    flex-direction: row;
+    width: 130px;
+    height: 60px;
+    border-radius: 16px;
+    margin: 15px 0 0 0;
+  }
+  .detailInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .title{
+    font-weight: bold;
+    margin-left: 12px;
+  }
+  .content{
+    margin-left: 10px;
+    margin-top: -10px;
+  }
 `
 
-const ExerciseData = ({data, exercise}) => {
-    const percent = data / 100
-    const chartData = {
-        labels: [{exercise}],
-        datasets: [
-            {
-                data: [percent, 1 - percent],
-                backgroundColor: ['hotpink', 'rgba(0, 0, 0, 0)']
-            }
-        ]
-    }
-    const options = {
-        cutoutPercentage: 30,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                enabled: false,
-            },
-        },
-        elements: {
-            arc: {
-                borderWidth: 130,
-                borderColor: 'transparent',
-                borderRadius: 50,
-            },
-        },
-    }
-    const backgroundData = {
-        labels: ['none'],
-        datasets: [
-            {
-                data: [100, 0],
-                backgroundColor: ['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 0, 0)']
-            },
-        ]
-    }
-    const backgroundOptions = {
-        cutoutPercentage: 30,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                enabled: false,
-            },
-        },
-        elements: {
-            arc: {
-                borderWidth: 130,
-                borderColor: 'transparent',
-            },
-        },
-    };
+const ExerciseDataChart = ({data, exercise}) => {
     return (
-        <DoughnutBox>
-            <span style={{position: 'relative', zIndex: '1', left: '150px'}}>
+        <DoughnutBox size='205'>
+            <span className={'back'}>
                 {<Doughnut data={backgroundData} options={backgroundOptions}/>}
             </span>
-            <span style={{position: 'relative', zIndex: '2', left: '-150px'}}>
-                {<Doughnut data={chartData} options={options}/>}
+            <span className={'front'}>
+                {<Doughnut data={chartData(exercise, data) } options={frontOption}/>}
             </span>
         </DoughnutBox>
     )
@@ -116,64 +58,58 @@ const EachExercise = ({dDay, goal}) => {
     const year = dDay.substring(2, 4)
     const month = dDay.substring(5, 7)
     const day = dDay.substring(8, 10)
-    const label = goal.label
-    const cycle = goal.cycle
-    const goalNum = goal.number
-    const attain = goal.attain
+
+
+    const {label, cycle, number: goalNum, attain} = goal
     const percent = attain / goalNum * 100
 
     return (
         <Box>
             <Label>{exerciseName[label]}</Label>
-            <div style={{display: 'flex', flexDirection: 'row'}}>
-                <ExerciseData data={percent} exercise={exerciseName[label]}/>
+            <InfoWrapper>
+                <ExerciseDataChart data={percent} exercise={exerciseName[label]}/>
                 <div>
-                    <InfoBox>
-                        <DivStyle>
-                            <PTitle>목표 날짜</PTitle>
-                            <PContent>{year}년 {month}월 {day}일</PContent>
-                        </DivStyle>
-                    </InfoBox>
-                    <InfoBox>
-                        <DivStyle>
-                            <PTitle>달성률</PTitle>
-                            <PContent>
+                    <div className={'infoBox'}>
+                        <div className='detailInfo'>
+                            <p className='title'>목표 날짜</p>
+                            <p className='content'>{year}년 {month}월 {day}일</p>
+                        </div>
+                    </div>
+                    <div className={'infoBox'}>
+                        <div className='detailInfo'>
+                            <p className='title'>달성률</p>
+                            <p className='content'>
                                 {isNaN(percent) ? '0' : Math.round(percent)}%
-                            </PContent>
-                        </DivStyle>
-                        <DivStyle>
-                            <PTitle>주기</PTitle>
-                            <PContent>{cycle}</PContent>
-                        </DivStyle>
-                    </InfoBox>
-                    <InfoBox>
-                        <DivStyle>
-                            <PTitle>목표치</PTitle>
-                            <PContent>{goalNum}회</PContent>
-                        </DivStyle>
-                        <DivStyle>
-                            <PTitle>달성량</PTitle>
-                            <PContent>{attain??'0'}회</PContent>
-                        </DivStyle>
-                    </InfoBox>
+                            </p>
+                        </div>
+                        <div className='detailInfo'>
+                            <p className='title'>주기</p>
+                            <p className='content'>{cycle}</p>
+                        </div>
+                    </div>
+                    <div className={'infoBox'}>
+                        <div className='detailInfo'>
+                            <p className='title'>목표치</p>
+                            <p className='content'>{goalNum}회</p>
+                        </div>
+                        <div className='detailInfo'>
+                            <p className='title'>달성량</p>
+                            <p className='content'>{attain??'0'}회</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </InfoWrapper>
         </Box>
     )
 }
 
 function Current(props) {
-    const name = useSelector((state) => state.name)
-    const dDay = useSelector((state) => state.dDay)
-    const goals = useSelector((state) => state.goals)
+    const { name, dDay, goals } = useSelector(state => state);
+
     return (
         <Container>
             <h1>{name}님의 현재 운동</h1>
-            {
-                goals.map((goal, index) => (
-                    <EachExercise key={index} dDay={dDay} goal={goal}/>
-                ))
-            }
+            { goals.map((goal, index) => <EachExercise key={index} dDay={dDay} goal={goal}/>) }
             <LinkBox url={WISH_EXERCISE} content={'새로운 운동 선택'}/>
             <br/>
             <NavigationBar/>

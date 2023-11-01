@@ -46,13 +46,9 @@ const updateData = async (url, dataToUpdate, dispatchUpdateAction, setIsLoading,
         console.error('API 요청 에러:', error);
     }
 };
-export const UserProfileSetting = ({name, email}) => {
-    return (
-        <>
-            {name && <UserBox name={name} email={email} size={UserBoxSize.large}/>}
-        </>
-    )
-}
+export const UserProfileSetting = ({name, email}) => name &&
+    <UserBox name={name} email={email} size={UserBoxSize.large}/>
+
 const StyledSpan = styled.span`margin-left: 10px;`;
 const OldPassword = ({setIsPasswordCorrect}) => {
     //새 비밀번호
@@ -62,9 +58,8 @@ const OldPassword = ({setIsPasswordCorrect}) => {
     //비밀번호 일치 여부
     const [isFailed, setIsFailed] = useState(false);
 
-    const handlePasswordChange = (e) => {
-        setOldPassword(e.target.value);
-    }
+    const handlePasswordChange = (e) => setOldPassword(e.target.value);
+
     const handleOldPassword = async () => {
         const headers = functions.getJWT()
         setIsLoading(true);
@@ -96,7 +91,6 @@ const OldPassword = ({setIsPasswordCorrect}) => {
             <Input type="password" placeholder="기존 비밀번호를 입력하세요" onChange={handlePasswordChange}/>
             {isFailed && <span>비밀번호가 틀렸습니다</span>}
             <Button onClick={handleOldPassword}>{isLoading ? (<Loading/>) : ("확인")}</Button>
-
         </>
     )
 }
@@ -116,11 +110,11 @@ const NewPassword = ({setIsPasswordCorrect}) => {
         const headers = functions.getJWT()
         setIsLoading(true);
         try {
-            const response = await axios.put(UPDATE_PASSWORD,
+            const res = await axios.put(UPDATE_PASSWORD,
                 {newPassword: newPassword},
                 {headers: headers});
 
-            if (response.data.state) {
+            if (res.data.state) {
                 setIsLoading(false);
                 setIsSuccessMessage(true);
                 setNewPassword("")
@@ -134,7 +128,6 @@ const NewPassword = ({setIsPasswordCorrect}) => {
         } finally {
             setIsLoading(false);
         }
-        console.log(newPassword)
     }
     useEffect(() => {
         setIsNoChange(newPassword === "");
@@ -146,71 +139,62 @@ const NewPassword = ({setIsPasswordCorrect}) => {
                    onChange={handlePasswordChange}/>
             {isSuccessMessage && <span>수정 완료</span>}
             <Button onClick={handleUpdate} disabled={isNoChange}>{isLoading ? (<Loading/>) : ("수정")}</Button>
-
         </>
     )
 }
 
 export const ChangeUserProfile = ({name, email}) => {
-    const [newName, setNewName] = useState(name)
-    const [newEmail, setNewEmail] = useState(email);
+    const [form, setForm] = useState({newName: name, newEmail: email})
     const [isLoading, setIsLoading] = useState(false);
     const [isSuccessMessage, setIsSuccessMessage] = useState(false);
     const [isNoChange, setIsNoChange] = useState(false)
     const [isPasswordCorrect, setIsPasswordCorrect] = useState(false)
 
     const dispatch = useDispatch();
-    const handleNameChange = (event) => {
-        setNewName(event.target.value);
-    }
 
-    const handleEmailChange = (event) => {
-        setNewEmail(event.target.value);
-    }
+    const handleFormChange = e => setForm({...form, [e.target.name]: e.target.value})
 
     useEffect(() => {
-        setIsNoChange(newName === name && newEmail === email)
-    }, [newName, newEmail])
+        setIsNoChange(form.newName === name && form.newEmail === email)
+    }, [form])
 
     const handleUpdate = () => {
         updateData(
             UPDATE_PROFILE, {
-                name: newName,
-                email: newEmail
+                name: form.newName,
+                email: form.newEmail
             },
             updateProfile, setIsLoading, setIsSuccessMessage, dispatch
-        ).then(
-            () => {
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
+        ).then()
     };
 
 
     return (
         <div style={{width: '300px'}}>
             <StyledSpan>이름</StyledSpan>
-            <Input type="name" defaultValue={name} onChange={handleNameChange}/>
+            <Input type="name" name={'newName'} defaultValue={name} onChange={handleFormChange}/>
             <StyledSpan>이메일</StyledSpan>
-            <Input type="email" defaultValue={email} onChange={handleEmailChange}/>
+            <Input type="email" name={'newEmail'} defaultValue={email} onChange={handleFormChange}/>
             {isSuccessMessage && <p>수정 완료</p>}
-            <Button onClick={handleUpdate} disabled={isNoChange}>{isLoading ? (<Loading/>) : ("수정")}</Button>
+            <Button onClick={handleUpdate} disabled={isNoChange}>{isLoading ? <Loading/> : ("수정")}</Button>
             <br/>
-            {isPasswordCorrect ? (<NewPassword setIsPasswordCorrect={setIsPasswordCorrect}/>) : (
-                <OldPassword setIsPasswordCorrect={setIsPasswordCorrect}/>)}
+            {isPasswordCorrect ?
+                <NewPassword setIsPasswordCorrect={setIsPasswordCorrect}/>
+                :
+                <OldPassword setIsPasswordCorrect={setIsPasswordCorrect}/>}
         </div>
     )
 }
-export const FollowingSetting = ({following}) => {
+
+export const FollowerFollowingSetting = ({follow, type}) => {
     return (
         <>
-            <p>팔로잉</p>
-            <p>{following ? following && following.length : '0'}명</p>
+            <p>{type === 'followers' ? '팔로워' : '팔로잉'}</p>
+            <p>{follow ? follow.length : '0'}명</p>
         </>
     )
 }
+
 const FFDiv = styled.div`
   width: 300px;
   display: flex;
@@ -233,14 +217,13 @@ const DeleteFF = ({friend}) => {
     const dispatch = useDispatch();
     const handleClick = () => {
         const headers = functions.getJWT()
-        const dataToSend = {friend: friend,};
+        const dataToSend = {friend: friend};
         setIsLoading(true)
         axios.post(GET_UNFOLLOW, dataToSend, {headers})
-            .then(response => {
+            .then(res => {
                 setIsLoading(false)
-                // console.log(response.data.following)
-                dispatch(putFollow({following: response.data.following}))
-                dispatch(putFollowingNames({followingNames: response.data.followingNames}))
+                dispatch(putFollow({following: res.data.following}))
+                dispatch(putFollowingNames({followingNames: res.data.followingNames}))
             })
             .catch(error => {
                 console.error('API 요청 에러:', error);
@@ -262,12 +245,8 @@ export const ShowFollowing = ({following}) => {
         const headers = functions.getJWT()
         setIsLoading(true)
         try {
-            const response = await axios.post(GET_FOLLOWING, {following},
-                {headers: headers});
-            dispatch(
-                putFollowingNames({followingNames: response.data.following})
-            )
-            console.log(response.data)
+            const response = await axios.post(GET_FOLLOWING, {following}, {headers: headers});
+            dispatch(putFollowingNames({followingNames: response.data.following}))
             setIsLoading(false)
         } catch (error) {
             console.error('API 요청 에러:', error);
@@ -276,11 +255,10 @@ export const ShowFollowing = ({following}) => {
     useEffect(() => {
         getFollowing().then()
     }, [following])
-    // console.log(following)
 
     const {followingNames} = useSelector(state => state)
-    if (isLoading) return (<Loading/>)
-    if (followingNames?.length === 0) return (<span>팔로잉한 계정이 없습니다.</span>)
+    if (isLoading) return <Loading/>
+    if (followingNames?.length === 0) return <span>팔로잉한 계정이 없습니다.</span>
     return (
         <>
             <span>팔로잉</span>
@@ -294,18 +272,10 @@ export const ShowFollowing = ({following}) => {
                     <DeleteFF friend={user[0]}/>
                 </FFDiv>
             ))}
+        </>
+    )
+}
 
-        </>
-    )
-}
-export const FollowersSetting = ({followers}) => {
-    return (
-        <>
-            <p>팔로워</p>
-            <p>{followers ? followers && followers.length : '0'}명</p>
-        </>
-    )
-}
 export const ShowFollowers = ({followers}) => {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch();
@@ -342,7 +312,6 @@ export const ShowFollowers = ({followers}) => {
                         size={UserBoxSize.medium}
                         style={{padding: '5px 0px'}}
                     />
-                    {/*<DeleteFF friend={followers}/>*/}
                 </FFDiv>
             ))}
         </>
@@ -370,20 +339,13 @@ export const ChangeArea = ({area}) => {
 
     const dispatch = useDispatch();
 
-    const handleAreaChange = (selectedArea) => {
-        setNewArea(selectedArea)
-    }
+    const handleAreaChange = selectedArea => setNewArea(selectedArea)
+
     const handleUpdate = () => {
         updateData(
             UPDATE_INFORMATION, {area: newArea.option, item: 'area'},
             updateArea, setIsLoading, setIsSuccessMessage, dispatch
-        ).then(
-            () => {
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
+        ).then();
     };
 
     useEffect(() => {
@@ -421,20 +383,13 @@ export const ChangeAge = ({age}) => {
     const [isNoChange, setIsNoChange] = useState(false)
 
     const dispatch = useDispatch();
-    const handleAgeChange = (selectedAge) => {
-        setNewAge(selectedAge)
-    }
+    const handleAgeChange = selectedAge => setNewAge(selectedAge)
+
     const handleUpdate = () => {
         updateData(
             UPDATE_INFORMATION, {age: newAge.option, item: 'age'},
             updateAge, setIsLoading, setIsSuccessMessage, dispatch
-        ).then(
-            () => {
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
+        ).then();
     };
     useEffect(() => {
         setIsNoChange(!newAge)
@@ -451,6 +406,25 @@ export const ChangeAge = ({age}) => {
     )
 }
 
+const WeightAge = ({value, type}) => {
+    const stringValue = value.toString()
+    const isWeight = type === 'kg';
+    const unit = isWeight ? 'kg' : 'cm';
+    const isRange = stringValue.includes('이상') || stringValue.includes('이하');
+    const weightAndAge = isWeight ? stringValue.substring(0, 2) : stringValue.substring(0, 3);
+    const upAndDown = isRange ? `${unit} ${stringValue.includes('이상') ? '이상' : '이하'}` : unit;
+
+    const style = {
+        fontSize: '15px',
+    };
+
+    return (
+        <p>
+            {weightAndAge}
+            <span style={style}>{upAndDown}</span>
+        </p>
+    );
+}
 export const WeightSetting = ({weight}) => {
     if (!weight) return (
         <>
@@ -460,22 +434,11 @@ export const WeightSetting = ({weight}) => {
             </p>
         </>
     )
-    const stringWeight = weight.toString()
+
     return (
         <>
             <p>몸무게</p>
-            {stringWeight.includes('이상') || stringWeight.includes('이하') ? (
-                <p>
-                    {stringWeight.substring(0, 2)}
-                    <span style={{fontSize: '15px'}}>
-                        kg {stringWeight.includes('이상') ? '이상' : '이하'}
-                    </span>
-                </p>
-            ) : (
-                <p>
-                    {weight}kg
-                </p>
-            )}
+            <WeightAge value={weight} type={'kg'}/>
         </>
     )
 }
@@ -486,25 +449,17 @@ export const ChangeWeight = ({weight}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isSuccessMessage, setIsSuccessMessage] = useState(false)
     const [isNoChange, setIsNoChange] = useState(false)
-    const stringWeight = weight.toString()
 
     const dispatch = useDispatch();
 
-    const handleWeightChange = (selectedWeight) => {
-        setNewWeight(selectedWeight)
-    }
+    const handleWeightChange = selectedWeight => setNewWeight(selectedWeight)
+
     const handleUpdate = () => {
         updateData(
             UPDATE_INFORMATION,
             {weight: newWeight.option, item: 'weight'},
             updateWeight, setIsLoading, setIsSuccessMessage, dispatch
-        ).then(
-            () => {
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
+        ).then();
     };
 
     useEffect(() => {
@@ -512,18 +467,9 @@ export const ChangeWeight = ({weight}) => {
     }, [newWeight])
     return (
         <div style={{width: '300px'}}>
-            <p>현재 몸무게 : {stringWeight.includes('이상') || stringWeight.includes('이하') ? (
-                <>
-                    {stringWeight.substring(0, 2)}
-                    <span style={{fontSize: '15px'}}>
-                    kg {stringWeight.includes('이상') ? '이상' : '이하'}
-                </span>
-                </>
-            ) : (
-                <>
-                    {weight}kg
-                </>
-            )}</p>
+            <p>
+                현재 몸무게 : <WeightAge value={weight} type={'kg'}/>
+            </p>
             <CustomSelect options={weightList} item='몸무게' onChange={handleWeightChange}/>
             {isSuccessMessage && <p>수정 완료</p>}
             <Button onClick={handleUpdate} disabled={isNoChange}>
@@ -542,25 +488,10 @@ export const HeightSetting = ({height}) => {
         </>
     )
 
-    const stringHeight = height.toString()
     return (
         <>
             <p>키</p>
-            {stringHeight.includes('이상') || stringHeight.includes('이하') ? (
-                    <p>
-                        {stringHeight.substring(0, 3)}
-                        <span style={{fontSize: '15px'}}>
-                            cm {stringHeight.includes('이상') ? '이상' : '이하'}
-                        </span>
-                    </p>
-                )
-                :
-                (
-                    <p>
-                        {height}<span style={{fontSize: '15px'}}>cm</span>
-                    </p>
-                )
-            }
+            <WeightAge value={height} type={'cm'}/>
         </>
     )
 }
@@ -570,7 +501,6 @@ export const ChangeHeight = ({height}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isSuccessMessage, setIsSuccessMessage] = useState(false)
     const [isNoChange, setIsNoChange] = useState(false)
-    const stringHeight = height.toString()
 
     const dispatch = useDispatch();
 
@@ -596,21 +526,9 @@ export const ChangeHeight = ({height}) => {
     }, [newHeight])
     return (
         <div style={{width: '300px'}}>
-            <p>현재 키 : {stringHeight.includes('이상') || stringHeight.includes('이하') ? (
-                    <>
-                        {stringHeight.substring(0, 3)}
-                        <span style={{fontSize: '15px'}}>
-                            cm {stringHeight.includes('이상') ? '이상' : '이하'}
-                        </span>
-                    </>
-                )
-                :
-                (
-                    <>
-                        {height}<span style={{fontSize: '15px'}}>cm</span>
-                    </>
-                )
-            }</p>
+            <p>
+                현재 키 :<WeightAge value={height} type={'cm'}/>
+            </p>
             <CustomSelect options={heightList} item='키' onChange={handleHeightChange}/>
             {isSuccessMessage && <p>수정 완료</p>}
             <Button onClick={handleUpdate} disabled={isNoChange}>
@@ -638,13 +556,7 @@ export const ChangeExercise = () => {
             UPDATE_INFORMATION,
             {exercise: selectedExercise, item: 'exercise'},
             updateExercise, setIsLoading, setIsSuccessMessage, dispatch
-        ).then(
-            () => {
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
+        ).then();
     }
     return (
         <>
@@ -660,11 +572,7 @@ export const ChangeExercise = () => {
     )
 }
 
-export const WishListSettingButton = () => {
-    return (
-        <span id={'wishList'}>고민 수정</span>
-    )
-}
+export const WishListSettingButton = () => <span id={'wishList'}>고민 수정</span>
 
 export const ChangeWishList = ({wishList}) => {
     const [selectedOptions, setSelectedOptions] = useState([]);
@@ -674,9 +582,8 @@ export const ChangeWishList = ({wishList}) => {
     const [isSuccessMessage, setIsSuccessMessage] = useState(false)
     const dispatch = useDispatch();
 
-    const handleOptionsChange = (selectedOptions) => {
-        setSelectedOptions(selectedOptions);
-    }
+    const handleOptionsChange = selectedOptions => setSelectedOptions(selectedOptions);
+
 
     useEffect(() => {
         setIsNoChange(selectedOptions.length === 0)
@@ -686,13 +593,7 @@ export const ChangeWishList = ({wishList}) => {
             UPDATE_INFORMATION,
             {wishList: selectedOptions, item: 'wishList'},
             updateWishList, setIsLoading, setIsSuccessMessage, dispatch
-        ).then(
-            () => {
-            },
-            (error) => {
-                console.error(error);
-            }
-        );
+        ).then();
     };
     return (
         <div style={{width: '335px'}}>
@@ -713,7 +614,7 @@ export const ChangeWishList = ({wishList}) => {
     )
 }
 
-const ChangePublic = ({item, onChange, isPublic}) => {
+const ChangePublic = ({item, isPublic}) => {
     const [isItemPublic, setIsItemPublic] = useState(isPublic[0])
     const [isLoading, setIsLoading] = useState(false)
 
@@ -744,8 +645,7 @@ const ChangePublic = ({item, onChange, isPublic}) => {
     return (
         <div style={publicStyle}>
             <span>{item}</span>
-            <ToggleButton isOn={isItemPublic} onClick={handleChange}/>
-            {isLoading && <Loading/>}
+            {isLoading ? <Loading/> : <ToggleButton isOn={isItemPublic} onClick={handleChange}/>}
         </div>
 
     )
@@ -771,6 +671,18 @@ export const PublicUserInformation = ({isPublic}) => {
             <div>
                 {renderItem}
             </div>
+        </>
+    )
+}
+
+export const WishListSetting = ({wishList}) => {
+    return (
+        <>
+            <p>해결하고싶은 고민</p>
+            {wishList.length === 0 && <p style={{fontSize: '15px'}}>등록되지 않음</p>}
+            {wishList.map((item, index) => <p key={index}>{index + 1}.&nbsp;{item}</p>
+                )
+            }
         </>
     )
 }

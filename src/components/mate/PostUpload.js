@@ -71,12 +71,9 @@ function PostUpload(props) {
 
     const navigate = useNavigate();
 
-    const handleRemove = () => {
-        setFile(null);
-    };
-    const handleContentChange = (e) => {
-        setContent(e.target.value);
-    }
+    const handleRemove = () => setFile(null)
+    const handleContentChange = e => setContent(e.target.value);
+
 
     const uploadImgToFirebase= async (file, fileName) => {
         if(file==null) return
@@ -91,12 +88,9 @@ function PostUpload(props) {
             await axios.post(UPLOAD_USER_POST, {
                 fileName: fileName,
                 content: content,
-            }, {
-                headers: headers
-            })
+            }, {headers: headers})
             await uploadImgToFirebase(file, fileName)
-        }
-        catch (e) {
+        } catch (e) {
             console.log(e)
         }
         finally {

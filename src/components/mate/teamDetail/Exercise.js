@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Container, NavigationBar, Scroll, ThemeColor, UserBox, UserBoxSize,} from "../../UI/UIPackage";
+import {Container, NavigationBar, Scroll, ThemeColor, UserBox, UserBoxSize,DoughnutBox} from "../../UI/UIPackage";
 import {functions} from "../../../utils/Functions";
 import axios from "axios";
 import {Doughnut} from "react-chartjs-2";
@@ -7,7 +7,9 @@ import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 
 import {GET_TEAM_MEMBERS_EXERCISE_STATUS} from "../../../services/api";
-import exerciseName from "../../../config/exercise";
+import exerciseName from "../../../config/exercise.json";
+import {chartData, frontOption, backgroundOptions, backgroundData} from "../../../config/doughnutChart";
+
 
 const MemberExerciseStatusBox = styled.div`
   > :first-child {
@@ -30,7 +32,8 @@ const MemberExerciseStatusBox = styled.div`
 const ExerciseStatusBox = styled.div`
   display: flex;
   flex-direction: row;
-  width: 280px;
+  width: 290px;
+  padding-right: 10px;
   background-color: ${ThemeColor.containerColor};
   border-radius: 20px;
   margin-left: 10px;
@@ -48,84 +51,19 @@ const ExerciseStatusBox = styled.div`
     font-size: 15px;
   }
 `
-const DoughnutBox = styled.div`
-  width: 180px;
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
-`
 
 
 const MemberExerciseStatus = ({goal}) => {
     const percent = goal.attain / goal.number * 100
-    const chartData = {
-        labels: [goal.label],
-        datasets: [
-            {
-                data: [percent, 100 - percent],
-                backgroundColor: ['hotpink', 'rgba(0, 0, 0, 0)']
-            }
-        ]
-    }
-    const options = {
-        cutoutPercentage: 30,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                enabled: false,
-            },
-        },
-        elements: {
-            arc: {
-                borderWidth: 130,
-                borderColor: 'transparent',
-                borderRadius: 50,
-            },
-        },
-    }
-    const backgroundData = {
-        labels: ['none'],
-        datasets: [
-            {
-                data: [100, 0],
-                backgroundColor: ['rgba(204, 51, 128, 0.2)', 'rgba(0, 0, 0, 0)']
-            },
-        ]
-    }
-    const backgroundOptions = {
-        cutoutPercentage: 30,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                enabled: false,
-            },
-        },
-        elements: {
-            arc: {
-                borderWidth: 130,
-                borderColor: 'transparent',
-            },
-        },
-    };
-    const a = 20
-    const b = a + 130
-    const c = a - 170
+
     return (
         <ExerciseStatusBox>
-            <DoughnutBox>
-                <span style={{
-                    position: 'relative', zIndex: '1', left: `${b}px`
-                }}>
+            <DoughnutBox size={'180'}>
+                <span className={'back'}>
                     {<Doughnut data={backgroundData} options={backgroundOptions}/>}
                 </span>
-                <span style={{position: 'relative', zIndex: '2', left: `${c}px`}}>
-                    {<Doughnut data={chartData} options={options}/>}
+                <span className={'front'}>
+                    {<Doughnut data={chartData(goal.label, percent)} options={frontOption}/>}
                 </span>
             </DoughnutBox>
             <div className={'memberExerciseDetailStatus'}>

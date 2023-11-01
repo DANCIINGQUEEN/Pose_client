@@ -99,7 +99,7 @@ function AiTraining() {
     const label = location.state?.label || ''
     const goals = useSelector((state) => state.goals)
     const goal = goals.find(goal => goal.label === label)?.number
-    const flaskServer = 'https://76df-1-237-93-105.ngrok-free.app/video_feed'
+    // const flaskServer = 'https://76df-1-237-93-105.ngrok-free.app/video_feed'
 
     return (
         <>
@@ -113,6 +113,7 @@ function AiTraining() {
                 :
                 <>
                     <br/>
+                    <p>{label}</p>
                     <h5>안녕?</h5>
                 </>
 

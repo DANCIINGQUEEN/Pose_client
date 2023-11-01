@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ThemeColor, Scroll, LinkBox, Loading} from "../../UI/UIPackage";
+import {ThemeColor, Scroll, LinkBox, Loading, DoughnutBox} from "../../UI/UIPackage";
 import {Doughnut} from "react-chartjs-2";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -8,6 +8,8 @@ import {useSelector} from "react-redux";
 import {MATE, GET_FOLLOWERS_EXERCISES_STATUS} from "../../../services/api";
 import {functions} from "../../../utils/Functions";
 import axios from "axios";
+import {backgroundOptions, frontOption} from "../../../config/doughnutChart";
+
 
 
 const SquareBox = ({data}) => {
@@ -48,69 +50,21 @@ const SquareBox = ({data}) => {
         return {chartData, backgroundData}
     }
 
-
-    const options = {
-        cutoutPercentage: 30,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                enabled: false,
-            },
-        },
-        elements: {
-            arc: {
-                borderWidth: 190,
-                borderColor: 'transparent',
-                borderRadius: 50,
-            },
-        },
-    };
-
-    const backgroundOptions = {
-        cutoutPercentage: 30,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltip: {
-                enabled: false,
-            },
-        },
-        elements: {
-            arc: {
-                borderWidth: 190,
-                borderColor: 'transparent',
-            },
-        },
-    };
     return (
-        <div style={{
-            width: "123px",
-            height: "123px",
-            backgroundColor: `${ThemeColor.containerColor}`,
-            margin: "15px",
-            marginLeft: '10px',
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "30px",
-            borderRadius: '16px',
-        }}>
+        <DoughnutBox>
             {data ?
                 <>
-                    <span style={{position: 'relative', zIndex: '1', left: '150px'}}>
+                    <span className={'back'}>
                         {<Doughnut data={makeChartData(data).backgroundData} options={backgroundOptions}/>}
                     </span>
-                            <span style={{position: 'relative', zIndex: '2', left: '-150px'}}>
-                        {<Doughnut data={makeChartData(data).chartData} options={options}/>}
+                    <span className={'front'}>
+                        {<Doughnut data={makeChartData(data).chartData} options={frontOption}/>}
                     </span>
                 </>
                 :
-                <p style={{fontSize:'15px'}}>정보가 없습니다</p>
+                <p style={{fontSize: '15px'}}>정보가 없습니다</p>
             }
-        </div>
+        </DoughnutBox>
     );
 };
 
@@ -143,7 +97,7 @@ const UserMate = () => {
 
     const getFollowersExercisesStatus = async () => {
         try {
-            const headers = functions.getJWT()
+            const headers = await functions.getJWT()
             const res = await axios.get(GET_FOLLOWERS_EXERCISES_STATUS, {headers: headers})
             setUserData(res.data.followingUsersExerciseStatus)
         } catch (error) {

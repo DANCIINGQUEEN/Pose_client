@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
     Container,
     NavigationBar,
     Modal,
     rainbowAnimation,
     ThemeColor,
+    SettingWrapper
 } from "../UI/UIPackage";
 import {useSelector} from "react-redux";
 
@@ -15,8 +16,6 @@ import {
     UserProfileSetting,
     ChangeUserProfile,
     WeightSetting,
-    FollowingSetting,
-    FollowersSetting,
     ChangeAge,
     AreaSetting,
     ChangeArea,
@@ -27,7 +26,7 @@ import {
     ExerciseSetting,
     ChangeExercise,
     ChangeWishList,
-    WishListSettingButton, PublicUserInformation
+    WishListSettingButton, PublicUserInformation, FollowerFollowingSetting, WishListSetting
 } from "./DetailSetting";
 
 export const RainbowDiv = styled.div`
@@ -55,7 +54,8 @@ export const RainbowDiv = styled.div`
 `;
 
 
-function UserSetting(props) {
+
+function UserSetting() {
     const {
         name,
         email,
@@ -74,29 +74,13 @@ function UserSetting(props) {
         <Container>
             <h1>유저 정보 수정</h1>
             <h5>각 항목을 클릭하면 수정할 수 있습니다</h5>
-            <div style={{
-                borderRadius: '20px',
-                backgroundColor: `${ThemeColor.containerColor}`,
-                width: '80%',
-                margin: '10px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: '20px',
-            }}>
+            <SettingWrapper>
 
-                <Modal width={'300px'}
-                       button={<UserProfileSetting email={email} name={name}/>}
-                       render={<ChangeUserProfile email={email} name={name}/>}/>
-                <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>
+                <Modal width={'300px'} button={<UserProfileSetting email={email} name={name}/>} render={<ChangeUserProfile email={email} name={name}/>}/>
+                <div className={'detailSetting'}>
+                    <Modal button={<FollowerFollowingSetting follow={followers} type={'followers'}/>} render={<ShowFollowers followers={followers}/>}/>
 
-                    <Modal button={<FollowersSetting followers={followers}/>}
-                           render={<ShowFollowers followers={followers}/>}/>
-
-                    <Modal button={<FollowingSetting following={following}/>}
-                           render={<ShowFollowing following={following}/>}/>
-
+                    <Modal button={<FollowerFollowingSetting follow={following} type={'following'}/>} render={<ShowFollowing following={following}/>}/>
 
                     <Modal button={<AgeSetting age={age}/>} render={<ChangeAge age={age}/>}/>
 
@@ -105,31 +89,19 @@ function UserSetting(props) {
                     <Modal button={<WeightSetting weight={weight}/>} render={<ChangeWeight weight={weight}/>}/>
 
                     <Modal button={<HeightSetting height={height}/>} render={<ChangeHeight height={height}/>}/>
-
                 </div>
-                <Modal width={'280px'}
-                       button={<ExerciseSetting exercise={exercise}/>} render={<ChangeExercise/>}/>
+
+                <Modal width={'280px'} button={<ExerciseSetting exercise={exercise}/>} render={<ChangeExercise/>}/>
 
                 <RainbowDiv>
-                    <p>해결하고싶은 고민</p>
-                    {
-                        wishList.map((item, index) => {
-                                return (
-                                    <p key={index}>{index + 1}.&nbsp;{item}</p>
-                                )
-                            }
-                        )
-                    }
+                    <WishListSetting wishList={wishList}/>
                 </RainbowDiv>
-                <Modal width={'102px'} button={<WishListSettingButton/>}
-                       render={<ChangeWishList wishList={wishList}/>}/>
-                <br/>
-            </div>
 
-            <PublicUserInformation
-                isPublic={setting}
-                // isPublic={true}
-            />
+                <Modal width={'102px'} button={<WishListSettingButton/>} render={<ChangeWishList wishList={wishList}/>}/>
+                <br/>
+            </SettingWrapper>
+
+            <PublicUserInformation isPublic={setting}/>
             <NavigationBar/>
         </Container>
     );

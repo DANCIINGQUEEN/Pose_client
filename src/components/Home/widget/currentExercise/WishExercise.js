@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {Button, Container, NavigationBar, rainbowAnimation, ThemeColor} from "../../../UI/UIPackage";
 import styled from "styled-components";
-import exerciseName from "../../../../config/exercise";
+import exerciseName from "../../../../config/exercise.json";
 import {GOAL} from "../../../../services/api";
 
 

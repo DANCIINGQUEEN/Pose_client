@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Link,} from "react-router-dom";
+import {Link, useNavigate,} from "react-router-dom";
+import axios from "axios";
 
 
-import {ACCOUNT, WISH_EXERCISE} from '../../services/api'
+import {ACCOUNT, WISH_EXERCISE, GET_USER_FULL_INFO} from '../../services/api'
+import {getUserFullInfo} from "../../store/userState";
 
 
 import {
@@ -18,6 +20,7 @@ import {
 import CurrentExercise from "./widget/currentExercise/CurrentExercise";
 import StateOfMate from "./widget/StateOfMate";
 import MateTeamExerciseState from "./widget/MateTeamExerciseState";
+import {functions} from "../../utils/Functions";
 
 
 const DecimalDay = () => {
@@ -78,6 +81,35 @@ const DecimalDay = () => {
 function Home(props) {
     const {name, email} = useSelector((state) => state)
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const getUserInfo = async () => {
+        try {
+            const headers = functions.getJWT()
+            const res = await axios.get(GET_USER_FULL_INFO, {headers: headers})
+
+            const {followers, following, goal, setting, ...userData} = res.data;
+            const followersList = followers.length > 0 ? followers : null;
+            const followingList = following.length > 0 ? following : null;
+            const {dDay, goals} = goal || {};
+
+            dispatch(getUserFullInfo({
+                ...userData,
+                followers: followersList,
+                following: followingList,
+                dDay,
+                goals,
+                setting
+            }));
+        } catch (error) {
+            console.error(error)
+            functions.handleJWTError(error, dispatch, navigate)
+        }
+    }
+    useEffect(() => {
+        getUserInfo().then()
+    }, [])
 
     return (
         <Container>
