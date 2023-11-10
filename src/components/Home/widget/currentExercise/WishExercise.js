@@ -84,15 +84,18 @@ function WishExercise(props) {
 
     const [selectedExercises, setSelectedExercises] = useState({
         squat: false,
-        lunge: false,
-        deadLift: false,
-        plank: false,
-        crunch: false,
+        // lunge: false,
+        // deadLift: false,
+        // plank: false,
+        // crunch: false,
         legRaise: false,
         pushUp: false,
         shoulderPress: false,
-        dumbbellRow: false,
-        hammerCurl: false
+        // dumbbellRow: false,
+        // hammerCurl: false
+        side:false,
+        dumbbellCurl:false,
+        sitUp:false
     });
     const trueExercises = Object.keys(selectedExercises).filter(exercise => selectedExercises[exercise]);
     const handleButtonClick = () => {
@@ -118,35 +121,35 @@ function WishExercise(props) {
             <h1>하고 싶은 운동 선택</h1>
             <h3>3개 이상 골라주세요!</h3>
             <Box>
-                <H4>복근 운동</H4>
+                <H4>하체 운동</H4>
                 <ExerciseItem exercise={exerciseName.squat}
                               onClick={() => handleExerciseSelection('squat')}
                               selected={selectedExercises.squat}/>
-                <ExerciseItem exercise={exerciseName.lunge}
-                              onClick={() => handleExerciseSelection('lunge')}
-                              selected={selectedExercises.lunge}/>
-                <ExerciseItem exercise={exerciseName.deadLift}
-                              onClick={() => handleExerciseSelection('deadLift')}
-                              selected={selectedExercises.deadLift}/>
+                {/*<ExerciseItem exercise={exerciseName.lunge}*/}
+                {/*              onClick={() => handleExerciseSelection('lunge')}*/}
+                {/*              selected={selectedExercises.lunge}/>*/}
+                {/*<ExerciseItem exercise={exerciseName.deadLift}*/}
+                {/*              onClick={() => handleExerciseSelection('deadLift')}*/}
+                {/*              selected={selectedExercises.deadLift}/>*/}
 
             </Box>
             <Box>
-                <H4>하체 운동</H4>
+                <H4>복근 운동</H4>
                 <ExerciseItem
-                    exercise={exerciseName.plank}
-                    onClick={() => handleExerciseSelection('plank')}
-                    selected={selectedExercises.plank}/>
-                <ExerciseItem
-                    exercise={exerciseName.crunch}
-                    onClick={() => handleExerciseSelection('crunch')}
-                    selected={selectedExercises.crunch}/>
+                    exercise={exerciseName.situp}
+                    onClick={() => handleExerciseSelection('sitUp')}
+                    selected={selectedExercises.sitUp}/>
+                {/*<ExerciseItem*/}
+                {/*    exercise={exerciseName.crunch}*/}
+                {/*    onClick={() => handleExerciseSelection('crunch')}*/}
+                {/*    selected={selectedExercises.crunch}/>*/}
                 <ExerciseItem
                     exercise={exerciseName.legRaise}
                     onClick={() => handleExerciseSelection('legRaise')}
                     selected={selectedExercises.legRaise}/>
             </Box>
             <Box>
-                <H4>팔 운동</H4>
+                <H4>상체 운동</H4>
                 <ExerciseItem
                     exercise={exerciseName.pushUp}
                     onClick={() => handleExerciseSelection('pushUp')}
@@ -156,13 +159,13 @@ function WishExercise(props) {
                     onClick={() => handleExerciseSelection('shoulderPress')}
                     selected={selectedExercises.shoulderPress}/>
                 <ExerciseItem
-                    exercise={exerciseName.dumbbellRow}
-                    onClick={() => handleExerciseSelection('dumbbellRow')}
-                    selected={selectedExercises.dumbbellRow}/>
+                    exercise={exerciseName.side}
+                    onClick={() => handleExerciseSelection('side')}
+                    selected={selectedExercises.side}/>
                 <ExerciseItem
-                    exercise={exerciseName.hammerCurl}
-                    onClick={() => handleExerciseSelection('hammerCurl')}
-                    selected={selectedExercises.hammerCurl}/>
+                    exercise={exerciseName.dumbbell_curl}
+                    onClick={() => handleExerciseSelection('dumbbellCurl')}
+                    selected={selectedExercises.dumbbellCurl}/>
 
             </Box>
             <h4>선택한 운동 {trueExercises.length}개</h4>

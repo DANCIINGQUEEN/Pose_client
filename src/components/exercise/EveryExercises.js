@@ -55,19 +55,16 @@ function EveryExercises() {
     const exercises = {
         "lowerBodyExercises": [
             {name: "스쿼트", image: exerciseImage.squat, label:'squat'},
-            {name: "런지", image: exerciseImage.lunge, label:'lunge'},
-            {name: "데드리프트", image: exerciseImage.deadLift, label:'deadLift'},
         ],
         "abdominalExercises": [
-            {name: "플랭크", image: exerciseImage.plank, label:'plank'},
-            {name: "크런치", image: exerciseImage.crunch, label:'crunch'},
             {name: "레그 레이즈", image: exerciseImage.legRaise, label:'legRaise'},
+            {name:"윗몸 일으키기", image: exerciseImage.sitUp, label:'situp'},
         ],
         "armExercises": [
             {name: "푸시업", image: exerciseImage.pushUp, label:'pushUp'},
             {name: "숄더 프레스", image: exerciseImage.shoulderPress, label:'shoulderPress'},
-            {name: "덤벨 로우", image: exerciseImage.dumbbellRow, label:'dumbbellRow'},
-            {name: "해머 컬", image: exerciseImage.hammerCurl, label:'hammerCurl'},
+            {name:'사이드 레이즈', image: exerciseImage.side, label:'side'},
+            {name:'덤벨 컬', image: exerciseImage.dumbbellCurl, label:'dumbbell_curl'}
 
         ]
     }
@@ -76,16 +73,16 @@ function EveryExercises() {
         <Container>
             <h1>운동</h1>
             <ExerciseBoxWrapper>
-                <h3 className={'part'}>하체 운동</h3>
-                <Carousel componentToRender={<RecBox/>} data={exercises.lowerBodyExercises}/>
+                <h3 className={'part'}>상체 운동</h3>
+                <Carousel componentToRender={<RecBox/>} data={exercises.armExercises}/>
             </ExerciseBoxWrapper>
             <ExerciseBoxWrapper>
                 <h3 className={'part'}>복근 운동</h3>
                 <Carousel componentToRender={<RecBox/>} data={exercises.abdominalExercises}/>
             </ExerciseBoxWrapper>
             <ExerciseBoxWrapper>
-                <h3 className={'part'}>팔 운동</h3>
-                <Carousel componentToRender={<RecBox/>} data={exercises.armExercises}/>
+                <h3 className={'part'}>하체 운동</h3>
+                <Carousel componentToRender={<RecBox/>} data={exercises.lowerBodyExercises}/>
             </ExerciseBoxWrapper>
             <LinkBox url={SELECTED_EXERCISE} content='내가 선택한 운동 보기'/>
             <br/>
