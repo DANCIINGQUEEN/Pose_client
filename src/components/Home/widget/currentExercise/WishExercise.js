@@ -163,7 +163,7 @@ function WishExercise(props) {
                     onClick={() => handleExerciseSelection('side')}
                     selected={selectedExercises.side}/>
                 <ExerciseItem
-                    exercise={exerciseName.dumbbell_curl}
+                    exercise={exerciseName.dumbbellCurl}
                     onClick={() => handleExerciseSelection('dumbbellCurl')}
                     selected={selectedExercises.dumbbellCurl}/>
 
