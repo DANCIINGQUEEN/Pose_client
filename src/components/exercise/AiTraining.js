@@ -113,8 +113,10 @@ function AiTraining() {
                 :
                 <>
                     <br/>
-                    <p>{label}</p>
-                    <h5>안녕?</h5>
+                    {/*<p>{label}</p>*/}
+                    {/*<h5>안녕?</h5>*/}
+                    <img src={process.env.PUBLIC_URL+'/squatPose.jpg'} alt={label} width={'300px'}/>
+
                 </>
 
             }
