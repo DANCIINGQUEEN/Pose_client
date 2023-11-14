@@ -117,9 +117,9 @@ const UserMate = () => {
                 <p>
                     팔로잉한 유저들의 운동 현황
                 </p>
-                <Link to={'/mate'} style={{textDecoration: 'none', color: 'black'}}>
-                    <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>
-                </Link>
+                {/*<Link to={'/mate'} style={{textDecoration: 'none', color: 'black'}}>*/}
+                {/*    <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>*/}
+                {/*</Link>*/}
             </div>
             {isLoading ?
                 <div style={{display: 'flex', justifyContent: 'center'}}>
