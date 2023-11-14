@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
 import {useSelector} from "react-redux";
-import {MATE, GET_FOLLOWERS_EXERCISES_STATUS} from "../../../services/api";
+import {MATE, GET_FOLLOWERS_EXERCISES_STATUS, FOLLOWING_USERS_EXERCISE_STATUS} from "../../../services/api";
 import {functions} from "../../../utils/Functions";
 import axios from "axios";
 import {backgroundOptions, frontOption} from "../../../config/doughnutChart";
@@ -117,9 +117,9 @@ const UserMate = () => {
                 <p>
                     팔로잉한 유저들의 운동 현황
                 </p>
-                {/*<Link to={'/mate'} style={{textDecoration: 'none', color: 'black'}}>*/}
-                {/*    <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>*/}
-                {/*</Link>*/}
+                <Link to={FOLLOWING_USERS_EXERCISE_STATUS} style={{textDecoration: 'none', color: 'black'}}>
+                    <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '20px', marginTop: '15px'}}/>
+                </Link>
             </div>
             {isLoading ?
                 <div style={{display: 'flex', justifyContent: 'center'}}>

@@ -59,9 +59,11 @@ import {
     MATE_TEAM_LIST,
     ENTER_TEAM,
     TEAM_DETAIL,
-    USER_INFORMATION
+    USER_INFORMATION,
+    FOLLOWING_USERS_EXERCISE_STATUS
 } from './services/api'
 import TeamDetail from "./components/mate/teamDetail/TeamDetail";
+import FollowingUsersExerciseStatus from "./components/Home/widget/FollowingUsersExerciseStatus";
 const App = () => {
     return (
         <div className="App">
@@ -91,6 +93,7 @@ const App = () => {
                     <Route path={ENTER_TEAM+'/:teamId'} element={<MyTeam/>}/>
                     <Route path={ENTER_TEAM+'/:teamId'+TEAM_DETAIL} element={<TeamDetail/>}/>
                     <Route path={USER_INFORMATION+'/:userId'} element={<UserInformation/>}/>
+                    <Route path={FOLLOWING_USERS_EXERCISE_STATUS} element={<FollowingUsersExerciseStatus/>}/>
 
 
                     //현재 유저 운동 상태

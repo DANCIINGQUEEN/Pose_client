@@ -131,6 +131,7 @@ const API={
 
     //운동상태
     CURRENT:'/exercise/current',
+    FOLLOWING_USERS_EXERCISE_STATUS:'/exercise/followingUsersExerciseStatus',
 
     //랭킹
     RANKING:'/ranking',
