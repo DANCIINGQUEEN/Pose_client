@@ -152,7 +152,7 @@ src
 │  setupTests.js
 │
 ├─assets
-│  └─exercise
+│  └─exercise                           //운동 이미지
 │      ├─abdominal
 │      │      crunch.jpg
 │      │      legRaise.jpg
@@ -169,7 +169,7 @@ src
 │              lunge.jpg
 │              squat.jpg
 │
-├─components
+├─components                          //화면을 구성할 컴포넌트
 │  ├─account
 │  │      DetailSetting.js
 │  │      UserSetting.js
@@ -248,30 +248,30 @@ src
 │          UserBox.js
 │          UserProfile.js
 │
-├─config
+├─config                              //각종 파일
 │      doughnutChart.js
 │      exercise.json
 │      exerciseImagePath.json
 │      youtubeExerciseUrl.json
 │
-├─constants
+├─constants                            //상수 값
 │      Constants.js
 │
-├─pages
+├─pages                                // 주요 페이지
 │      Account.js
 │      AuthHome.js
 │      Mate.js
 │      SelectedExercise.js
 │
-├─services
+├─services                              //api 호출, 외부 서비스 관리(firebase)
 │      api.js
 │      firebase.js
 │
 ├─store
-│      userState.js
+│      userState.js                    //전역 상태 관리(redux)
 │
-└─utils
-        Functions.js
+└─utils                                //재사용되는 함수
+        Functions.js  
 ```
 
 
