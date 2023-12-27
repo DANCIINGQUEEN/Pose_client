@@ -154,7 +154,7 @@
   │  ├─store           //전역 상태 관리(redux)
   │  ├─utils           //재사용되는 함수
   │  ├─app.js
-  │  ├─package.json
+  └─ └─package.json
  
 ```
 
