@@ -230,6 +230,7 @@ const initialState = {
 
 <div>
     <img src="https://img.shields.io/badge/React-FFFFFF?style=flat&logo=react&logoColor=61DAFB">
+    <img src="https://img.shields.io/badge/Figma-FFFFFF?style=flat&logo=figma&logoColor=61DAFB">
     <img src="https://img.shields.io/badge/Firebase-FFFFFF?style=flat&logo=Firebase&logoColor=FFCA28">
     <img src="https://img.shields.io/badge/Vercel-FFFFFF?style=flat&logo=vercel&logoColor=009639">
   <img src="https://img.shields.io/badge/Redux-FFFFFF?style=flat&logo=redux&logoColor=4479A1">
