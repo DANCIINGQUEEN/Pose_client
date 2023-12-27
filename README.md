@@ -32,10 +32,10 @@
     <img src="./exec/interface/exercise/스쿼트운동.png" height="515px" width="250px">
     <img src="./exec/interface/exercise/운동선택.png" height="515px" width="250px">
   </p>
-  ### 사용자가 선택한 운동 리스트 페이지, 운동(스쿼트)하는 페이지, 모든 운동 선택 페이지
+  <p align="center"> 사용자가 선택한 운동 리스트 페이지, 운동(스쿼트)하는 페이지, 모든 운동 선택 페이지 </p>
   <p align="center">
     <img src="./exec/interface/exercise/운동선택후목표설정.png" height="515px" width="250px">
     <img src="./exec/interface/exercise/하고싶은운동선택.png" height="515px" width="250px">
   </p>
     
-   ### 운동 선택 후 목표 설정 페이지, 하고싶은 운동 선택 페이지
+   <p align="center">운동 선택 후 목표 설정 페이지, 하고싶은 운동 선택 페이지 </p>
