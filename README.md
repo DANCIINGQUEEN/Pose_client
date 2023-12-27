@@ -95,7 +95,7 @@
 ## 계정 페이지
 
 <p align="center">
-    <img src="./exec/interface/account/유저고민수정" height="515px" width="250px">
+    <img src="./exec/interface/account/유저고민수정.png" height="515px" width="250px">
     <img src="./exec/interface/account/유저기본정보수정.png" height="515px" width="250px">
     <img src="./exec/interface/account/유저나이정보수정.png" height="515px" width="250px">
 </p>
@@ -115,7 +115,27 @@
 
 
 
+## 로그인, 회원가입 페이지
 
+<p align="center">
+    <img src="./exec/interface/account/로그인.png" height="515px" width="250px">
+    <img src="./exec/interface/account/세부정보입력.png" height="515px" width="250px">
+    <img src="./exec/interface/account/자세한정보.png" height="515px" width="250px">
+</p>
+<p align="center">로그인 페이지, 세부 정보 입력 여부, 자세한 정보 입력 </p>
+
+<p align="center">
+    <img src="./exec/interface/account/주로하는운동.png" height="515px" width="250px">
+    <img src="./exec/interface/account/폭죽.png" height="515px" width="250px">
+    <img src="./exec/interface/account/해결하고싶은고민.png" height="515px" width="250px">
+</p>
+<p align="center">주로 하는 운동 입력 페이지 , 회원가입 완료시 폭죽 터짐,  해결하고싶은 고민 입력 페이지</p>
+
+<p align="center">
+    <img src="./exec/interface/account/회원가입.png" height="515px" width="250px">
+    <img src="./exec/interface/account/회원가입완료.png" height="515px" width="250px">
+</p>
+<p align="center">회원가입 페이지, 회원가입 완료 알림</p>
 
 
 
