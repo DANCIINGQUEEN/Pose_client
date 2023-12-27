@@ -247,6 +247,54 @@ const initialState = {
 
 <br />
 
+### 포스트 업로드 함수
+```
+    //... another code...
+
+    const [file, setFile] = useState(null);
+    const [content, setContent] = useState('');
+
+    //... another code...
+
+    const uploadImgToFirebase= async (file, fileName) => {
+        if(file==null) return
+        const fileRef=ref(storage, fileName)
+        await uploadBytes(fileRef, file)
+    }
+    const handleSubmit= async () => {
+        setIsLoading(true)
+        try{
+            const headers=functions.getJWT()
+            const fileName=`images/${file.name}`
+            await axios.post(UPLOAD_USER_POST, {
+                fileName: fileName,    //db에 사진 이름만 저장하고 firebase에 실제 사진을 저장
+                content: content,
+            }, {headers: headers})
+            await uploadImgToFirebase(file, fileName)
+        } catch (e) {
+            console.log(e)
+        }
+        finally {
+            setIsLoading(false)
+            navigate(MATE)
+        }
+    }
+
+    // another code...
+
+```
+
+### 포스트 수신 함수 
+```
+  /// another code...
+
+  const imageName = post?.post.image
+    useEffect(() => {
+        const imageRef = ref(storage, imageName)
+        getDownloadURL(imageRef).then(url => setImage(url)).finally(() => setIsLoading(false))
+    }, [imageName])
+
+  /// another code...
 
 
-
+```
