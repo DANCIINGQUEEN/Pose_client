@@ -240,7 +240,8 @@ const initialState = {
 ### :mega: Communication
 
 <div>
-    <img src="https://img.shields.io/badge/Kakaotalk-FFFFFF?style=flat&logo=Mattermost&logoColor=0058CC">
+    <img src="https://img.shields.io/badge/Kakaotalk-FFFFFF?style=flat&logo=kakaotalk&logoColor=0058CC">
+   <img src="https://img.shields.io/badge/Discord-FFFFFF?style=flat&logo=discord&logoColor=0058CC">
 </div>
 
 <br />
