@@ -139,25 +139,10 @@
 
 
   ## 프로젝트 디렉터리 구조
-```
-  React
 
-  pose
-  ├─public
-  └─src
-     ├─assets          //운동 이미지
-     ├─components      //화면을 구성할 컴포넌트
-     ├─config          //각종 json파일
-     ├─constants       //상수 값
-     ├─pages           // 주요 페이지
-     ├─services        //api 호출, 외부 서비스 관리(firebase)
-     ├─store           //전역 상태 관리(redux)
-     ├─utils           //재사용되는 함수
-     ├─app.js
-     └─package.json
- 
-```
 ```bash
+
+src
 │  App.css
 │  App.js
 │  App.test.js
