@@ -92,8 +92,26 @@
 
 
 
+## 계정 페이지
 
+<p align="center">
+    <img src="./exec/interface/account/유저고민수정" height="515px" width="250px">
+    <img src="./exec/interface/account/유저기본정보수정.png" height="515px" width="250px">
+    <img src="./exec/interface/account/유저나이정보수정.png" height="515px" width="250px">
+</p>
+<p align="center">유저 고민 수정, 유저 기본 정보 수정, 유저 세부정보(예시 : 나이) 수정 </p>
 
+<p align="center">
+    <img src="./exec/interface/account/유저정보.png" height="515px" width="250px">
+    <img src="./exec/interface/account/유저정보공개여부.png" height="515px" width="250px">
+    <img src="./exec/interface/account/유저정보수정.png" height="515px" width="250px">
+</p>
+<p align="center">유저 정보, 유저 정보 공개 여부 설정,  유저 정보 수정 페이지</p>
+
+<p align="center">
+    <img src="./exec/interface/account/팔로잉리스트.png" height="515px" width="250px">
+</p>
+<p align="center">팔로잉 리스트</p>
 
 
 
