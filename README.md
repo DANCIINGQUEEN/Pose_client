@@ -144,18 +144,149 @@
 
   pose
   ├─public
-  ├─src
-  │  ├─assets          //운동 이미지
-  │  ├─components      //화면을 구성할 컴포넌트
-  │  ├─config          //각종 json파일
-  │  ├─constants       //상수 값
-  │  ├─pages           // 주요 페이지
-  │  ├─services        //api 호출, 외부 서비스 관리(firebase)
-  │  ├─store           //전역 상태 관리(redux)
-  │  ├─utils           //재사용되는 함수
-  │  ├─app.js
-  └─ └─package.json
+  └─src
+     ├─assets          //운동 이미지
+     ├─components      //화면을 구성할 컴포넌트
+     ├─config          //각종 json파일
+     ├─constants       //상수 값
+     ├─pages           // 주요 페이지
+     ├─services        //api 호출, 외부 서비스 관리(firebase)
+     ├─store           //전역 상태 관리(redux)
+     ├─utils           //재사용되는 함수
+     ├─app.js
+     └─package.json
  
+```
+```bash
+│  App.css
+│  App.js
+│  App.test.js
+│  index.css
+│  index.js
+│  reportWebVitals.js
+│  setupTests.js
+│
+├─assets
+│  └─exercise
+│      ├─abdominal
+│      │      crunch.jpg
+│      │      legRaise.jpg
+│      │      plank.jpg
+│      │
+│      ├─arm
+│      │      dumbbellRow.jpg
+│      │      hammerCurl.jpg
+│      │      pushUp.jpg
+│      │      shoulderPress.jpg
+│      │
+│      └─lower
+│              deadLift.jpg
+│              lunge.jpg
+│              squat.jpg
+│
+├─components
+│  ├─account
+│  │      DetailSetting.js
+│  │      UserSetting.js
+│  │
+│  ├─auth
+│  │      Login.js
+│  │      Register.js
+│  │      UserDetail.js
+│  │      UserDetail2.js
+│  │      UserDetail3.js
+│  │
+│  ├─exercise
+│  │      AiTraining.js
+│  │      EveryExercises.js
+│  │      Examples.js
+│  │      Training.js
+│  │
+│  ├─Home
+│  │  │  Home.js
+│  │  │
+│  │  └─widget
+│  │      │  FollowingUsersExerciseStatus.js
+│  │      │  HomeRanking.js
+│  │      │  MateTeamExerciseState.js
+│  │      │  StateOfMate.js
+│  │      │
+│  │      └─currentExercise
+│  │              Current.js
+│  │              CurrentExercise.js
+│  │              GoalSetting.js
+│  │              WishExercise.js
+│  │
+│  ├─mate
+│  │  │  CreateTeam.js
+│  │  │  MateTeam.js
+│  │  │  MateTeamList.js
+│  │  │  MyPosts.js
+│  │  │  MyTeam.js
+│  │  │  Posts.js
+│  │  │  PostUpload.js
+│  │  │  RecommendUser.js
+│  │  │  UserInformation.js
+│  │  │
+│  │  └─teamDetail
+│  │          Board.js
+│  │          Chat.js
+│  │          Exercise.js
+│  │          Members.js
+│  │          Notice.js
+│  │          TeamDetail.js
+│  │
+│  ├─prtc
+│  │      Gallery.js
+│  │      GetFirebaseImg.js
+│  │      InputToss.js
+│  │      InputToss2.js
+│  │      Like.js
+│  │      PoseNetprtc.js
+│  │      UploadFirebaseImg.js
+│  │
+│  ├─ranking
+│  │      RankInfo.js
+│  │      Ranking.js
+│  │
+│  └─UI
+│          HorizonLine.js
+│          LinkBox.js
+│          Loading.js
+│          LogoutButton.js
+│          Modal.js
+│          NavigationBar.js
+│          PlusButton.js
+│          Select.js
+│          TwoTabNav.js
+│          UIPackage.js
+│          UserBox.js
+│          UserProfile.js
+│
+├─config
+│      doughnutChart.js
+│      exercise.json
+│      exerciseImagePath.json
+│      youtubeExerciseUrl.json
+│
+├─constants
+│      Constants.js
+│
+├─pages
+│      Account.js
+│      AuthHome.js
+│      Mate.js
+│      SelectedExercise.js
+│
+├─services
+│      api.js
+│      firebase.js
+│
+├─store
+│      userState.js
+│
+└─utils
+        Functions.js
 ```
 
 
@@ -163,7 +294,7 @@
 ## 전역 상태 관리 - Redux-toolkit
 
   - ### 초기 상태
-```
+```javascript
 const initialState = {
     _id:null,
     email: null,
