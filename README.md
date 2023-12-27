@@ -12,3 +12,4 @@
   
 # 시스템 구성도
 ![system-diagram](./exec/system-diagram.png) 
+![사용자가선택한운동의세부정보페이지](./exec/interface/사용자가선택한운동의세부정보페이지.png) 
