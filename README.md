@@ -21,7 +21,7 @@
 
 - ### 홈페이지
 
-<p align="center"><img src="./exec/interface/homepage.png" height="515px" width="250px"></p>
+<span align="center"><img src="./exec/interface/homepage.png" height="515px" width="250px"></span>
 
 - ### 사용자가 선택한 운동의 세부 정보 페이지
-<p align="center"><img src="./exec/interface/사용자가선택한운동의세부정보페이지.png" height="515px" width="250px"></p>
+<span align="center"><img src="./exec/interface/사용자가선택한운동의세부정보페이지.png" height="515px" width="250px"></span>
