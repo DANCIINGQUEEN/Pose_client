@@ -39,3 +39,72 @@
   </p>
     
    <p align="center">운동 선택 후 목표 설정 페이지, 하고싶은 운동 선택 페이지 </p>
+
+
+## 메이트 페이지
+
+<p align="center">
+    <img src="./exec/interface/mate/가입하지않은팀목록.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/가입한팀목록.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/게시글수정.png" height="515px" width="250px">
+</p>
+<p align="center">가입하지 않은 메이트 팀 목록 페이지, 가입한 메이트 팀 목록 페이지, 게시글 수정</p>
+
+<p align="center">
+    <img src="./exec/interface/mate/게시글수정모달.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/게시글업로드.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/게시판글작성.png" height="515px" width="250px">
+</p>
+<p align="center">게시글 수정·삭제 모달, 게시글 업로드, 게시판 글 작성</p>
+
+<p align="center">
+    <img src="./exec/interface/mate/공지.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/공지글작성.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/공지수정.png" height="515px" width="250px">
+</p>
+<p align="center">공지 페이지, 공지글 작성, 공지 수정</p>
+
+<p align="center">
+    <img src="./exec/interface/mate/공지수정모달.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/다른사용자정보.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/메이트팀.png" height="515px" width="250px">
+</p>
+<p align="center">공지 수정·삭제 모달, 다른 사용자 정보 페이지, 메이트 팀</p>
+
+<p align="center">
+    <img src="./exec/interface/mate/소셜네트워크.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/소셜댓글삭제.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/익명게시판.png" height="515px" width="250px">
+</p>
+<p align="center">SNS 피드 페이지, SNS에 작성한 댓글 삭제, 익명게시판 </p>
+
+<p align="center">
+    <img src="./exec/interface/mate/자유게시판.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/채팅.png" height="515px" width="250px">
+    <img src="./exec/interface/mate/팀만들기.png" height="515px" width="250px">
+</p>
+<p align="center">자유게시판, 채팅,  메이트 팀 만들기</p>
+
+<p align="center">
+    <img src="./exec/interface/mate/회원목록.png" height="515px" width="250px">
+</p>
+<p align="center">회원목록 페이지</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
