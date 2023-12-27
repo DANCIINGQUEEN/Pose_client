@@ -19,13 +19,19 @@
 
 ## 홈페이지
 
- - ### 홈페이지
-
-- ### 사용자가 선택한 운동의 세부 정보 페이지
-<span align="center"><img src="./exec/interface/homepage.png" height="515px" width="250px">
-<img src="./exec/interface/사용자가선택한운동의세부정보페이지.png" height="515px" width="250px"></span> 
+<p align="center">
+<img src="./exec/interface/homepage.png" height="515px" width="250px">
+<img src="./exec/interface/사용자가선택한운동의세부정보페이지.png" height="515px" width="250px">
+</p> 
+홈페이지, 사용자가 선택한 운동의 세부 정보 페이지
 
 ## 운동 페이지
 
-  - ### 사용자가 선택안 운동 리스트 페이지
-    <span align="center"><img src="./exec/interface/exercise/사용자가선택한운동리스트페이지.png" height="515px" width="250px"></span>
+    <p align="center">
+      <img src="./exec/interface/exercise/사용자가선택한운동리스트페이지.png" height="515px" width="250px">
+      <img src="./exec/interface/exercise/스쿼트운동.png" height="515px" width="250px">
+      <img src="./exec/interface/exercise/운동선택.png" height="515px" width="250px">
+      <img src="./exec/interface/exercise/운동선택후목표설정.png" height="515px" width="250px">
+      <img src="./exec/interface/exercise/하고싶은운동선택.png" height="515px" width="250px">
+    </p>
+  사용자가 선택한 운동 리스트 페이지, 운동(스쿼트)하는 페이지, 모든 운동 선택 페이지, 운동 선택 후 목표 설정 페이지, 하고싶은 운동 선택 페이지
