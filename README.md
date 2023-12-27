@@ -248,7 +248,7 @@ const initialState = {
 <br />
 
 ### 포스트 업로드 함수
-```
+```javascript
     //... another code...
 
     const [file, setFile] = useState(null);
@@ -285,7 +285,7 @@ const initialState = {
 ```
 
 ### 포스트 수신 함수 
-```
+```javascript
   /// another code...
 
   const imageName = post?.post.image
