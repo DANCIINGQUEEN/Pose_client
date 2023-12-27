@@ -222,6 +222,7 @@ const initialState = {
     <img src="https://img.shields.io/badge/Git-FFFFFF?style=flat&logo=Git&logoColor=F05032">
     <img src="https://img.shields.io/badge/Visual Studio Code-FFFFFF?style=flat&logo=visualstudiocode&logoColor=007ACC">
     <img src="https://img.shields.io/badge/InteliJ-FFFFFF?style=flat&logo=intellijidea&logoColor=000000">
+    <img src="https://img.shields.io/badge/Figma-FFFFFF?style=flat&logo=figma&logoColor=61DAFB">
 </div>
 
 <br />
@@ -230,7 +231,6 @@ const initialState = {
 
 <div>
     <img src="https://img.shields.io/badge/React-FFFFFF?style=flat&logo=react&logoColor=61DAFB">
-    <img src="https://img.shields.io/badge/Figma-FFFFFF?style=flat&logo=figma&logoColor=61DAFB">
     <img src="https://img.shields.io/badge/Firebase-FFFFFF?style=flat&logo=Firebase&logoColor=FFCA28">
     <img src="https://img.shields.io/badge/Vercel-FFFFFF?style=flat&logo=vercel&logoColor=009639">
   <img src="https://img.shields.io/badge/Redux-FFFFFF?style=flat&logo=redux&logoColor=4479A1">
