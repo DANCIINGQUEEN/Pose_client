@@ -160,7 +160,57 @@
 
 
 
+## 전역 상태 관리 - Redux-toolkit
 
+  - ### 초기 상태
+```
+const initialState = {
+    _id:null,
+    email: null,
+    name: null,
+    token: null,
+    age: null,
+    area: null,
+    sex: null,
+    weight: null,
+    height: null,
+    exercise: null,
+    wishList: null,
+    followers: null,
+    followerNames:null,
+    following: null,
+    followingNames:null,
+    dDay: null,
+    goals: null,
+    activeNav:'/',
+    setting: null,
+}
+
+```
+
+
+  - ### 상태 관리 함수
+    | 함수명 | 기능|
+    | --- | --- |
+    | navClick | 유저가 머물고 있는 페이지의 네비게이션바 아이콘 bold |
+    | login | 로그인시 jwt 저장 |
+    | logout | 로그아웃시 초기상태 삭제 |
+    | getUserFullInfo | 로그인시 초기상태 저장 |
+    | putFollow | 수정된 팔로우 리스트 저장 |
+    | putGoals | 수정된 목표 리스트 저장 |
+    | updateAttain | 운동 목표 업데이트 |
+    | putFollowerNames | 수정된 팔로우 유저 이름 리스트 저장 |
+    | putFollowingNames | 수정된 팔로잉 유저 이름 리스트 저장 |
+    | updateProfile | 수정된 프로필 정보 저장 |
+    | updateAge | 수정된 나이 정보 저장 |
+    | updateArea | 수정된 지역 정보 저장 |
+    | updateWeight | 수정된 몸무게 정보 저장 |
+    | updateHeight | 수정된 키 정보 저장 |
+    | updateExercise | 수정된 운동 정보 저장 |
+    | updateWishList | 수정된 해결하고싶은 고민 정보 저장 |
+    | updateItemPublic | 수정된 세부 정보 공개 여부값 저장 |
+    
+    
 
 
 
