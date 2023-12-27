@@ -12,4 +12,8 @@
   
 # 시스템 구성도
 ![system-diagram](./exec/system-diagram.png) 
-![사용자가선택한운동의세부정보페이지](./exec/interface/사용자가선택한운동의세부정보페이지.png) 
+
+# **운동메이트** 인터페이스
+
+## **아래 사진과 함께 인터페이스를 설명합니다**
+<p align="center"><img src="./exec/interface/사용자가선택한운동의세부정보페이지.png" height="630px" width="300px"></p>
